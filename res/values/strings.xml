@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Cruise</string>
+    <string name="points">Points</string>
+    <string name="remaining_range">Remaining range</string>
+    <string name="action_defaultrange">Set default range</string>
+    <string name="action_defaultacc">Set average acc. mistakes</string>
+    <string name="action_defaultspeed">Set average speed mistakes</string>
+    <string name="action_defaultdrivecycle">Set average drive cycle distance</string>
+    <string name="starting_range">Starting range in km</string>
+    <string name="drive_distance">Enter length of drive in km</string>
+    <string name="acc_mistakes">Enter number of acc. mistakes</string>
+    <string name="speed_mistakes">Enter number of speed mistakes</string>
+    <string name="drive_button">Simulate drive</string>
+    <string name="nullnull">0</string>
+    <string name="title_activity_after_drive">AfterDriveActivity</string>
+    <string name="hello_world">Hello world!</string>
+
+</resources>

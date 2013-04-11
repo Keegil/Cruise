@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_defaultrange"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_defaultrange"/>
+    
+    <item
+        android:id="@+id/action_defaultacc"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_defaultacc"/>
+    
+    <item
+        android:id="@+id/action_defaultspeed"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_defaultspeed"/>
+    
+    <item
+        android:id="@+id/action_defaultdrivecycle"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_defaultdrivecycle"/>
+
+</menu>
