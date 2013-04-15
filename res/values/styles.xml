@@ -16,5 +16,8 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    <style name="NoActionBar" parent="@android:style/Theme">
+        <!-- Inherits the default theme for pre-HC (no action bar) -->
+    </style>
 
 </resources>

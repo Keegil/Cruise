@@ -1,47 +1,56 @@
 package com.prototype.cruise;
 
-import java.sql.Date;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class DriveActivity extends Activity implements OnClickListener {
+
+	private static final String TAG = "DriveActivity";
 
 	public static final String PREFS_NAME = "MyPrefsFile";
 	public static final String DATA_NAME = "MyDataFile";
 	public static final String DATE_NAME = "MyDateFile";
 
 	int defaultRange = 100;
+	double doubleDefaultRange;
 	int defaultAccMistakes = 4;
 	int defaultSpeedMistakes = 1;
 	int defaultDriveCycle = 11;
 
 	int currentRange = 100;
+	double doubleCurrentRange;
+
 	int driveLength = 0;
 	int accMistakes = 0;
 	int speedMistakes = 0;
-	
-	Date lastTime = null;
+	int chargedRange = 0;
+
+	long lastTime = 0;
 
 	EditText etDistance;
 	EditText etAccMistakes;
 	EditText etSpeedMistakes;
 
 	TextView tvStartingRange;
-	TextView tvDate1;
-	TextView tvDate2;
-	
+
+	ImageView ivPreBatteryFill;
+
 	Button bDrive;
 
 	@Override
@@ -53,6 +62,7 @@ public class DriveActivity extends Activity implements OnClickListener {
 		loadDate();
 		init();
 		calc();
+		draw();
 	}
 
 	public void init() {
@@ -60,23 +70,58 @@ public class DriveActivity extends Activity implements OnClickListener {
 		etAccMistakes = (EditText) findViewById(R.id.et_acc_mistakes);
 		etSpeedMistakes = (EditText) findViewById(R.id.et_speed_mistakes);
 		tvStartingRange = (TextView) findViewById(R.id.tv_starting_range);
-		tvDate1 = (TextView) findViewById(R.id.tv_date1);
-		tvDate2 = (TextView) findViewById(R.id.tv_date2);
 		bDrive = (Button) findViewById(R.id.b_drive);
 		bDrive.setOnClickListener(this);
+		ivPreBatteryFill = (ImageView) findViewById(R.id.iv_pre_battery_fill);
 	}
-	
+
 	public void calc() {
-		if (lastTime.getTime() == 0) {
+		if (lastTime == 0) {
 			currentRange = defaultRange;
 		} else {
-			long difference = System.currentTimeMillis() - lastTime.getTime();
-			long differenceHours = difference / 3600000;
-			int chargedRange = (int) differenceHours;
-			chargedRange = chargedRange*10;
-			currentRange = currentRange + chargedRange;
+			chargedRange = (int) (double) ((System.currentTimeMillis() - lastTime) / 300000);
+			if (currentRange + chargedRange >= defaultRange) {
+				currentRange = defaultRange;
+			} else {
+				currentRange = currentRange + chargedRange;
+			}
 		}
-		tvStartingRange.setText("" + currentRange + "");
+		tvStartingRange.setText("" + currentRange + " km");
+		Log.d(TAG, ""
+				+ ((double) ((System.currentTimeMillis() - lastTime) / 60000))
+				+ "");
+		saveData();
+	}
+
+	public void draw() {
+		doubleCurrentRange = (double) currentRange;
+		doubleDefaultRange = (double) defaultRange;
+		if (doubleCurrentRange / doubleDefaultRange >= 0.6) {
+			ivPreBatteryFill.setImageResource(R.drawable.green);
+			tvStartingRange.setBackgroundColor(getResources().getColor(
+					R.color.light_green));
+		} else if ((doubleCurrentRange / doubleDefaultRange < 0.6)
+				&& (doubleCurrentRange / doubleDefaultRange >= 0.2)) {
+			ivPreBatteryFill.setImageResource(R.drawable.yellow);
+			tvStartingRange.setBackgroundColor(getResources().getColor(
+					R.color.mustard));
+		} else if ((doubleCurrentRange / doubleDefaultRange < 0.2)
+				&& (doubleCurrentRange / doubleDefaultRange > 0)) {
+			ivPreBatteryFill.setImageResource(R.drawable.red);
+			tvStartingRange.setBackgroundColor(getResources().getColor(
+					R.color.wine_red));
+		} else {
+			ivPreBatteryFill.setImageResource(R.drawable.red);
+			tvStartingRange.setBackgroundColor(getResources().getColor(
+					R.color.wine_red));
+		}
+		LayoutParams layoutParams = ivPreBatteryFill.getLayoutParams();
+		int width = (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, 134, getResources()
+						.getDisplayMetrics());
+		double batteryWidth = doubleCurrentRange / doubleDefaultRange;
+		layoutParams.width = (int) (width * batteryWidth);
+		ivPreBatteryFill.setLayoutParams(layoutParams);
 	}
 
 	public void loadSettings() {
@@ -96,11 +141,12 @@ public class DriveActivity extends Activity implements OnClickListener {
 		driveLength = data.getInt("driveLength", driveLength);
 		accMistakes = data.getInt("accMistakes", accMistakes);
 		speedMistakes = data.getInt("speedMistakes", speedMistakes);
+		chargedRange = data.getInt("chargedRange", chargedRange);
 	}
-	
+
 	public void loadDate() {
 		SharedPreferences date = getSharedPreferences(DATE_NAME, 0);
-		lastTime = new Date(date.getLong("time", 0));
+		lastTime = date.getLong("lastTime", lastTime);
 	}
 
 	public void saveSettings() {
@@ -119,6 +165,14 @@ public class DriveActivity extends Activity implements OnClickListener {
 		editor.putInt("driveLength", driveLength);
 		editor.putInt("accMistakes", accMistakes);
 		editor.putInt("speedMistakes", speedMistakes);
+		editor.putInt("chargedRange", chargedRange);
+		editor.commit();
+	}
+
+	public void saveDate() {
+		SharedPreferences date = getSharedPreferences(DATE_NAME, 0);
+		SharedPreferences.Editor editor = date.edit();
+		editor.putLong("lastTime", lastTime);
 		editor.commit();
 	}
 
@@ -144,6 +198,9 @@ public class DriveActivity extends Activity implements OnClickListener {
 		case R.id.action_defaultdrivecycle:
 			setDefaultDriveCycle();
 			return true;
+		case R.id.action_reset:
+			reset();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -158,11 +215,15 @@ public class DriveActivity extends Activity implements OnClickListener {
 		final EditText input = new EditText(this);
 		alert.setView(input);
 		input.setText("" + defaultRange + "");
+		input.setInputType(InputType.TYPE_CLASS_PHONE);
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				defaultRange = Integer.parseInt(input.getText().toString());
 				saveSettings();
+				Intent intent = getIntent();
+				finish();
+				startActivity(intent);
 			}
 		});
 
@@ -185,12 +246,16 @@ public class DriveActivity extends Activity implements OnClickListener {
 		final EditText input = new EditText(this);
 		alert.setView(input);
 		input.setText("" + defaultAccMistakes + "");
+		input.setInputType(InputType.TYPE_CLASS_PHONE);
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				defaultAccMistakes = Integer.parseInt(input.getText()
 						.toString());
 				saveSettings();
+				Intent intent = getIntent();
+				finish();
+				startActivity(intent);
 			}
 		});
 
@@ -213,12 +278,16 @@ public class DriveActivity extends Activity implements OnClickListener {
 		final EditText input = new EditText(this);
 		alert.setView(input);
 		input.setText("" + defaultSpeedMistakes + "");
+		input.setInputType(InputType.TYPE_CLASS_PHONE);
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				defaultSpeedMistakes = Integer.parseInt(input.getText()
 						.toString());
 				saveSettings();
+				Intent intent = getIntent();
+				finish();
+				startActivity(intent);
 			}
 		});
 
@@ -241,12 +310,16 @@ public class DriveActivity extends Activity implements OnClickListener {
 		final EditText input = new EditText(this);
 		alert.setView(input);
 		input.setText("" + defaultDriveCycle + "");
+		input.setInputType(InputType.TYPE_CLASS_PHONE);
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				defaultDriveCycle = Integer
 						.parseInt(input.getText().toString());
 				saveSettings();
+				Intent intent = getIntent();
+				finish();
+				startActivity(intent);
 			}
 		});
 
@@ -258,6 +331,22 @@ public class DriveActivity extends Activity implements OnClickListener {
 				});
 
 		alert.show();
+	}
+
+	public void reset() {
+		defaultRange = 100;
+		defaultAccMistakes = 4;
+		defaultSpeedMistakes = 1;
+		defaultDriveCycle = 11;
+		lastTime = 0;
+		currentRange = defaultRange;
+		chargedRange = 0;
+		saveSettings();
+		saveData();
+		saveDate();
+		Intent intent = getIntent();
+		finish();
+		startActivity(intent);
 	}
 
 	@Override

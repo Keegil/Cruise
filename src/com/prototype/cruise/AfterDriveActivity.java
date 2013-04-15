@@ -1,17 +1,31 @@
 package com.prototype.cruise;
 
-import java.sql.Date;
-
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class AfterDriveActivity extends Activity {
 
+	private static final String TAG = "AfterDriveActivity";
+
 	public static final String PREFS_NAME = "MyPrefsFile";
 	public static final String DATA_NAME = "MyDataFile";
 	public static final String DATE_NAME = "MyDateFile";
+
+	SpannableStringBuilder ssb;
+	StyleSpan ss;
+	ForegroundColorSpan fcs;
 
 	int defaultRange = 100;
 	int defaultAccMistakes = 4;
@@ -22,16 +36,29 @@ public class AfterDriveActivity extends Activity {
 	int driveLength = 0;
 	int accMistakes = 0;
 	int speedMistakes = 0;
+	int chargedRange = 0;
 
-	double doublePoints = 0;
-	int intPoints = 0;
-	double doubleUsedRange = 0;
-	int intUsedRange = 0;
+	int iPoints = 0;
+	double dPoints = 0;
+	int iUsedRange = 0;
+	double dUsedRange = 0;
+	double modifier = 0;
 
-	Date lastTime = null;
+	long lastTime;
 
-	TextView tvPoints;
-	TextView tvRemainingRange;
+	TextView tvCompatible;
+	TextView tvCharging;
+	TextView tvCharged;
+	TextView tvActualDistance;
+	TextView tvEvDistance;
+	TextView tvAcc;
+	TextView tvSpeed;
+	TextView tvRangeDecrease;
+	TextView tvRangeLeft;
+	ImageView ivBatteryFill;
+	ImageView ivRangeDecrease;
+	LinearLayout llRangeDecrease;
+	FrameLayout flRangeDecrease;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +68,37 @@ public class AfterDriveActivity extends Activity {
 		loadData();
 		init();
 		calc();
+		draw();
 	}
 
 	public void init() {
-		lastTime = new Date(System.currentTimeMillis());
-		tvPoints = (TextView) findViewById(R.id.tv_points);
-		tvRemainingRange = (TextView) findViewById(R.id.tv_remaining_range);
+		tvCompatible = (TextView) findViewById(R.id.tv_compatible);
+		tvCharging = (TextView) findViewById(R.id.tv_charging);
+		tvCharged = (TextView) findViewById(R.id.tv_charged);
+		tvActualDistance = (TextView) findViewById(R.id.tv_actual_distance);
+		tvEvDistance = (TextView) findViewById(R.id.tv_ev_distance);
+		tvSpeed = (TextView) findViewById(R.id.tv_speed);
+		tvAcc = (TextView) findViewById(R.id.tv_acc);
+		tvRangeDecrease = (TextView) findViewById(R.id.tv_range_decrease);
+		tvRangeLeft = (TextView) findViewById(R.id.tv_ev_range_left);
+		ivBatteryFill = (ImageView) findViewById(R.id.iv_battery_fill);
+		ivRangeDecrease = (ImageView) findViewById(R.id.iv_range_decrease);
+		llRangeDecrease = (LinearLayout) findViewById(R.id.ll_range_decrease);
+		flRangeDecrease = (FrameLayout) findViewById(R.id.fl_range_decrease);
 	}
 
-	private void calc() {
+	public void calc() {
+		// set distance charged
+		ssb = new SpannableStringBuilder("Charged " + chargedRange
+				+ " km before drive");
+		ss = new StyleSpan(android.graphics.Typeface.BOLD);
+		ssb.setSpan(ss, 8, 12, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+		tvCharged.setText(ssb);
+		// set distance driven
+		ssb = new SpannableStringBuilder("Drove " + driveLength + " km");
+		ssb.setSpan(ss, 6, ssb.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+		tvActualDistance.setText(ssb);
+		// calculate points
 		double aa = (double) defaultAccMistakes;
 		double a = (double) accMistakes;
 		double da = (double) defaultDriveCycle;
@@ -60,14 +109,91 @@ public class AfterDriveActivity extends Activity {
 		x = 1 + Math.pow(x, 1.1);
 		double y = ((sa * (d / da)) / ((sa * (d / da)) + s));
 		y = 1 + Math.pow(y, 1.1);
-		doublePoints = (1 / (2 / ((0.8 * x) + (0.2 * y)))) * 100;
-		intPoints = (int) doublePoints;
-		tvPoints.setText("" + intPoints + "");
-		doubleUsedRange = d * (1 / (doublePoints / 100));
-		intUsedRange = (int) doubleUsedRange;
-		currentRange = currentRange - intUsedRange;
-		tvRemainingRange.setText("" + currentRange + "");
+		dPoints = (1 / (2 / ((0.8 * x) + (0.2 * y)))) * 100;
+		iPoints = (int) dPoints;
+		// calculate and apply modifier
+		modifier = (1 / (dPoints / 100));
+		dUsedRange = d * modifier;
+		iUsedRange = (int) dUsedRange;
+		// set range down
+		ssb = new SpannableStringBuilder("Range down " + iUsedRange + " km");
+		if (modifier <= 1.1) {
+			fcs = new ForegroundColorSpan(getResources().getColor(
+					R.color.light_green));
+			ivRangeDecrease.setImageDrawable(getResources().getDrawable(
+					R.drawable.greenstripes));
+		} else if ((modifier > 1.1) && (modifier <= 1.4)) {
+			fcs = new ForegroundColorSpan(getResources().getColor(
+					R.color.mustard));
+			ivRangeDecrease.setImageDrawable(getResources().getDrawable(
+					R.drawable.yellowstripes));
+		} else {
+			fcs = new ForegroundColorSpan(getResources().getColor(
+					R.color.wine_red));
+			ivRangeDecrease.setImageDrawable(getResources().getDrawable(
+					R.drawable.redstripes));
+		}
+		ssb.setSpan(ss, 11, ssb.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+		ssb.setSpan(fcs, 11, ssb.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+		tvEvDistance.setText(ssb);
+		// display mistakes
+		if (accMistakes > 0) {
+			tvAcc.setVisibility(View.VISIBLE);
+			llRangeDecrease.setVisibility(View.VISIBLE);
+			flRangeDecrease.setVisibility(View.VISIBLE);
+		}
+		if (speedMistakes > 0) {
+			tvSpeed.setVisibility(View.VISIBLE);
+			llRangeDecrease.setVisibility(View.VISIBLE);
+			flRangeDecrease.setVisibility(View.VISIBLE);
+
+		}
+		// set current range and time
+		currentRange = currentRange - iUsedRange;
+		if (currentRange < 0) {
+			currentRange = 0;
+		}
+		// set range left
+		ssb = new SpannableStringBuilder("" + currentRange + " km range left");
+		ssb.setSpan(ss, 0, 5, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+		tvRangeLeft.setText(ssb);
+		lastTime = System.currentTimeMillis();
 		saveData();
+		saveDate();
+	}
+
+	public void draw() {
+		if ((((double) currentRange) / ((double) defaultRange)) >= 0.6) {
+			ivBatteryFill.setImageResource(R.drawable.green);
+			tvCompatible.setText("EV COMPATIBLE DRIVE");
+			tvCompatible.setBackgroundColor(getResources().getColor(
+					R.color.light_green));
+		} else if ((((double) currentRange) / ((double) defaultRange) < 0.6)
+				&& (((double) currentRange) / ((double) defaultRange) >= 0.2)) {
+			ivBatteryFill.setImageResource(R.drawable.yellow);
+			tvCompatible.setText("EV COMPATIBLE DRIVE");
+			tvCompatible.setBackgroundColor(getResources().getColor(
+					R.color.mustard));
+		} else if ((((double) currentRange) / ((double) defaultRange) < 0.2)
+				&& (((double) currentRange) / ((double) defaultRange) > 0)) {
+			ivBatteryFill.setImageResource(R.drawable.red);
+			tvCompatible.setText("EV COMPATIBLE DRIVE");
+			tvCompatible.setBackgroundColor(getResources().getColor(
+					R.color.wine_red));
+			tvCharging.setVisibility(View.VISIBLE);
+			tvCharging.setText("CHARGING RECOMMENDED!");
+		} else {
+			tvCompatible.setText("EV INCOMPATIBLE DRIVE");
+			tvCompatible.setBackgroundColor(getResources().getColor(
+					R.color.wine_red));
+		}
+		LayoutParams layoutParams = ivBatteryFill.getLayoutParams();
+		int width = (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, 134, getResources()
+						.getDisplayMetrics());
+		double batteryWidth = ((double) currentRange) / ((double) defaultRange);
+		layoutParams.width = (int) (width * batteryWidth);
+		ivBatteryFill.setLayoutParams(layoutParams);
 	}
 
 	public void loadSettings() {
@@ -87,15 +213,7 @@ public class AfterDriveActivity extends Activity {
 		driveLength = data.getInt("driveLength", driveLength);
 		accMistakes = data.getInt("accMistakes", accMistakes);
 		speedMistakes = data.getInt("speedMistakes", speedMistakes);
-	}
-
-	public void saveSettings() {
-		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-		SharedPreferences.Editor editor = settings.edit();
-		editor.putInt("defaultRange", defaultRange);
-		editor.putInt("defaultAccMistakes", defaultAccMistakes);
-		editor.putInt("defaultSpeedMistakes", defaultSpeedMistakes);
-		editor.commit();
+		chargedRange = data.getInt("chargedRange", chargedRange);
 	}
 
 	public void saveData() {
@@ -111,8 +229,7 @@ public class AfterDriveActivity extends Activity {
 	public void saveDate() {
 		SharedPreferences date = getSharedPreferences(DATE_NAME, 0);
 		SharedPreferences.Editor editor = date.edit();
-		editor.putLong("lastTime", lastTime.getTime());
+		editor.putLong("lastTime", lastTime);
 		editor.commit();
 	}
-
 }
