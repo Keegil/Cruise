@@ -41,9 +41,9 @@ public class DrivingStatsDataSource {
 		values.put(MySQLiteHelper.COLUMN_SPEED_MISTAKES, speedMistakes);
 		values.put(MySQLiteHelper.COLUMN_POINTS, point);
 		values.put(MySQLiteHelper.COLUMN_RANGE, remainingRange);
-		long insertId = database.insert(MySQLiteHelper.TABLE_CRUISE, null,
+		long insertId = database.insert(MySQLiteHelper.TABLE_DRIVING_STATS, null,
 				values);
-		Cursor cursor = database.query(MySQLiteHelper.TABLE_CRUISE, allColumns,
+		Cursor cursor = database.query(MySQLiteHelper.TABLE_DRIVING_STATS, allColumns,
 				MySQLiteHelper.COLUMN_ID + " = " + insertId, null, null, null,
 				null);
 		cursor.moveToFirst();
@@ -55,14 +55,14 @@ public class DrivingStatsDataSource {
 	public void deleteStat(Stats stat) {
 		long id = stat.getId();
 		System.out.println("Log deleted with id: " + id);
-		database.delete(MySQLiteHelper.TABLE_CRUISE, MySQLiteHelper.COLUMN_ID
+		database.delete(MySQLiteHelper.TABLE_DRIVING_STATS, MySQLiteHelper.COLUMN_ID
 				+ " = " + id, null);
 	}
 
 	public List<Stats> getAllStats() {
 		List<Stats> stats = new ArrayList<Stats>();
 
-		Cursor cursor = database.query(MySQLiteHelper.TABLE_CRUISE, allColumns,
+		Cursor cursor = database.query(MySQLiteHelper.TABLE_DRIVING_STATS, allColumns,
 				null, null, null, null, null);
 
 		cursor.moveToFirst();
@@ -79,7 +79,7 @@ public class DrivingStatsDataSource {
 	// Getting single stat
 	public Stats getStat(int id) {
 
-		Cursor cursor = database.query(MySQLiteHelper.TABLE_CRUISE, allColumns,
+		Cursor cursor = database.query(MySQLiteHelper.TABLE_DRIVING_STATS, allColumns,
 				MySQLiteHelper.COLUMN_ID + "=?",
 				new String[] { String.valueOf(id) }, null, null, null, null);
 		if (cursor != null)
