@@ -60,8 +60,8 @@ public class GPSDataSource {
 	}
 	
 	public void deleteAllGPSData() {
-		database.delete(MySQLiteHelper.TABLE_GPS_DATA,
-				null, null);
+		String deleteGPS = "DROP TABLE " + MySQLiteHelper.TABLE_GPS_DATA + ";";
+		database.execSQL(deleteGPS);
 	}
 
 	public List<GPSData> getAllGPSData() {

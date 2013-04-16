@@ -26,8 +26,9 @@ public class DriveActivity extends Activity implements OnClickListener {
 	public static final String PREFS_NAME = "MyPrefsFile";
 	public static final String DATA_NAME = "MyDataFile";
 	public static final String DATE_NAME = "MyDateFile";
-	
+
 	private GPSDataSource gpsDataSource;
+	private DrivingStatsDataSource statSource;
 
 	int defaultRange = 100;
 	double doubleDefaultRange;
@@ -77,6 +78,8 @@ public class DriveActivity extends Activity implements OnClickListener {
 		ivPreBatteryFill = (ImageView) findViewById(R.id.iv_pre_battery_fill);
 		gpsDataSource = new GPSDataSource(this);
 		gpsDataSource.open();
+		statSource = new DrivingStatsDataSource(this);
+		statSource.open();
 	}
 
 	public void calc() {
@@ -355,9 +358,10 @@ public class DriveActivity extends Activity implements OnClickListener {
 		finish();
 		startActivity(intent);
 	}
-	
+
 	public void resetDb() {
 		gpsDataSource.deleteAllGPSData();
+		statSource.deleteAllDrivingStats();
 	}
 
 	@Override

@@ -72,9 +72,13 @@ public class DrivingStatsDataSource {
 
 	public void deleteDrivingStats(DrivingStats drivingStats) {
 		long id = drivingStats.getId();
-		System.out.println("Log deleted with id: " + id);
 		database.delete(MySQLiteHelper.TABLE_DRIVING_STATS,
 				MySQLiteHelper.COLUMN_DRIVING_STATS_ID + " = " + id, null);
+	}
+	
+	public void deleteAllDrivingStats() {
+		String deleteDrivingStats = "DROP TABLE " + MySQLiteHelper.TABLE_DRIVING_STATS + ";";
+		database.execSQL(deleteDrivingStats);
 	}
 
 	public List<DrivingStats> getAllDrivingStats() {
