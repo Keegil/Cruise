@@ -42,19 +42,30 @@ public final class R {
         public static final int yellowstripes=0x7f020009;
     }
     public static final class id {
-        public static final int action_defaultacc=0x7f090015;
-        public static final int action_defaultdrivecycle=0x7f090017;
-        public static final int action_defaultrange=0x7f090014;
-        public static final int action_defaultspeed=0x7f090016;
-        public static final int action_reset=0x7f090018;
+        public static final int action_defaultacc=0x7f090020;
+        public static final int action_defaultdrivecycle=0x7f090022;
+        public static final int action_defaultrange=0x7f09001f;
+        public static final int action_defaultspeed=0x7f090021;
+        public static final int action_reset=0x7f090023;
         public static final int b_drive=0x7f090013;
         public static final int et_acc_mistakes=0x7f090011;
         public static final int et_distance=0x7f090010;
         public static final int et_speed_mistakes=0x7f090012;
         public static final int fl_range_decrease=0x7f090008;
+        public static final int group=0x7f090014;
+        public static final int group1=0x7f090015;
+        public static final int group2=0x7f090017;
+        public static final int group3=0x7f09001a;
         public static final int iv_battery_fill=0x7f090003;
         public static final int iv_pre_battery_fill=0x7f09000f;
         public static final int iv_range_decrease=0x7f090009;
+        public static final int li_accmist=0x7f09001d;
+        public static final int li_date=0x7f090019;
+        public static final int li_dist=0x7f09001b;
+        public static final int li_id=0x7f09001c;
+        public static final int li_point=0x7f090016;
+        public static final int li_remdist=0x7f090018;
+        public static final int li_spmist=0x7f09001e;
         public static final int ll_compatible=0x7f090000;
         public static final int ll_range_decrease=0x7f09000b;
         public static final int tv_acc=0x7f09000c;
@@ -71,6 +82,7 @@ public final class R {
     public static final class layout {
         public static final int activity_after_drive=0x7f030000;
         public static final int activity_drive=0x7f030001;
+        public static final int list_item=0x7f030002;
     }
     public static final class menu {
         public static final int after_drive=0x7f080000;
