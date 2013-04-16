@@ -38,7 +38,7 @@ public class DrivingStatsDataSource {
 		dbHelper.close();
 	}
 
-	public DrivingStats createStat(String date, int numAccEvent,
+	public DrivingStats createDrivingStats(String date, int numAccEvent,
 			int numSpeedEvent, int numBrakeEvent, int driveDistance,
 			int rangeStart, int rangeUsed, int rangeEnd, double rangeModifier,
 			double fuelSavings) {
@@ -65,64 +65,64 @@ public class DrivingStatsDataSource {
 				allColumns, MySQLiteHelper.COLUMN_DRIVING_STATS_ID + " = "
 						+ insertId, null, null, null, null);
 		cursor.moveToFirst();
-		DrivingStats stat = cursorToStat(cursor);
+		DrivingStats drivingStats = cursorToDrivingStats(cursor);
 		cursor.close();
-		return stat;
+		return drivingStats;
 	}
 
-	public void deleteStat(DrivingStats stat) {
-		long id = stat.getId();
+	public void deleteDrivingStats(DrivingStats drivingStats) {
+		long id = drivingStats.getId();
 		System.out.println("Log deleted with id: " + id);
 		database.delete(MySQLiteHelper.TABLE_DRIVING_STATS,
 				MySQLiteHelper.COLUMN_DRIVING_STATS_ID + " = " + id, null);
 	}
 
-	public List<DrivingStats> getAllStats() {
-		List<DrivingStats> stats = new ArrayList<DrivingStats>();
+	public List<DrivingStats> getAllDrivingStats() {
+		List<DrivingStats> drivingStatss = new ArrayList<DrivingStats>();
 
 		Cursor cursor = database.query(MySQLiteHelper.TABLE_DRIVING_STATS,
 				allColumns, null, null, null, null, null);
 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
-			DrivingStats stat = cursorToStat(cursor);
-			stats.add(stat);
+			DrivingStats drivingStats = cursorToDrivingStats(cursor);
+			drivingStatss.add(drivingStats);
 			cursor.moveToNext();
 		}
 		// Make sure to close the cursor
 		cursor.close();
-		return stats;
+		return drivingStatss;
 	}
 
 	// Getting single stat
-	public DrivingStats getStat(int id) {
+	public DrivingStats getDrivingStats(long id) {
 
 		Cursor cursor = database.query(MySQLiteHelper.TABLE_DRIVING_STATS,
 				allColumns, MySQLiteHelper.COLUMN_DRIVING_STATS_ID + "=?",
 				new String[] { String.valueOf(id) }, null, null, null, null);
 		if (cursor != null)
 			cursor.moveToFirst();
-		DrivingStats stat = new DrivingStats(Integer.parseInt(cursor
+		DrivingStats drivingStats = new DrivingStats(Integer.parseInt(cursor
 				.getString(0)), cursor.getString(1), cursor.getInt(2),
 				cursor.getInt(3), cursor.getInt(4), cursor.getInt(5),
 				cursor.getInt(6), cursor.getInt(7), cursor.getInt(8),
 				cursor.getDouble(9), cursor.getDouble(10));
-		return stat;
+		return drivingStats;
 	}
 
-	private DrivingStats cursorToStat(Cursor cursor) {
-		DrivingStats stat = new DrivingStats();
-		stat.setId(cursor.getLong(0));
-		stat.setDate(cursor.getString(1));
-		stat.setNumAccEvent(cursor.getInt(2));
-		stat.setNumSpeedEvent(cursor.getInt(3));
-		stat.setNumBrakeEvent(cursor.getInt(4));
-		stat.setDriveDistance(cursor.getInt(5));
-		stat.setRangeStart(cursor.getInt(6));
-		stat.setRangeUsed(cursor.getInt(7));
-		stat.setRangeEnd(cursor.getInt(8));
-		stat.setRangeModifier(cursor.getDouble(9));
-		stat.setFuelSavings(cursor.getDouble(10));
-		return stat;
+	private DrivingStats cursorToDrivingStats(Cursor cursor) {
+		DrivingStats drivingStats = new DrivingStats();
+		drivingStats.setId(cursor.getLong(0));
+		drivingStats.setDate(cursor.getString(1));
+		drivingStats.setNumAccEvent(cursor.getInt(2));
+		drivingStats.setNumSpeedEvent(cursor.getInt(3));
+		drivingStats.setNumBrakeEvent(cursor.getInt(4));
+		drivingStats.setDriveDistance(cursor.getInt(5));
+		drivingStats.setRangeStart(cursor.getInt(6));
+		drivingStats.setRangeUsed(cursor.getInt(7));
+		drivingStats.setRangeEnd(cursor.getInt(8));
+		drivingStats.setRangeModifier(cursor.getDouble(9));
+		drivingStats.setFuelSavings(cursor.getDouble(10));
+		return drivingStats;
 	}
 }
