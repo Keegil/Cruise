@@ -54,12 +54,12 @@ public class CustomListViewAdapter extends ArrayAdapter<DrivingStats> {
 			holder = (ViewHolder) convertView.getTag();
 
 		holder.li_id.setText(""+rowItem.getId());
-		holder.li_point.setText("Score: "+rowItem.getPoint());
+		holder.li_point.setText("Score: "+rowItem.getRangeModifier());
 		holder.li_date.setText(""+rowItem.getDate());
-		holder.li_remdist.setText("Remaining range: "+rowItem.getRemainingRange());
-		holder.li_dist.setText(""+rowItem.getDriveLength());
-		holder.li_accmist.setText(""+rowItem.accMistakes());
-		holder.li_spmist.setText(""+rowItem.getSpeedMistakes());
+		holder.li_remdist.setText("Remaining range: "+rowItem.getRangeEnd());
+		holder.li_dist.setText(""+rowItem.getDriveDistance());
+		holder.li_accmist.setText(""+rowItem.getNumAccEvent());
+		holder.li_spmist.setText(""+rowItem.getNumSpeedEvent());
 
 		return convertView;
 	}

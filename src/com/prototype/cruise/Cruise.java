@@ -59,7 +59,7 @@ public class Cruise extends ListActivity {
 
 		
 		
-		values = statSource.getAllStats();
+		values = statSource.getAllDrivingStats();
 		
 
 		
@@ -86,8 +86,8 @@ public class Cruise extends ListActivity {
 					
 					cal = Calendar.getInstance();
 					date = dateFormat.format(cal.getTime());
-					statSource.createStat(numdt, date, numat, numst, 50, 95);
-					DrivingStats s = new DrivingStats(adapter.getCount()+1,date, numdt, numat, numst, 50, 95);
+					statSource.createDrivingStats(date, numdt, numat, numst, 50, 95, 0, 0, 0, 0);
+					DrivingStats s = new DrivingStats(adapter.getCount()+1,date, numdt, numat, numst, 50, 95, 0, 0, 0, 0);
 					adapter.add(s);
 					setListAdapter(adapter);
 

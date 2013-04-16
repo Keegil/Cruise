@@ -184,10 +184,21 @@ public class AfterDriveActivity extends Activity {
 
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("Database data");
-		final TextView output = new EditText(this);
+		final TextView output = new TextView(this);
 		alert.setView(output);
-		DrivingStats stats = statSource.getDrivingStats(statSource.getAllDrivingStats().size());
-		output.setText("ID: " + stats.getId() + "");
+		DrivingStats drivingStats = statSource.getDrivingStats(statSource
+				.getAllDrivingStats().size());
+		output.setText("ID: " + drivingStats.getId() + "\n" + "Date: "
+				+ drivingStats.getDate() + "\n" + "# acceleration events: "
+				+ drivingStats.getNumAccEvent() + "\n" + "# speed events: "
+				+ drivingStats.getNumSpeedEvent() + "\n" + "# brake events: "
+				+ drivingStats.getNumBrakeEvent() + "\n" + "Drive distance: "
+				+ drivingStats.getDriveDistance() + "\n" + "Starting range: "
+				+ drivingStats.getRangeStart() + "\n" + "Range used: "
+				+ drivingStats.getRangeUsed() + "\n" + "Finishing range: "
+				+ drivingStats.getRangeEnd() + "\n" + "Range modifier: "
+				+ drivingStats.getRangeModifier() + "\n" + "Fuel savings: "
+				+ drivingStats.getFuelSavings());
 		alert.show();
 
 	}
