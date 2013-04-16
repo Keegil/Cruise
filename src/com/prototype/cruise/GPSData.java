@@ -54,7 +54,7 @@ public class GPSData {
 		this.latitude = latitude;
 	}
 	
-	public float getNumBrakeEvent() {
+	public float getLongitude() {
 		return longitude;
 	}
 	

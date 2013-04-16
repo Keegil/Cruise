@@ -4,21 +4,25 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.InputType;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +30,13 @@ import android.widget.TextView;
 
 public class AfterDriveActivity extends Activity {
 
+	// JSON parsing
+	private static String filename = "gpslog30.txt";
+	private static final String TAG_DRIVE_DATA = "driveData";
+	private static final String TAG_GPS_DATA = "gpsData";
+	JSONArray driveData = null;
+
+	// logging
 	private static final String TAG = "AfterDriveActivity";
 
 	public static final String PREFS_NAME = "MyPrefsFile";
@@ -33,6 +44,7 @@ public class AfterDriveActivity extends Activity {
 	public static final String DATE_NAME = "MyDateFile";
 
 	private DrivingStatsDataSource statSource;
+	private GPSDataSource gpsDataSource;
 	private DateFormat dateFormat;
 	private Calendar cal;
 	private String date;
@@ -60,6 +72,8 @@ public class AfterDriveActivity extends Activity {
 
 	long lastTime;
 
+	long statSize;
+
 	TextView tvCompatible;
 	TextView tvCharging;
 	TextView tvCharged;
@@ -83,6 +97,7 @@ public class AfterDriveActivity extends Activity {
 		init();
 		calc();
 		draw();
+		getJSON();
 	}
 
 	public void init() {
@@ -101,6 +116,8 @@ public class AfterDriveActivity extends Activity {
 		flRangeDecrease = (FrameLayout) findViewById(R.id.fl_range_decrease);
 		statSource = new DrivingStatsDataSource(this);
 		statSource.open();
+		gpsDataSource = new GPSDataSource(this);
+		gpsDataSource.open();
 		// formatting date
 		dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		// get current date time with Calendar()
@@ -182,24 +199,28 @@ public class AfterDriveActivity extends Activity {
 		saveData();
 		saveDate();
 
-		AlertDialog.Builder alert = new AlertDialog.Builder(this);
-		alert.setTitle("Database data");
-		final TextView output = new TextView(this);
-		alert.setView(output);
-		DrivingStats drivingStats = statSource.getDrivingStats(statSource
-				.getAllDrivingStats().size());
-		output.setText("ID: " + drivingStats.getId() + "\n" + "Date: "
-				+ drivingStats.getDate() + "\n" + "# acceleration events: "
-				+ drivingStats.getNumAccEvent() + "\n" + "# speed events: "
-				+ drivingStats.getNumSpeedEvent() + "\n" + "# brake events: "
-				+ drivingStats.getNumBrakeEvent() + "\n" + "Drive distance: "
-				+ drivingStats.getDriveDistance() + "\n" + "Starting range: "
-				+ drivingStats.getRangeStart() + "\n" + "Range used: "
-				+ drivingStats.getRangeUsed() + "\n" + "Finishing range: "
-				+ drivingStats.getRangeEnd() + "\n" + "Range modifier: "
-				+ drivingStats.getRangeModifier() + "\n" + "Fuel savings: "
-				+ drivingStats.getFuelSavings());
-		alert.show();
+		cal = Calendar.getInstance();
+		date = dateFormat.format(cal.getTime());
+		statSource.createDrivingStats(date, accMistakes, speedMistakes, 0,
+				driveLength, 0, iUsedRange, currentRange, iPoints, 0);
+
+		/*
+		 * AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		 * alert.setTitle("Database data"); final TextView output = new
+		 * TextView(this); alert.setView(output); DrivingStats drivingStats =
+		 * statSource.getDrivingStats(statSource .getAllDrivingStats().size());
+		 * output.setText("ID: " + drivingStats.getId() + "\n" + "Date: " +
+		 * drivingStats.getDate() + "\n" + "# acceleration events: " +
+		 * drivingStats.getNumAccEvent() + "\n" + "# speed events: " +
+		 * drivingStats.getNumSpeedEvent() + "\n" + "# brake events: " +
+		 * drivingStats.getNumBrakeEvent() + "\n" + "Drive distance: " +
+		 * drivingStats.getDriveDistance() + "\n" + "Starting range: " +
+		 * drivingStats.getRangeStart() + "\n" + "Range used: " +
+		 * drivingStats.getRangeUsed() + "\n" + "Finishing range: " +
+		 * drivingStats.getRangeEnd() + "\n" + "Range modifier: " +
+		 * drivingStats.getRangeModifier() + "\n" + "Fuel savings: " +
+		 * drivingStats.getFuelSavings()); alert.show();
+		 */
 
 	}
 
@@ -237,6 +258,68 @@ public class AfterDriveActivity extends Activity {
 		ivBatteryFill.setLayoutParams(layoutParams);
 	}
 
+	public void getJSON() {
+		JSONParser jParser = new JSONParser();
+		final JSONObject json = jParser.getJSONFromAsset(this, filename);
+		try {
+			driveData = json.getJSONArray(TAG_DRIVE_DATA);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		final ProgressDialog pdParsing = new ProgressDialog(this);
+		pdParsing.setTitle("Parsing " + filename + "...");
+		pdParsing.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		pdParsing.setProgress(0);
+		pdParsing.setMax(driveData.length());
+		pdParsing.setCancelable(false);
+		pdParsing.show();
+		Runnable runnable = new Runnable() {
+			@Override
+			public void run() {
+				for (int i = 0; i < driveData.length(); i++) {
+					try {
+						JSONObject c = driveData.getJSONObject(i);
+						final String sentence = c.getString(TAG_GPS_DATA);
+						String[] strValues = sentence.split(",");
+						String time = strValues[1];
+						float latitude = (float) (Float
+								.parseFloat(strValues[3]) * .01);
+						if (strValues[4].charAt(0) == 'S') {
+							latitude = -latitude;
+						}
+						float longitude = (float) (Float
+								.parseFloat(strValues[5]) * .01);
+						if (strValues[6].charAt(0) == 'W') {
+							longitude = -longitude;
+						}
+						gpsDataSource.createGPSData(statSource
+								.getAllDrivingStats().size(), time, latitude,
+								longitude);
+						pdParsing.incrementProgressBy(1);
+						if (pdParsing.getProgress() >= pdParsing.getMax()) {
+							pdParsing.dismiss();
+							GPSData gpsData = gpsDataSource
+									.getGPSData(statSource.getAllDrivingStats()
+											.size());
+							Log.d(TAG,
+									"ID: " + gpsData.getId() + "\n" + "Time: "
+											+ gpsData.getTime() + "\n"
+											+ "Latitude: "
+											+ gpsData.getLatitude() + "\n"
+											+ "Longitude: "
+											+ gpsData.getLongitude());
+						}
+
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+
+				}
+			}
+		};
+		new Thread(runnable).start();
+	}
+
 	public void loadSettings() {
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		defaultRange = settings.getInt("defaultRange", defaultRange);
@@ -266,10 +349,6 @@ public class AfterDriveActivity extends Activity {
 		editor.putInt("speedMistakes", speedMistakes);
 		editor.putInt("chargedRange", chargedRange);
 		editor.commit();
-		cal = Calendar.getInstance();
-		date = dateFormat.format(cal.getTime());
-		statSource.createDrivingStats(date, accMistakes, speedMistakes, 0,
-				driveLength, 0, iUsedRange, currentRange, iPoints, 0);
 	}
 
 	public void saveDate() {

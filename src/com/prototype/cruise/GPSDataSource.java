@@ -53,17 +53,21 @@ public class GPSDataSource {
 		return gps;
 	}
 
-	public void deleteStat(DrivingStats stat) {
-		long id = stat.getId();
-		System.out.println("Log deleted with id: " + id);
-		database.delete(MySQLiteHelper.TABLE_DRIVING_STATS,
+	public void deleteGPSData(GPSData gps) {
+		long id = gps.getId();
+		database.delete(MySQLiteHelper.TABLE_GPS_DATA,
 				MySQLiteHelper.COLUMN_DRIVING_STATS_ID + " = " + id, null);
 	}
+	
+	public void deleteAllGPSData() {
+		database.delete(MySQLiteHelper.TABLE_GPS_DATA,
+				null, null);
+	}
 
-	public List<GPSData> getAllStats() {
+	public List<GPSData> getAllGPSData() {
 		List<GPSData> gpss = new ArrayList<GPSData>();
 
-		Cursor cursor = database.query(MySQLiteHelper.TABLE_DRIVING_STATS,
+		Cursor cursor = database.query(MySQLiteHelper.TABLE_GPS_DATA,
 				allColumns, null, null, null, null, null);
 
 		cursor.moveToFirst();

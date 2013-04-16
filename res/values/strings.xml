@@ -9,6 +9,7 @@
     <string name="action_defaultacc">Set average acc. mistakes</string>
     <string name="action_defaultspeed">Set average speed mistakes</string>
     <string name="action_defaultdrivecycle">Set average drive cycle distance</string>
+    <string name="action_reset_db">Clear GPS database table</string>
     <string name="battery_range">BATTERY RANGE</string>
     <string name="drive_distance">Enter length of drive in km</string>
     <string name="acc_mistakes">Enter number of acc. mistakes</string>
