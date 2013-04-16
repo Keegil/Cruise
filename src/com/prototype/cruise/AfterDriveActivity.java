@@ -186,7 +186,7 @@ public class AfterDriveActivity extends Activity {
 		alert.setTitle("Database data");
 		final TextView output = new EditText(this);
 		alert.setView(output);
-		DrivingStats stats = statSource.getStat(statSource.getAllStats().size());
+		DrivingStats stats = statSource.getDrivingStats(statSource.getAllDrivingStats().size());
 		output.setText("ID: " + stats.getId() + "");
 		alert.show();
 
@@ -257,8 +257,8 @@ public class AfterDriveActivity extends Activity {
 		editor.commit();
 		cal = Calendar.getInstance();
 		date = dateFormat.format(cal.getTime());
-		statSource.createStat(iUsedRange, date, accMistakes, speedMistakes,
-				iPoints, currentRange);
+		statSource.createDrivingStats(date, accMistakes, speedMistakes, 0,
+				driveLength, 0, iUsedRange, currentRange, iPoints, 0);
 	}
 
 	public void saveDate() {
