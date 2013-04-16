@@ -1,4 +1,4 @@
-package com.example.cruiseev;
+package com.prototype.cruise;
 
 import java.util.List;
 

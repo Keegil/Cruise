@@ -1,4 +1,4 @@
-package com.example.cruiseev;
+package com.prototype.cruise;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,21 +9,18 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-public class StatsDataSource {
-	
+public class DrivingStatsDataSource {
 
 	// Database fields
 	private SQLiteDatabase database;
 	private MySQLiteHelper dbHelper;
 	private String[] allColumns = { MySQLiteHelper.COLUMN_ID,
-			MySQLiteHelper.COLUMN_DRIVE_LENGTH, 
-			MySQLiteHelper.COLUMN_DATE,
+			MySQLiteHelper.COLUMN_DATE, MySQLiteHelper.COLUMN_DRIVE_LENGTH,
 			MySQLiteHelper.COLUMN_ACC_MISTAKES,
-			MySQLiteHelper.COLUMN_SPEED_MISTAKES, 
-			MySQLiteHelper.COLUMN_POINTS, 
+			MySQLiteHelper.COLUMN_SPEED_MISTAKES, MySQLiteHelper.COLUMN_POINTS,
 			MySQLiteHelper.COLUMN_RANGE };
 
-	public StatsDataSource(Context context) {
+	public DrivingStatsDataSource(Context context) {
 		dbHelper = new MySQLiteHelper(context);
 	}
 
@@ -35,7 +32,8 @@ public class StatsDataSource {
 		dbHelper.close();
 	}
 
-	public Stats createStat(int driveLength, String date, int accMistakes, int speedMistakes, int point, int remainingRange)  {
+	public Stats createStat(int driveLength, String date, int accMistakes,
+			int speedMistakes, int point, int remainingRange) {
 		ContentValues values = new ContentValues();
 		values.put(MySQLiteHelper.COLUMN_DRIVE_LENGTH, driveLength);
 		values.put(MySQLiteHelper.COLUMN_DATE, date);
@@ -45,9 +43,9 @@ public class StatsDataSource {
 		values.put(MySQLiteHelper.COLUMN_RANGE, remainingRange);
 		long insertId = database.insert(MySQLiteHelper.TABLE_CRUISE, null,
 				values);
-		Cursor cursor = database.query(MySQLiteHelper.TABLE_CRUISE,
-				allColumns, MySQLiteHelper.COLUMN_ID + " = " + insertId, null,
-				null, null, null);
+		Cursor cursor = database.query(MySQLiteHelper.TABLE_CRUISE, allColumns,
+				MySQLiteHelper.COLUMN_ID + " = " + insertId, null, null, null,
+				null);
 		cursor.moveToFirst();
 		Stats stat = cursorToStat(cursor);
 		cursor.close();
@@ -64,8 +62,8 @@ public class StatsDataSource {
 	public List<Stats> getAllStats() {
 		List<Stats> stats = new ArrayList<Stats>();
 
-		Cursor cursor = database.query(MySQLiteHelper.TABLE_CRUISE,
-				allColumns, null, null, null, null, null);
+		Cursor cursor = database.query(MySQLiteHelper.TABLE_CRUISE, allColumns,
+				null, null, null, null, null);
 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
@@ -81,14 +79,16 @@ public class StatsDataSource {
 	// Getting single stat
 	public Stats getStat(int id) {
 
-		Cursor cursor = database.query(MySQLiteHelper.TABLE_CRUISE,allColumns, MySQLiteHelper.COLUMN_ID + "=?",
+		Cursor cursor = database.query(MySQLiteHelper.TABLE_CRUISE, allColumns,
+				MySQLiteHelper.COLUMN_ID + "=?",
 				new String[] { String.valueOf(id) }, null, null, null, null);
 		if (cursor != null)
 			cursor.moveToFirst();
-		Stats stat = new Stats(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5),cursor.getInt(6));
+		Stats stat = new Stats(Integer.parseInt(cursor.getString(0)),
+				cursor.getString(1), cursor.getInt(2), cursor.getInt(3),
+				cursor.getInt(4), cursor.getInt(5), cursor.getInt(6));
 		return stat;
 	}
-	
 
 	private Stats cursorToStat(Cursor cursor) {
 		Stats stat = new Stats();

@@ -1,8 +1,16 @@
 package com.prototype.cruise;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -10,6 +18,7 @@ import android.text.style.StyleSpan;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +31,11 @@ public class AfterDriveActivity extends Activity {
 	public static final String PREFS_NAME = "MyPrefsFile";
 	public static final String DATA_NAME = "MyDataFile";
 	public static final String DATE_NAME = "MyDateFile";
+
+	private DrivingStatsDataSource statSource;
+	private DateFormat dateFormat;
+	private Calendar cal;
+	private String date;
 
 	SpannableStringBuilder ssb;
 	StyleSpan ss;
@@ -85,6 +99,13 @@ public class AfterDriveActivity extends Activity {
 		ivRangeDecrease = (ImageView) findViewById(R.id.iv_range_decrease);
 		llRangeDecrease = (LinearLayout) findViewById(R.id.ll_range_decrease);
 		flRangeDecrease = (FrameLayout) findViewById(R.id.fl_range_decrease);
+		statSource = new DrivingStatsDataSource(this);
+		statSource.open();
+		// formatting date
+		dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		// get current date time with Calendar()
+		cal = Calendar.getInstance();
+		date = dateFormat.format(cal.getTime());
 	}
 
 	public void calc() {
@@ -160,6 +181,14 @@ public class AfterDriveActivity extends Activity {
 		lastTime = System.currentTimeMillis();
 		saveData();
 		saveDate();
+
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Database data");
+		final TextView output = new EditText(this);
+		alert.setView(output);
+		output.setText("" + defaultDriveCycle + "");
+		alert.show();
+
 	}
 
 	public void draw() {
@@ -223,7 +252,12 @@ public class AfterDriveActivity extends Activity {
 		editor.putInt("driveLength", driveLength);
 		editor.putInt("accMistakes", accMistakes);
 		editor.putInt("speedMistakes", speedMistakes);
+		editor.putInt("chargedRange", chargedRange);
 		editor.commit();
+		cal = Calendar.getInstance();
+		date = dateFormat.format(cal.getTime());
+		statSource.createStat(iUsedRange, date, accMistakes, speedMistakes,
+				iPoints, currentRange);
 	}
 
 	public void saveDate() {

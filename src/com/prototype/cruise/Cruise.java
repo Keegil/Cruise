@@ -1,4 +1,4 @@
-package com.example.cruiseev;
+package com.prototype.cruise;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 public class Cruise extends ListActivity {
 
-	private StatsDataSource statSource;
+	private DrivingStatsDataSource statSource;
 	private Button simButton;
 	private EditText distance;
 	private EditText accMist;
@@ -46,9 +46,9 @@ public class Cruise extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_cruise);
+		setContentView(R.layout.activity_drive);
 
-		statSource = new StatsDataSource(this);
+		statSource = new DrivingStatsDataSource(this);
 		statSource.open();
 
 		// formatting date
@@ -109,7 +109,7 @@ public class Cruise extends ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.cruise, menu);
+		getMenuInflater().inflate(R.menu.drive, menu);
 		return true;
 	}
 

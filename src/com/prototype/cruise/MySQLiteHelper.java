@@ -1,4 +1,4 @@
-package com.example.cruiseev;
+package com.prototype.cruise;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;

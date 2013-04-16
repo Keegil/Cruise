@@ -1,4 +1,4 @@
-package com.example.cruiseev;
+package com.prototype.cruise;
 
 
 public class Stats {
