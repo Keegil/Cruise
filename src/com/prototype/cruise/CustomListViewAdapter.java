@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class CustomListViewAdapter extends ArrayAdapter<Stats> {
+public class CustomListViewAdapter extends ArrayAdapter<DrivingStats> {
 
 	Context context;
 
 	public CustomListViewAdapter(Context context, int resourceId,
-			List<Stats> items) {
+			List<DrivingStats> items) {
 		super(context, resourceId, items);
 		this.context = context;
 	}
@@ -33,7 +33,7 @@ public class CustomListViewAdapter extends ArrayAdapter<Stats> {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;
-		Stats rowItem = getItem(position);
+		DrivingStats rowItem = getItem(position);
 
 		LayoutInflater mInflater = (LayoutInflater) context
 				.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);

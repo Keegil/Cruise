@@ -186,7 +186,7 @@ public class AfterDriveActivity extends Activity {
 		alert.setTitle("Database data");
 		final TextView output = new EditText(this);
 		alert.setView(output);
-		Stats stats = statSource.getStat(statSource.getAllStats().size());
+		DrivingStats stats = statSource.getStat(statSource.getAllStats().size());
 		output.setText("ID: " + stats.getId() + "");
 		alert.show();
 

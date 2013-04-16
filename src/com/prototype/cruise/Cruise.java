@@ -24,7 +24,7 @@ public class Cruise extends ListActivity {
 
 	private String date, dt, at, st, numcheck;
 	private CustomListViewAdapter adapter;
-	List<Stats> values;
+	List<DrivingStats> values;
 	private DateFormat dateFormat;
 	private Calendar cal;
 
@@ -87,7 +87,7 @@ public class Cruise extends ListActivity {
 					cal = Calendar.getInstance();
 					date = dateFormat.format(cal.getTime());
 					statSource.createStat(numdt, date, numat, numst, 50, 95);
-					Stats s = new Stats(adapter.getCount()+1,date, numdt, numat, numst, 50, 95);
+					DrivingStats s = new DrivingStats(adapter.getCount()+1,date, numdt, numat, numst, 50, 95);
 					adapter.add(s);
 					setListAdapter(adapter);
 
