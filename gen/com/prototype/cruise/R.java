@@ -33,13 +33,14 @@ public final class R {
         public static final int arrowdown=0x7f020000;
         public static final int arrowup=0x7f020001;
         public static final int battery=0x7f020002;
-        public static final int green=0x7f020003;
-        public static final int greenstripes=0x7f020004;
-        public static final int ic_launcher=0x7f020005;
-        public static final int red=0x7f020006;
-        public static final int redstripes=0x7f020007;
-        public static final int yellow=0x7f020008;
-        public static final int yellowstripes=0x7f020009;
+        public static final int cruise_logo=0x7f020003;
+        public static final int green=0x7f020004;
+        public static final int greenstripes=0x7f020005;
+        public static final int ic_launcher=0x7f020006;
+        public static final int red=0x7f020007;
+        public static final int redstripes=0x7f020008;
+        public static final int yellow=0x7f020009;
+        public static final int yellowstripes=0x7f02000a;
     }
     public static final class id {
         public static final int action_defaultacc=0x7f090020;
@@ -58,7 +59,6 @@ public final class R {
         public static final int group2=0x7f090017;
         public static final int group3=0x7f09001a;
         public static final int iv_battery_fill=0x7f090003;
-        public static final int iv_pre_battery_fill=0x7f09000f;
         public static final int iv_range_decrease=0x7f090009;
         public static final int li_accmist=0x7f09001d;
         public static final int li_date=0x7f090019;
@@ -76,9 +76,10 @@ public final class R {
         public static final int tv_compatible=0x7f090001;
         public static final int tv_ev_distance=0x7f090006;
         public static final int tv_ev_range_left=0x7f090007;
+        public static final int tv_logo=0x7f09000e;
         public static final int tv_range_decrease=0x7f09000a;
         public static final int tv_speed=0x7f09000d;
-        public static final int tv_starting_range=0x7f09000e;
+        public static final int tv_starting_range=0x7f09000f;
     }
     public static final class layout {
         public static final int activity_after_drive=0x7f030000;
@@ -90,29 +91,30 @@ public final class R {
         public static final int drive=0x7f080001;
     }
     public static final class string {
-        public static final int acc_decrease=0x7f060015;
-        public static final int acc_mistakes=0x7f06000b;
-        public static final int action_defaultacc=0x7f060005;
-        public static final int action_defaultdrivecycle=0x7f060007;
-        public static final int action_defaultrange=0x7f060004;
-        public static final int action_defaultspeed=0x7f060006;
-        public static final int action_reset=0x7f060002;
-        public static final int action_reset_db=0x7f060008;
+        public static final int acc_decrease=0x7f060016;
+        public static final int acc_mistakes=0x7f06000c;
+        public static final int action_defaultacc=0x7f060006;
+        public static final int action_defaultdrivecycle=0x7f060008;
+        public static final int action_defaultrange=0x7f060005;
+        public static final int action_defaultspeed=0x7f060007;
+        public static final int action_reset=0x7f060003;
+        public static final int action_reset_db=0x7f060009;
         public static final int app_name=0x7f060000;
-        public static final int battery_range=0x7f060009;
-        public static final int drive_button=0x7f06000d;
-        public static final int drive_complete=0x7f060011;
-        public static final int drive_distance=0x7f06000a;
-        public static final int ev_compatible=0x7f060012;
-        public static final int example_km=0x7f06000e;
-        public static final int hello_world=0x7f060010;
-        public static final int points=0x7f060001;
-        public static final int range_decrease=0x7f060014;
-        public static final int remaining_range=0x7f060003;
-        public static final int speed_decrease=0x7f060016;
-        public static final int speed_mistakes=0x7f06000c;
-        public static final int statistics=0x7f060013;
-        public static final int title_activity_after_drive=0x7f06000f;
+        public static final int app_name_caps=0x7f060001;
+        public static final int battery_range=0x7f06000a;
+        public static final int drive_button=0x7f06000e;
+        public static final int drive_complete=0x7f060012;
+        public static final int drive_distance=0x7f06000b;
+        public static final int ev_compatible=0x7f060013;
+        public static final int example_km=0x7f06000f;
+        public static final int hello_world=0x7f060011;
+        public static final int points=0x7f060002;
+        public static final int range_decrease=0x7f060015;
+        public static final int remaining_range=0x7f060004;
+        public static final int speed_decrease=0x7f060017;
+        public static final int speed_mistakes=0x7f06000d;
+        public static final int statistics=0x7f060014;
+        public static final int title_activity_after_drive=0x7f060010;
     }
     public static final class style {
         /** 

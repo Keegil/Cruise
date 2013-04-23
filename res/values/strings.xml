@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Cruise</string>
+    <string name="app_name_caps">CRUISE</string>
     <string name="points">Points</string>
     <string name="action_reset">Reset all values</string>
     <string name="remaining_range">Remaining range</string>

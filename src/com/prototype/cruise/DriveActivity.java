@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -51,8 +52,9 @@ public class DriveActivity extends Activity implements OnClickListener {
 	EditText etSpeedMistakes;
 
 	TextView tvStartingRange;
+	TextView tvLogo;
 
-	ImageView ivPreBatteryFill;
+//	ImageView ivPreBatteryFill;
 
 	Button bDrive;
 
@@ -65,7 +67,7 @@ public class DriveActivity extends Activity implements OnClickListener {
 		loadDate();
 		init();
 		calc();
-		draw();
+		// draw();
 	}
 
 	public void init() {
@@ -73,13 +75,17 @@ public class DriveActivity extends Activity implements OnClickListener {
 		etAccMistakes = (EditText) findViewById(R.id.et_acc_mistakes);
 		etSpeedMistakes = (EditText) findViewById(R.id.et_speed_mistakes);
 		tvStartingRange = (TextView) findViewById(R.id.tv_starting_range);
+		tvLogo = (TextView) findViewById(R.id.tv_logo);
 		bDrive = (Button) findViewById(R.id.b_drive);
 		bDrive.setOnClickListener(this);
-		ivPreBatteryFill = (ImageView) findViewById(R.id.iv_pre_battery_fill);
+		// ivPreBatteryFill = (ImageView) findViewById(R.id.iv_pre_battery_fill);
 		gpsDataSource = new GPSDataSource(this);
 		gpsDataSource.open();
 		statSource = new DrivingStatsDataSource(this);
 		statSource.open();
+		Typeface tfHelvetica = Typeface.createFromAsset(getAssets(),
+                "fonts/helvetica_bold_oblique.ttf");
+        tvLogo.setTypeface(tfHelvetica);
 	}
 
 	public void calc() {
@@ -100,7 +106,7 @@ public class DriveActivity extends Activity implements OnClickListener {
 		saveData();
 	}
 
-	public void draw() {
+	/* public void draw() {
 		doubleCurrentRange = (double) currentRange;
 		doubleDefaultRange = (double) defaultRange;
 		if (doubleCurrentRange / doubleDefaultRange >= 0.6) {
@@ -129,7 +135,7 @@ public class DriveActivity extends Activity implements OnClickListener {
 		double batteryWidth = doubleCurrentRange / doubleDefaultRange;
 		layoutParams.width = (int) (width * batteryWidth);
 		ivPreBatteryFill.setLayoutParams(layoutParams);
-	}
+	} */
 
 	public void loadSettings() {
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
