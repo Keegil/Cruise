@@ -31,7 +31,7 @@ import android.widget.TextView;
 public class AfterDriveActivity extends Activity {
 
 	// JSON parsing
-	private static String filename = "gpslog30.txt";
+	private static String filename = "gpslog20.txt";
 	private static final String TAG_DRIVE_DATA = "driveData";
 	private static final String TAG_GPS_DATA = "gpsData";
 	JSONArray driveData = null;
@@ -292,9 +292,9 @@ public class AfterDriveActivity extends Activity {
 						if (strValues[6].charAt(0) == 'W') {
 							longitude = -longitude;
 						}
-						gpsDataSource.createGPSData(statSource
+						/* gpsDataSource.createGPSData(statSource
 								.getAllDrivingStats().size(), time, latitude,
-								longitude);
+								longitude); */
 						pdParsing.incrementProgressBy(1);
 						if (pdParsing.getProgress() >= pdParsing.getMax()) {
 							pdParsing.dismiss();
@@ -309,7 +309,6 @@ public class AfterDriveActivity extends Activity {
 											+ "Longitude: "
 											+ gpsData.getLongitude());
 						}
-
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
