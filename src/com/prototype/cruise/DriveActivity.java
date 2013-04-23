@@ -18,7 +18,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class DriveActivity extends Activity implements OnClickListener {
@@ -40,6 +39,7 @@ public class DriveActivity extends Activity implements OnClickListener {
 
 	int currentRange = 100;
 	double doubleCurrentRange;
+	double relativeRange;
 
 	int driveLength = 0;
 	int accMistakes = 0;
@@ -54,8 +54,26 @@ public class DriveActivity extends Activity implements OnClickListener {
 
 	TextView tvStartingRange;
 	TextView tvLogo;
-
-//	ImageView ivPreBatteryFill;
+	TextView tvEstRangeRemain;
+	TextView tvKm1;
+	TextView tvKm2;
+	TextView tvKm3;
+	TextView tvHighwayDesc;
+	TextView tvHighwayRange;
+	TextView tvCityDesc;
+	TextView tvCityRange;
+	TextView tvTimeParked;
+	TextView tvChargeGained;
+	
+	LinearLayout llBar1;
+	LinearLayout llBar2;
+	LinearLayout llBar3;
+	LinearLayout llBar4;
+	LinearLayout llBar5;
+	LinearLayout llBar6;
+	LinearLayout llBar7;
+	LinearLayout llBar8;
+	LinearLayout llBar9;
 
 	Button bDrive;
 
@@ -63,20 +81,11 @@ public class DriveActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_drive);
-		
-		
-		   GradientDrawable gd = new GradientDrawable(
-		            GradientDrawable.Orientation.TOP_BOTTOM, 
-		            new int[] {Color.rgb(2, 104, 56),Color.rgb(0, 147, 69)});
-		    gd.setCornerRadius(0f);
-		//rgb:2, 104, 56	hex:026838
-		//rgb:0, 147, 69	hex:009345
-		
-		LinearLayout ll=(LinearLayout)findViewById(R.id.linmain);
-		//rl.setBackgroundColor(Color.RED);
-		ll.setBackgroundResource(R.drawable.gradgreen);
-		
-		
+
+		GradientDrawable gd = new GradientDrawable(
+				GradientDrawable.Orientation.TOP_BOTTOM, new int[] {
+						Color.rgb(2, 104, 56), Color.rgb(0, 147, 69) });
+		gd.setCornerRadius(0f);
 		loadSettings();
 		loadData();
 		loadDate();
@@ -86,21 +95,51 @@ public class DriveActivity extends Activity implements OnClickListener {
 	}
 
 	public void init() {
+		llBar1  = (LinearLayout) findViewById(R.id.bar1);
+		
 		etDistance = (EditText) findViewById(R.id.et_distance);
 		etAccMistakes = (EditText) findViewById(R.id.et_acc_mistakes);
 		etSpeedMistakes = (EditText) findViewById(R.id.et_speed_mistakes);
 		tvStartingRange = (TextView) findViewById(R.id.tv_starting_range);
 		tvLogo = (TextView) findViewById(R.id.tv_logo);
+		tvEstRangeRemain = (TextView) findViewById(R.id.tv_est_range_remain);
+		tvKm1 = (TextView) findViewById(R.id.tv_km);
+		tvKm2 = (TextView) findViewById(R.id.tv_highway_km);
+		tvKm3 = (TextView) findViewById(R.id.tv_city_km);
+		tvHighwayDesc = (TextView) findViewById(R.id.tv_highway_desc);
+		tvHighwayRange = (TextView) findViewById(R.id.tv_highway_range);
+		tvCityDesc = (TextView) findViewById(R.id.tv_city_desc);
+		tvCityRange = (TextView) findViewById(R.id.tv_city_range);
+		tvTimeParked = (TextView) findViewById(R.id.tv_time_parked);
+		tvChargeGained = (TextView) findViewById(R.id.tv_charge_gained);
 		bDrive = (Button) findViewById(R.id.b_drive);
 		bDrive.setOnClickListener(this);
-		// ivPreBatteryFill = (ImageView) findViewById(R.id.iv_pre_battery_fill);
+		// ivPreBatteryFill = (ImageView)
+		// findViewById(R.id.iv_pre_battery_fill);
 		gpsDataSource = new GPSDataSource(this);
 		gpsDataSource.open();
 		statSource = new DrivingStatsDataSource(this);
 		statSource.open();
 		Typeface tfHelvetica = Typeface.createFromAsset(getAssets(),
-                "fonts/helvetica_bold_oblique.ttf");
-        tvLogo.setTypeface(tfHelvetica);
+				"fonts/helvetica_bold_oblique.ttf");
+		Typeface tfGeosansLightOblique = Typeface.createFromAsset(getAssets(),
+				"fonts/geosans_light_oblique.ttf");
+		Typeface tfGeosansLight = Typeface.createFromAsset(getAssets(),
+				"fonts/geosans_light.ttf");
+		tvLogo.setTypeface(tfHelvetica);
+		tvStartingRange.setTypeface(tfHelvetica);
+		tvEstRangeRemain.setTypeface(tfGeosansLightOblique);
+		tvKm1.setTypeface(tfGeosansLight);
+		tvKm2.setTypeface(tfGeosansLight);
+		tvKm3.setTypeface(tfGeosansLight);
+		tvHighwayDesc.setTypeface(tfGeosansLightOblique);
+		tvHighwayRange.setTypeface(tfHelvetica);
+		tvCityDesc.setTypeface(tfGeosansLightOblique);
+		tvCityRange.setTypeface(tfHelvetica);
+		tvTimeParked.setTypeface(tfGeosansLight);
+		tvChargeGained.setTypeface(tfGeosansLight);
+		LinearLayout ll = (LinearLayout) findViewById(R.id.ll_main);
+		ll.setBackgroundResource(R.drawable.gradgreenyellow);
 	}
 
 	public void calc() {
@@ -114,22 +153,20 @@ public class DriveActivity extends Activity implements OnClickListener {
 				currentRange = currentRange + chargedRange;
 			}
 		}
-		tvStartingRange.setText("" + currentRange + " km");
+		tvStartingRange.setText("" + currentRange + "");
 		Log.d(TAG, ""
 				+ ((double) ((System.currentTimeMillis() - lastTime) / 60000))
 				+ "");
 		saveData();
 	}
 
-	/* public void draw() {
+	public void draw() {
 		doubleCurrentRange = (double) currentRange;
 		doubleDefaultRange = (double) defaultRange;
-		if (doubleCurrentRange / doubleDefaultRange >= 0.6) {
-			ivPreBatteryFill.setImageResource(R.drawable.green);
-			tvStartingRange.setBackgroundColor(getResources().getColor(
-					R.color.light_green));
-		} else if ((doubleCurrentRange / doubleDefaultRange < 0.6)
-				&& (doubleCurrentRange / doubleDefaultRange >= 0.2)) {
+		relativeRange = doubleCurrentRange / doubleDefaultRange;
+		if (relativeRange <= 1 && relativeRange > 0.9) {
+			
+		} else if (relativeRange <= 0.9 & relativeRange > 0.8) {
 			ivPreBatteryFill.setImageResource(R.drawable.yellow);
 			tvStartingRange.setBackgroundColor(getResources().getColor(
 					R.color.mustard));
@@ -143,14 +180,7 @@ public class DriveActivity extends Activity implements OnClickListener {
 			tvStartingRange.setBackgroundColor(getResources().getColor(
 					R.color.wine_red));
 		}
-		LayoutParams layoutParams = ivPreBatteryFill.getLayoutParams();
-		int width = (int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_DIP, 134, getResources()
-						.getDisplayMetrics());
-		double batteryWidth = doubleCurrentRange / doubleDefaultRange;
-		layoutParams.width = (int) (width * batteryWidth);
-		ivPreBatteryFill.setLayoutParams(layoutParams);
-	} */
+	}
 
 	public void loadSettings() {
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
