@@ -5,19 +5,20 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class DriveActivity extends Activity implements OnClickListener {
@@ -62,6 +63,20 @@ public class DriveActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_drive);
+		
+		
+		   GradientDrawable gd = new GradientDrawable(
+		            GradientDrawable.Orientation.TOP_BOTTOM, 
+		            new int[] {Color.rgb(2, 104, 56),Color.rgb(0, 147, 69)});
+		    gd.setCornerRadius(0f);
+		//rgb:2, 104, 56	hex:026838
+		//rgb:0, 147, 69	hex:009345
+		
+		LinearLayout ll=(LinearLayout)findViewById(R.id.linmain);
+		//rl.setBackgroundColor(Color.RED);
+		ll.setBackgroundResource(R.drawable.gradgreen);
+		
+		
 		loadSettings();
 		loadData();
 		loadDate();
