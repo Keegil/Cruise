@@ -31,7 +31,7 @@ import android.widget.TextView;
 public class AfterDriveActivity extends Activity {
 
 	// JSON parsing
-	private static String filename = "gpslog20.txt";
+	private static String filename = "gpslog30.txt";
 	private static final String TAG_DRIVE_DATA = "driveData";
 	private static final String TAG_GPS_DATA = "gpsData";
 	JSONArray driveData = null;
@@ -63,6 +63,10 @@ public class AfterDriveActivity extends Activity {
 	int accMistakes = 0;
 	int speedMistakes = 0;
 	int chargedRange = 0;
+	
+	double doubleCurrentRange;
+	double doubleDefaultRange;
+	double relativeRange;
 
 	int iPoints = 0;
 	double dPoints = 0;
@@ -83,10 +87,17 @@ public class AfterDriveActivity extends Activity {
 	TextView tvSpeed;
 	TextView tvRangeDecrease;
 	TextView tvRangeLeft;
-	ImageView ivBatteryFill;
-	ImageView ivRangeDecrease;
-	LinearLayout llRangeDecrease;
-	FrameLayout flRangeDecrease;
+
+	LinearLayout llBar1;
+	LinearLayout llBar2;
+	LinearLayout llBar3;
+	LinearLayout llBar4;
+	LinearLayout llBar5;
+	LinearLayout llBar6;
+	LinearLayout llBar7;
+	LinearLayout llBar8;
+	LinearLayout llBar9;
+	LinearLayout ll;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +112,21 @@ public class AfterDriveActivity extends Activity {
 	}
 
 	public void init() {
+		// initialize bars
+		llBar1 = (LinearLayout) findViewById(R.id.bar1_after);
+		llBar2 = (LinearLayout) findViewById(R.id.bar2_after);
+		llBar3 = (LinearLayout) findViewById(R.id.bar3_after);
+		llBar4 = (LinearLayout) findViewById(R.id.bar4_after);
+		llBar5 = (LinearLayout) findViewById(R.id.bar5_after);
+		llBar6 = (LinearLayout) findViewById(R.id.bar6_after);
+		llBar7 = (LinearLayout) findViewById(R.id.bar7_after);
+		llBar8 = (LinearLayout) findViewById(R.id.bar8_after);
+		llBar9 = (LinearLayout) findViewById(R.id.bar9_after);
+		
+		// initialize background
+		ll = (LinearLayout) findViewById(R.id.ll_main_after);
+		
+		// initialize textviews
 		tvCompatible = (TextView) findViewById(R.id.tv_compatible);
 		tvCharging = (TextView) findViewById(R.id.tv_charging);
 		tvCharged = (TextView) findViewById(R.id.tv_charged);
@@ -110,17 +136,15 @@ public class AfterDriveActivity extends Activity {
 		tvAcc = (TextView) findViewById(R.id.tv_acc);
 		tvRangeDecrease = (TextView) findViewById(R.id.tv_range_decrease);
 		tvRangeLeft = (TextView) findViewById(R.id.tv_ev_range_left);
-		ivBatteryFill = (ImageView) findViewById(R.id.iv_battery_fill);
-		ivRangeDecrease = (ImageView) findViewById(R.id.iv_range_decrease);
-		llRangeDecrease = (LinearLayout) findViewById(R.id.ll_range_decrease);
-		flRangeDecrease = (FrameLayout) findViewById(R.id.fl_range_decrease);
+		
+		// initialize database
 		statSource = new DrivingStatsDataSource(this);
 		statSource.open();
 		gpsDataSource = new GPSDataSource(this);
 		gpsDataSource.open();
-		// formatting date
+		
+		// formatting and get date
 		dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		// get current date time with Calendar()
 		cal = Calendar.getInstance();
 		date = dateFormat.format(cal.getTime());
 	}
@@ -155,46 +179,14 @@ public class AfterDriveActivity extends Activity {
 		iUsedRange = (int) dUsedRange;
 		// set range down
 		ssb = new SpannableStringBuilder("Range down " + iUsedRange + " km");
-		if (modifier <= 1.1) {
-			fcs = new ForegroundColorSpan(getResources().getColor(
-					R.color.light_green));
-			ivRangeDecrease.setImageDrawable(getResources().getDrawable(
-					R.drawable.greenstripes));
-		} else if ((modifier > 1.1) && (modifier <= 1.4)) {
-			fcs = new ForegroundColorSpan(getResources().getColor(
-					R.color.mustard));
-			ivRangeDecrease.setImageDrawable(getResources().getDrawable(
-					R.drawable.yellowstripes));
-		} else {
-			fcs = new ForegroundColorSpan(getResources().getColor(
-					R.color.wine_red));
-			ivRangeDecrease.setImageDrawable(getResources().getDrawable(
-					R.drawable.redstripes));
-		}
-		ssb.setSpan(ss, 11, ssb.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-		ssb.setSpan(fcs, 11, ssb.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 		tvEvDistance.setText(ssb);
-		// display mistakes
-		if (accMistakes > 0) {
-			tvAcc.setVisibility(View.VISIBLE);
-			llRangeDecrease.setVisibility(View.VISIBLE);
-			flRangeDecrease.setVisibility(View.VISIBLE);
-		}
-		if (speedMistakes > 0) {
-			tvSpeed.setVisibility(View.VISIBLE);
-			llRangeDecrease.setVisibility(View.VISIBLE);
-			flRangeDecrease.setVisibility(View.VISIBLE);
-
-		}
 		// set current range and time
 		currentRange = currentRange - iUsedRange;
 		if (currentRange < 0) {
 			currentRange = 0;
 		}
 		// set range left
-		ssb = new SpannableStringBuilder("" + currentRange + " km range left");
-		ssb.setSpan(ss, 0, 5, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-		tvRangeLeft.setText(ssb);
+		tvRangeLeft.setText("" + currentRange + " km range left");
 		lastTime = System.currentTimeMillis();
 		saveData();
 		saveDate();
@@ -203,59 +195,78 @@ public class AfterDriveActivity extends Activity {
 		date = dateFormat.format(cal.getTime());
 		statSource.createDrivingStats(date, accMistakes, speedMistakes, 0,
 				driveLength, 0, iUsedRange, currentRange, iPoints, 0);
-
-		/*
-		 * AlertDialog.Builder alert = new AlertDialog.Builder(this);
-		 * alert.setTitle("Database data"); final TextView output = new
-		 * TextView(this); alert.setView(output); DrivingStats drivingStats =
-		 * statSource.getDrivingStats(statSource .getAllDrivingStats().size());
-		 * output.setText("ID: " + drivingStats.getId() + "\n" + "Date: " +
-		 * drivingStats.getDate() + "\n" + "# acceleration events: " +
-		 * drivingStats.getNumAccEvent() + "\n" + "# speed events: " +
-		 * drivingStats.getNumSpeedEvent() + "\n" + "# brake events: " +
-		 * drivingStats.getNumBrakeEvent() + "\n" + "Drive distance: " +
-		 * drivingStats.getDriveDistance() + "\n" + "Starting range: " +
-		 * drivingStats.getRangeStart() + "\n" + "Range used: " +
-		 * drivingStats.getRangeUsed() + "\n" + "Finishing range: " +
-		 * drivingStats.getRangeEnd() + "\n" + "Range modifier: " +
-		 * drivingStats.getRangeModifier() + "\n" + "Fuel savings: " +
-		 * drivingStats.getFuelSavings()); alert.show();
-		 */
-
 	}
 
 	public void draw() {
-		if ((((double) currentRange) / ((double) defaultRange)) >= 0.6) {
-			ivBatteryFill.setImageResource(R.drawable.green);
-			tvCompatible.setText("EV COMPATIBLE DRIVE");
-			tvCompatible.setBackgroundColor(getResources().getColor(
-					R.color.light_green));
-		} else if ((((double) currentRange) / ((double) defaultRange) < 0.6)
-				&& (((double) currentRange) / ((double) defaultRange) >= 0.2)) {
-			ivBatteryFill.setImageResource(R.drawable.yellow);
-			tvCompatible.setText("EV COMPATIBLE DRIVE");
-			tvCompatible.setBackgroundColor(getResources().getColor(
-					R.color.mustard));
-		} else if ((((double) currentRange) / ((double) defaultRange) < 0.2)
-				&& (((double) currentRange) / ((double) defaultRange) > 0)) {
-			ivBatteryFill.setImageResource(R.drawable.red);
-			tvCompatible.setText("EV COMPATIBLE DRIVE");
-			tvCompatible.setBackgroundColor(getResources().getColor(
-					R.color.wine_red));
-			tvCharging.setVisibility(View.VISIBLE);
-			tvCharging.setText("CHARGING RECOMMENDED!");
-		} else {
-			tvCompatible.setText("EV INCOMPATIBLE DRIVE");
-			tvCompatible.setBackgroundColor(getResources().getColor(
-					R.color.wine_red));
+		doubleCurrentRange = (double) currentRange;
+		doubleDefaultRange = (double) defaultRange;
+		relativeRange = doubleCurrentRange / doubleDefaultRange;
+		if (relativeRange <= 1 && relativeRange > 0.9) {
+			ll.setBackgroundResource(R.drawable.gradgreenyellow);
+		} else if (relativeRange <= 0.9 && relativeRange > 0.8) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			ll.setBackgroundResource(R.drawable.gradgreenyellow);
+		} else if (relativeRange <= 0.8 && relativeRange > 0.7) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			ll.setBackgroundResource(R.drawable.gradgreenyellow);
+		} else if (relativeRange <= 0.7 && relativeRange > 0.6) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			ll.setBackgroundResource(R.drawable.gradgreenorange);
+		} else if (relativeRange <= 0.6 && relativeRange > 0.5) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			ll.setBackgroundResource(R.drawable.gradgreenorange);
+		} else if (relativeRange <= 0.5 && relativeRange > 0.4) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+			ll.setBackgroundResource(R.drawable.gradgreenorange);
+		} else if (relativeRange <= 0.4 && relativeRange > 0.3) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
+			ll.setBackgroundResource(R.drawable.gradyelloworange);
+		} else if (relativeRange <= 0.3 && relativeRange > 0.2) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
+			ll.setBackgroundResource(R.drawable.gradyelloworange);
+		} else if (relativeRange <= 0.2 && relativeRange > 0.1) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar8.setBackgroundResource(R.drawable.whiteemptybar);
+			ll.setBackgroundResource(R.drawable.gradorangered);
+		} else if (relativeRange <= 0.1 && relativeRange >= 0) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar8.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar9.setBackgroundResource(R.drawable.whiteemptybar);
+			ll.setBackgroundResource(R.drawable.gradorangered);
 		}
-		LayoutParams layoutParams = ivBatteryFill.getLayoutParams();
-		int width = (int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_DIP, 134, getResources()
-						.getDisplayMetrics());
-		double batteryWidth = ((double) currentRange) / ((double) defaultRange);
-		layoutParams.width = (int) (width * batteryWidth);
-		ivBatteryFill.setLayoutParams(layoutParams);
 	}
 
 	public void getJSON() {
@@ -292,9 +303,9 @@ public class AfterDriveActivity extends Activity {
 						if (strValues[6].charAt(0) == 'W') {
 							longitude = -longitude;
 						}
-						/* gpsDataSource.createGPSData(statSource
+						gpsDataSource.createGPSData(statSource
 								.getAllDrivingStats().size(), time, latitude,
-								longitude); */
+								longitude);
 						pdParsing.incrementProgressBy(1);
 						if (pdParsing.getProgress() >= pdParsing.getMax()) {
 							pdParsing.dismiss();

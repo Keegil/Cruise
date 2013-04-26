@@ -1,5 +1,7 @@
 package com.prototype.cruise;
 
+import java.util.concurrent.TimeUnit;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -10,7 +12,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,36 +23,39 @@ import android.widget.TextView;
 
 public class DriveActivity extends Activity implements OnClickListener {
 
+	// declare logging variables
 	private static final String TAG = "DriveActivity";
 
+	// declare preference variables and set defaults
 	public static final String PREFS_NAME = "MyPrefsFile";
-	public static final String DATA_NAME = "MyDataFile";
-	public static final String DATE_NAME = "MyDateFile";
-
-	private GPSDataSource gpsDataSource;
-	private DrivingStatsDataSource statSource;
-
-	int defaultRange = 100;
-	double doubleDefaultRange;
+	int defaultRange = 120;
 	int defaultAccMistakes = 4;
 	int defaultSpeedMistakes = 1;
 	int defaultDriveCycle = 11;
 
+	// declare data variables
+	public static final String DATA_NAME = "MyDataFile";
 	int currentRange = 100;
-	double doubleCurrentRange;
-	double relativeRange;
-
 	int driveLength = 0;
 	int accMistakes = 0;
 	int speedMistakes = 0;
 	int chargedRange = 0;
 
+	// declare date setting
+	public static final String DATE_NAME = "MyDateFile";
 	long lastTime = 0;
 
+	// declare database
+	private GPSDataSource gpsDataSource;
+	private DrivingStatsDataSource statSource;
+
+	// declare simulation views
 	EditText etDistance;
 	EditText etAccMistakes;
 	EditText etSpeedMistakes;
+	Button bDrive;
 
+	// declare textviews
 	TextView tvStartingRange;
 	TextView tvLogo;
 	TextView tvEstRangeRemain;
@@ -64,7 +68,8 @@ public class DriveActivity extends Activity implements OnClickListener {
 	TextView tvCityRange;
 	TextView tvTimeParked;
 	TextView tvChargeGained;
-	
+
+	// declare bars
 	LinearLayout llBar1;
 	LinearLayout llBar2;
 	LinearLayout llBar3;
@@ -75,31 +80,72 @@ public class DriveActivity extends Activity implements OnClickListener {
 	LinearLayout llBar8;
 	LinearLayout llBar9;
 
-	Button bDrive;
+	// declare background and gradient
+	LinearLayout ll;
+	GradientDrawable gdBackground;
+
+	// declare temporary calculation variables
+	double doubleDefaultRange;
+	double doubleCurrentRange;
+	double relativeRange;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_drive);
-
-		GradientDrawable gd = new GradientDrawable(
-				GradientDrawable.Orientation.TOP_BOTTOM, new int[] {
-						Color.rgb(2, 104, 56), Color.rgb(0, 147, 69) });
-		gd.setCornerRadius(0f);
 		loadSettings();
 		loadData();
 		loadDate();
 		init();
+		setFonts();
 		calc();
-		// draw();
+		draw();
+	}
+
+	public void setFonts() {
+		// initialize typefaces
+		Typeface tfHelvetica = Typeface.createFromAsset(getAssets(),
+				"fonts/helvetica_bold_oblique.ttf");
+		Typeface tfMyriadRegular = Typeface.createFromAsset(getAssets(),
+				"fonts/myriad_regular.ttf");
+		Typeface tfMyriadItalic = Typeface.createFromAsset(getAssets(),
+				"fonts/myriad_italic.ttf");
+
+		// set correct fonts to views
+		tvLogo.setTypeface(tfHelvetica);
+		tvStartingRange.setTypeface(tfHelvetica);
+		tvEstRangeRemain.setTypeface(tfMyriadItalic);
+		tvKm1.setTypeface(tfMyriadRegular);
+		tvKm2.setTypeface(tfMyriadRegular);
+		tvKm3.setTypeface(tfMyriadRegular);
+		tvHighwayDesc.setTypeface(tfMyriadItalic);
+		tvHighwayRange.setTypeface(tfHelvetica);
+		tvCityDesc.setTypeface(tfMyriadItalic);
+		tvCityRange.setTypeface(tfHelvetica);
+		tvTimeParked.setTypeface(tfMyriadRegular);
+		tvChargeGained.setTypeface(tfMyriadRegular);
 	}
 
 	public void init() {
-		llBar1  = (LinearLayout) findViewById(R.id.bar1);
-		
-		etDistance = (EditText) findViewById(R.id.et_distance);
-		etAccMistakes = (EditText) findViewById(R.id.et_acc_mistakes);
-		etSpeedMistakes = (EditText) findViewById(R.id.et_speed_mistakes);
+		// initialize bars
+		llBar1 = (LinearLayout) findViewById(R.id.bar1);
+		llBar2 = (LinearLayout) findViewById(R.id.bar2);
+		llBar3 = (LinearLayout) findViewById(R.id.bar3);
+		llBar4 = (LinearLayout) findViewById(R.id.bar4);
+		llBar5 = (LinearLayout) findViewById(R.id.bar5);
+		llBar6 = (LinearLayout) findViewById(R.id.bar6);
+		llBar7 = (LinearLayout) findViewById(R.id.bar7);
+		llBar8 = (LinearLayout) findViewById(R.id.bar8);
+		llBar9 = (LinearLayout) findViewById(R.id.bar9);
+
+		// initialize background and gradient
+		ll = (LinearLayout) findViewById(R.id.ll_main);
+		gdBackground = new GradientDrawable(
+				GradientDrawable.Orientation.TOP_BOTTOM, new int[] {
+						Color.rgb(2, 104, 56), Color.rgb(0, 147, 69) });
+		gdBackground.setCornerRadius(0f);
+
+		// initialize textviews
 		tvStartingRange = (TextView) findViewById(R.id.tv_starting_range);
 		tvLogo = (TextView) findViewById(R.id.tv_logo);
 		tvEstRangeRemain = (TextView) findViewById(R.id.tv_est_range_remain);
@@ -112,73 +158,122 @@ public class DriveActivity extends Activity implements OnClickListener {
 		tvCityRange = (TextView) findViewById(R.id.tv_city_range);
 		tvTimeParked = (TextView) findViewById(R.id.tv_time_parked);
 		tvChargeGained = (TextView) findViewById(R.id.tv_charge_gained);
+
+		// initialize edittexts
+		etDistance = (EditText) findViewById(R.id.et_distance);
+		etAccMistakes = (EditText) findViewById(R.id.et_acc_mistakes);
+		etSpeedMistakes = (EditText) findViewById(R.id.et_speed_mistakes);
+
+		// initialize button and set listener
 		bDrive = (Button) findViewById(R.id.b_drive);
 		bDrive.setOnClickListener(this);
-		// ivPreBatteryFill = (ImageView)
-		// findViewById(R.id.iv_pre_battery_fill);
+
+		// initialize database
 		gpsDataSource = new GPSDataSource(this);
 		gpsDataSource.open();
 		statSource = new DrivingStatsDataSource(this);
 		statSource.open();
-		Typeface tfHelvetica = Typeface.createFromAsset(getAssets(),
-				"fonts/helvetica_bold_oblique.ttf");
-		Typeface tfGeosansLightOblique = Typeface.createFromAsset(getAssets(),
-				"fonts/geosans_light_oblique.ttf");
-		Typeface tfGeosansLight = Typeface.createFromAsset(getAssets(),
-				"fonts/geosans_light.ttf");
-		tvLogo.setTypeface(tfHelvetica);
-		tvStartingRange.setTypeface(tfHelvetica);
-		tvEstRangeRemain.setTypeface(tfGeosansLightOblique);
-		tvKm1.setTypeface(tfGeosansLight);
-		tvKm2.setTypeface(tfGeosansLight);
-		tvKm3.setTypeface(tfGeosansLight);
-		tvHighwayDesc.setTypeface(tfGeosansLightOblique);
-		tvHighwayRange.setTypeface(tfHelvetica);
-		tvCityDesc.setTypeface(tfGeosansLightOblique);
-		tvCityRange.setTypeface(tfHelvetica);
-		tvTimeParked.setTypeface(tfGeosansLight);
-		tvChargeGained.setTypeface(tfGeosansLight);
-		LinearLayout ll = (LinearLayout) findViewById(R.id.ll_main);
-		ll.setBackgroundResource(R.drawable.gradgreenyellow);
 	}
 
 	public void calc() {
+		// calculate range and charge time
+		long timeDifference = System.currentTimeMillis() - lastTime;
 		if (lastTime == 0) {
 			currentRange = defaultRange;
 		} else {
-			chargedRange = (int) (double) ((System.currentTimeMillis() - lastTime) / 300000);
+			chargedRange = (int) (double) (timeDifference / 300000);
 			if (currentRange + chargedRange >= defaultRange) {
 				currentRange = defaultRange;
 			} else {
 				currentRange = currentRange + chargedRange;
 			}
 		}
+
+		// calculate relative range
+		doubleCurrentRange = (double) currentRange;
+		doubleDefaultRange = (double) defaultRange;
+		relativeRange = doubleCurrentRange / doubleDefaultRange;
+
+		// set textviews and calculate highway and city range
 		tvStartingRange.setText("" + currentRange + "");
-		Log.d(TAG, ""
-				+ ((double) ((System.currentTimeMillis() - lastTime) / 60000))
-				+ "");
+		tvHighwayRange.setText("" + (int) (currentRange * 0.75) + "");
+		tvCityRange.setText("" + (int) (currentRange * 1.2) + "");
+		tvTimeParked.setText("Time Parked: "
+				+ TimeUnit.MILLISECONDS.toDays(timeDifference) + ":"
+				+ TimeUnit.MILLISECONDS.toHours(timeDifference) + ":"
+				+ TimeUnit.MILLISECONDS.toMinutes(timeDifference) + "");
+		tvChargeGained.setText("Charge Gained: " + chargedRange + " km");
+
 		saveData();
 	}
 
 	public void draw() {
-		doubleCurrentRange = (double) currentRange;
-		doubleDefaultRange = (double) defaultRange;
-		relativeRange = doubleCurrentRange / doubleDefaultRange;
+		// check relative range and set background and bars accordingly
 		if (relativeRange <= 1 && relativeRange > 0.9) {
-			
-		} else if (relativeRange <= 0.9 & relativeRange > 0.8) {
-			ivPreBatteryFill.setImageResource(R.drawable.yellow);
-			tvStartingRange.setBackgroundColor(getResources().getColor(
-					R.color.mustard));
-		} else if ((doubleCurrentRange / doubleDefaultRange < 0.2)
-				&& (doubleCurrentRange / doubleDefaultRange > 0)) {
-			ivPreBatteryFill.setImageResource(R.drawable.red);
-			tvStartingRange.setBackgroundColor(getResources().getColor(
-					R.color.wine_red));
-		} else {
-			ivPreBatteryFill.setImageResource(R.drawable.red);
-			tvStartingRange.setBackgroundColor(getResources().getColor(
-					R.color.wine_red));
+			ll.setBackgroundResource(R.drawable.gradgreenyellow);
+		} else if (relativeRange <= 0.9 && relativeRange > 0.8) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			ll.setBackgroundResource(R.drawable.gradgreenyellow);
+		} else if (relativeRange <= 0.8 && relativeRange > 0.7) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			ll.setBackgroundResource(R.drawable.gradgreenyellow);
+		} else if (relativeRange <= 0.7 && relativeRange > 0.6) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			ll.setBackgroundResource(R.drawable.gradgreenorange);
+		} else if (relativeRange <= 0.6 && relativeRange > 0.5) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			ll.setBackgroundResource(R.drawable.gradgreenorange);
+		} else if (relativeRange <= 0.5 && relativeRange > 0.4) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+			ll.setBackgroundResource(R.drawable.gradgreenorange);
+		} else if (relativeRange <= 0.4 && relativeRange > 0.3) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
+			ll.setBackgroundResource(R.drawable.gradyelloworange);
+		} else if (relativeRange <= 0.3 && relativeRange > 0.2) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
+			ll.setBackgroundResource(R.drawable.gradyelloworange);
+		} else if (relativeRange <= 0.2 && relativeRange > 0.1) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar8.setBackgroundResource(R.drawable.whiteemptybar);
+			ll.setBackgroundResource(R.drawable.gradorangered);
+		} else if (relativeRange <= 0.1 && relativeRange >= 0) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar8.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar9.setBackgroundResource(R.drawable.whiteemptybar);
+			ll.setBackgroundResource(R.drawable.gradorangered);
 		}
 	}
 
@@ -272,7 +367,6 @@ public class DriveActivity extends Activity implements OnClickListener {
 
 		alert.setTitle("Enter default range in km");
 
-		// Set an EditText view to get user input
 		final EditText input = new EditText(this);
 		alert.setView(input);
 		input.setText("" + defaultRange + "");
@@ -291,7 +385,6 @@ public class DriveActivity extends Activity implements OnClickListener {
 		alert.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
-						// Canceled.
 					}
 				});
 
@@ -303,7 +396,6 @@ public class DriveActivity extends Activity implements OnClickListener {
 
 		alert.setTitle("Enter default average amount of acc. mistakes");
 
-		// Set an EditText view to get user input
 		final EditText input = new EditText(this);
 		alert.setView(input);
 		input.setText("" + defaultAccMistakes + "");
@@ -323,7 +415,6 @@ public class DriveActivity extends Activity implements OnClickListener {
 		alert.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
-						// Canceled.
 					}
 				});
 
@@ -335,7 +426,6 @@ public class DriveActivity extends Activity implements OnClickListener {
 
 		alert.setTitle("Enter default average amount of speed mistakes");
 
-		// Set an EditText view to get user input
 		final EditText input = new EditText(this);
 		alert.setView(input);
 		input.setText("" + defaultSpeedMistakes + "");
@@ -355,7 +445,6 @@ public class DriveActivity extends Activity implements OnClickListener {
 		alert.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
-						// Canceled.
 					}
 				});
 
@@ -367,7 +456,6 @@ public class DriveActivity extends Activity implements OnClickListener {
 
 		alert.setTitle("Enter default drive cycle distance in km");
 
-		// Set an EditText view to get user input
 		final EditText input = new EditText(this);
 		alert.setView(input);
 		input.setText("" + defaultDriveCycle + "");
@@ -387,7 +475,6 @@ public class DriveActivity extends Activity implements OnClickListener {
 		alert.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
-						// Canceled.
 					}
 				});
 
@@ -395,7 +482,8 @@ public class DriveActivity extends Activity implements OnClickListener {
 	}
 
 	public void reset() {
-		defaultRange = 100;
+		// reset all defaults and restart activity
+		defaultRange = 120;
 		defaultAccMistakes = 4;
 		defaultSpeedMistakes = 1;
 		defaultDriveCycle = 11;

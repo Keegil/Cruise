@@ -3,7 +3,7 @@
     android:id="@+id/ll_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@drawable/gradgreenyellow"
     android:gravity="center"
     android:orientation="vertical"
     android:weightSum="1"
@@ -182,73 +182,82 @@
 
             <LinearLayout
                 android:id="@+id/bar1"
-                android:layout_width="120dp"
+                android:layout_width="140dp"
                 android:layout_height="17dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginRight="-4dp"
                 android:background="@drawable/whitebar" >
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/bar2"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="17dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginRight="-4dp"
                 android:background="@drawable/whitebar" >
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/bar3"
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="17dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginRight="-4dp"
                 android:background="@drawable/whitebar" >
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/bar4"
-                android:layout_width="60dp"
+                android:layout_width="80dp"
                 android:layout_height="17dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginRight="-4dp"
                 android:background="@drawable/whitebar" >
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/bar5"
-                android:layout_width="40dp"
+                android:layout_width="60dp"
                 android:layout_height="17dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginRight="-4dp"
                 android:background="@drawable/whitebar" >
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/bar6"
-                android:layout_width="60dp"
+                android:layout_width="80dp"
                 android:layout_height="17dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginRight="-4dp"
                 android:background="@drawable/whitebar" >
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/bar7"
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="17dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginRight="-4dp"
                 android:background="@drawable/whitebar" >
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/bar8"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="17dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginRight="-4dp"
                 android:background="@drawable/whitebar" >
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/bar9"
-                android:layout_width="120dp"
+                android:layout_width="140dp"
                 android:layout_height="17dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginRight="-4dp"
                 android:background="@drawable/whitebar" >
             </LinearLayout>
         </LinearLayout>
@@ -267,13 +276,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/time_parked_ex"
-            android:textSize="20sp" />
-        <TextView
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <TextView
             android:id="@+id/tv_charge_gained"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/charge_gained_ex"
-            android:textSize="20sp" />
+            android:textColor="@color/white"
+            android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
