@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Cruise</string>
+    <string name="app_name_caps">CRUISE</string>
     <string name="points">Points</string>
     <string name="action_reset">Reset all values</string>
     <string name="remaining_range">Remaining range</string>
@@ -14,16 +15,25 @@
     <string name="drive_distance">Enter length of drive in km</string>
     <string name="acc_mistakes">Enter number of acc. mistakes</string>
     <string name="speed_mistakes">Enter number of speed mistakes</string>
-    <string name="drive_button">Simulate drive</string>
-    <string name="example_km">100 km</string>
+    <string name="drive_button">Simulate</string>
+    <string name="example_km">120</string>
     <string name="title_activity_after_drive">AfterDriveActivity</string>
     <string name="hello_world">Hello world!</string>
-    
+    <string name="est_range_remain">Estimated Range Remaining</string>
+    <string name="km">km</string>
+    <string name="highway_desc">Highway</string>
+    <string name="highway_ex">80</string>
+    <string name="city_desc">City driving</string>
+    <string name="city_ex">110</string>
+    <string name="time_parked_ex">Time Parked: 00:02:56 hrs</string>
+    <string name="charge_gained_ex">Charge Gained: 35 km</string>
     <string name="drive_complete">Drive complete!</string>
     <string name="ev_compatible">EV COMPATIBLE DRIVE</string>
     <string name="statistics">Statistics</string>
     <string name="range_decrease">Range decreasing factors</string>
     <string name="acc_decrease">Too much aggressive acceleration</string>
     <string name="speed_decrease">Too high speed</string>
+    <string name="endofdrive">Drive Completed!</string>
+    <string name="goodamount">Your EV still has a good amount of charge remaining.</string>
 
 </resources>

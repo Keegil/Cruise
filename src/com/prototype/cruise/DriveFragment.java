@@ -9,22 +9,19 @@ import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.text.InputType;
 import android.util.Log;
-import android.view.Menu;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class DriveActivity extends FragmentActivity implements OnClickListener {
+public class DriveFragment extends Fragment implements OnClickListener {
 
 	private static final String TAG = "DriveActivity";
 
@@ -81,14 +78,20 @@ public class DriveActivity extends FragmentActivity implements OnClickListener {
 
 	Button bDrive;
 	
+	
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_drive);
-		
 
-		
+	}
+	
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.activity_drive, container, false);
+
 
 		GradientDrawable gd = new GradientDrawable(
 				GradientDrawable.Orientation.TOP_BOTTOM, new int[] {
@@ -97,46 +100,46 @@ public class DriveActivity extends FragmentActivity implements OnClickListener {
 		loadSettings();
 		loadData();
 		loadDate();
-		init();
+		init(view);
 		calc();
 		// draw();
 		
-
 		
 		
+		return view;
 	}
 
-	public void init() {
-		llBar1  = (LinearLayout) findViewById(R.id.bar1);
+	public void init(View v) {
+		llBar1  = (LinearLayout) v.findViewById(R.id.bar1);
 		
-		etDistance = (EditText) findViewById(R.id.et_distance);
-		etAccMistakes = (EditText) findViewById(R.id.et_acc_mistakes);
-		etSpeedMistakes = (EditText) findViewById(R.id.et_speed_mistakes);
-		tvStartingRange = (TextView) findViewById(R.id.tv_starting_range);
-		tvLogo = (TextView) findViewById(R.id.tv_logo);
-		tvEstRangeRemain = (TextView) findViewById(R.id.tv_est_range_remain);
-		tvKm1 = (TextView) findViewById(R.id.tv_km);
-		tvKm2 = (TextView) findViewById(R.id.tv_highway_km);
-		tvKm3 = (TextView) findViewById(R.id.tv_city_km);
-		tvHighwayDesc = (TextView) findViewById(R.id.tv_highway_desc);
-		tvHighwayRange = (TextView) findViewById(R.id.tv_highway_range);
-		tvCityDesc = (TextView) findViewById(R.id.tv_city_desc);
-		tvCityRange = (TextView) findViewById(R.id.tv_city_range);
-		tvTimeParked = (TextView) findViewById(R.id.tv_time_parked);
-		tvChargeGained = (TextView) findViewById(R.id.tv_charge_gained);
-		bDrive = (Button) findViewById(R.id.b_drive);
+		etDistance = (EditText) v.findViewById(R.id.et_distance);
+		etAccMistakes = (EditText) v.findViewById(R.id.et_acc_mistakes);
+		etSpeedMistakes = (EditText) v.findViewById(R.id.et_speed_mistakes);
+		tvStartingRange = (TextView) v.findViewById(R.id.tv_starting_range);
+		tvLogo = (TextView) v.findViewById(R.id.tv_logo);
+		tvEstRangeRemain = (TextView) v.findViewById(R.id.tv_est_range_remain);
+		tvKm1 = (TextView) v.findViewById(R.id.tv_km);
+		tvKm2 = (TextView) v.findViewById(R.id.tv_highway_km);
+		tvKm3 = (TextView) v.findViewById(R.id.tv_city_km);
+		tvHighwayDesc = (TextView) v.findViewById(R.id.tv_highway_desc);
+		tvHighwayRange = (TextView) v.findViewById(R.id.tv_highway_range);
+		tvCityDesc = (TextView) v.findViewById(R.id.tv_city_desc);
+		tvCityRange = (TextView) v.findViewById(R.id.tv_city_range);
+		tvTimeParked = (TextView) v.findViewById(R.id.tv_time_parked);
+		tvChargeGained = (TextView) v.findViewById(R.id.tv_charge_gained);
+		bDrive = (Button) v.findViewById(R.id.b_drive);
 		bDrive.setOnClickListener(this);
 		// ivPreBatteryFill = (ImageView)
 		// findViewById(R.id.iv_pre_battery_fill);
-		gpsDataSource = new GPSDataSource(this);
+		gpsDataSource = new GPSDataSource(getActivity());
 		gpsDataSource.open();
-		statSource = new DrivingStatsDataSource(this);
+		statSource = new DrivingStatsDataSource(getActivity());
 		statSource.open();
-		Typeface tfHelvetica = Typeface.createFromAsset(getAssets(),
+		Typeface tfHelvetica = Typeface.createFromAsset(getActivity().getAssets(),
 				"fonts/helvetica_bold_oblique.ttf");
-		Typeface tfGeosansLightOblique = Typeface.createFromAsset(getAssets(),
+		Typeface tfGeosansLightOblique = Typeface.createFromAsset(getActivity().getAssets(),
 				"fonts/geosans_light_oblique.ttf");
-		Typeface tfGeosansLight = Typeface.createFromAsset(getAssets(),
+		Typeface tfGeosansLight = Typeface.createFromAsset(getActivity().getAssets(),
 				"fonts/geosans_light.ttf");
 		tvLogo.setTypeface(tfHelvetica);
 		tvStartingRange.setTypeface(tfHelvetica);
@@ -150,7 +153,7 @@ public class DriveActivity extends FragmentActivity implements OnClickListener {
 		tvCityRange.setTypeface(tfHelvetica);
 		tvTimeParked.setTypeface(tfGeosansLight);
 		tvChargeGained.setTypeface(tfGeosansLight);
-		LinearLayout ll = (LinearLayout) findViewById(R.id.ll_main);
+		LinearLayout ll = (LinearLayout) v.findViewById(R.id.ll_main);
 		ll.setBackgroundResource(R.drawable.gradgreenyellow);
 	}
 
@@ -195,7 +198,7 @@ public class DriveActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	public void loadSettings() {
-		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+		SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
 		defaultRange = settings.getInt("defaultRange", defaultRange);
 		defaultAccMistakes = settings.getInt("defaultAccMistakes",
 				defaultAccMistakes);
@@ -206,7 +209,7 @@ public class DriveActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	public void loadData() {
-		SharedPreferences data = getSharedPreferences(DATA_NAME, 0);
+		SharedPreferences data = getActivity().getSharedPreferences(DATA_NAME, 0);
 		currentRange = data.getInt("currentRange", currentRange);
 		driveLength = data.getInt("driveLength", driveLength);
 		accMistakes = data.getInt("accMistakes", accMistakes);
@@ -215,12 +218,12 @@ public class DriveActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	public void loadDate() {
-		SharedPreferences date = getSharedPreferences(DATE_NAME, 0);
+		SharedPreferences date = getActivity().getSharedPreferences(DATE_NAME, 0);
 		lastTime = date.getLong("lastTime", lastTime);
 	}
 
 	public void saveSettings() {
-		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+		SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
 		SharedPreferences.Editor editor = settings.edit();
 		editor.putInt("defaultRange", defaultRange);
 		editor.putInt("defaultAccMistakes", defaultAccMistakes);
@@ -229,7 +232,7 @@ public class DriveActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	public void saveData() {
-		SharedPreferences data = getSharedPreferences(DATA_NAME, 0);
+		SharedPreferences data = getActivity().getSharedPreferences(DATA_NAME, 0);
 		SharedPreferences.Editor editor = data.edit();
 		editor.putInt("currentRange", currentRange);
 		editor.putInt("driveLength", driveLength);
@@ -240,18 +243,18 @@ public class DriveActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	public void saveDate() {
-		SharedPreferences date = getSharedPreferences(DATE_NAME, 0);
+		SharedPreferences date = getActivity().getSharedPreferences(DATE_NAME, 0);
 		SharedPreferences.Editor editor = date.edit();
 		editor.putLong("lastTime", lastTime);
 		editor.commit();
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	/*public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.drive, menu);
 		return true;
-	}
+	}*/
 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
@@ -280,12 +283,12 @@ public class DriveActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	public void setDefaultRange() {
-		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
 		alert.setTitle("Enter default range in km");
 
 		// Set an EditText view to get user input
-		final EditText input = new EditText(this);
+		final EditText input = new EditText(getActivity());
 		alert.setView(input);
 		input.setText("" + defaultRange + "");
 		input.setInputType(InputType.TYPE_CLASS_PHONE);
@@ -294,8 +297,8 @@ public class DriveActivity extends FragmentActivity implements OnClickListener {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				defaultRange = Integer.parseInt(input.getText().toString());
 				saveSettings();
-				Intent intent = getIntent();
-				finish();
+				Intent intent = getActivity().getIntent();
+				getActivity().finish();
 				startActivity(intent);
 			}
 		});
@@ -311,12 +314,12 @@ public class DriveActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	public void setDefaultAcc() {
-		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
 		alert.setTitle("Enter default average amount of acc. mistakes");
 
 		// Set an EditText view to get user input
-		final EditText input = new EditText(this);
+		final EditText input = new EditText(getActivity());
 		alert.setView(input);
 		input.setText("" + defaultAccMistakes + "");
 		input.setInputType(InputType.TYPE_CLASS_PHONE);
@@ -326,8 +329,8 @@ public class DriveActivity extends FragmentActivity implements OnClickListener {
 				defaultAccMistakes = Integer.parseInt(input.getText()
 						.toString());
 				saveSettings();
-				Intent intent = getIntent();
-				finish();
+				Intent intent = getActivity().getIntent();
+				getActivity().finish();
 				startActivity(intent);
 			}
 		});
@@ -343,12 +346,12 @@ public class DriveActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	public void setDefaultSpeed() {
-		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
 		alert.setTitle("Enter default average amount of speed mistakes");
 
 		// Set an EditText view to get user input
-		final EditText input = new EditText(this);
+		final EditText input = new EditText(getActivity());
 		alert.setView(input);
 		input.setText("" + defaultSpeedMistakes + "");
 		input.setInputType(InputType.TYPE_CLASS_PHONE);
@@ -358,8 +361,8 @@ public class DriveActivity extends FragmentActivity implements OnClickListener {
 				defaultSpeedMistakes = Integer.parseInt(input.getText()
 						.toString());
 				saveSettings();
-				Intent intent = getIntent();
-				finish();
+				Intent intent = getActivity().getIntent();
+				getActivity().finish();
 				startActivity(intent);
 			}
 		});
@@ -375,12 +378,12 @@ public class DriveActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	public void setDefaultDriveCycle() {
-		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
 		alert.setTitle("Enter default drive cycle distance in km");
 
 		// Set an EditText view to get user input
-		final EditText input = new EditText(this);
+		final EditText input = new EditText(getActivity());
 		alert.setView(input);
 		input.setText("" + defaultDriveCycle + "");
 		input.setInputType(InputType.TYPE_CLASS_PHONE);
@@ -390,8 +393,8 @@ public class DriveActivity extends FragmentActivity implements OnClickListener {
 				defaultDriveCycle = Integer
 						.parseInt(input.getText().toString());
 				saveSettings();
-				Intent intent = getIntent();
-				finish();
+				Intent intent = getActivity().getIntent();
+				getActivity().finish();
 				startActivity(intent);
 			}
 		});
@@ -417,8 +420,8 @@ public class DriveActivity extends FragmentActivity implements OnClickListener {
 		saveSettings();
 		saveData();
 		saveDate();
-		Intent intent = getIntent();
-		finish();
+		Intent intent = getActivity().getIntent();
+		getActivity().finish();
 		startActivity(intent);
 	}
 
@@ -428,7 +431,7 @@ public class DriveActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	@Override
-	protected void onPause() {
+	public void onPause() {
 		super.onPause();
 		saveSettings();
 	}
@@ -442,13 +445,11 @@ public class DriveActivity extends FragmentActivity implements OnClickListener {
 			speedMistakes = Integer.parseInt(etSpeedMistakes.getText()
 					.toString());
 			saveData();
-			Intent i = new Intent(getApplicationContext(),
+			Intent i = new Intent(getActivity().getApplicationContext(),
 					AfterDriveActivity.class);
 			startActivity(i);
-			finish();
+			getActivity().finish();
 			break;
 		}
 	}
-	
-
 }
