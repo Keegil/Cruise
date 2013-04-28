@@ -46,7 +46,7 @@ public class Cruise extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_drive);
+		setContentView(R.layout.activity_before_drive);
 
 		statSource = new DrivingStatsDataSource(this);
 		statSource.open();

@@ -12,19 +12,21 @@ import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class DriveActivity extends Activity implements OnClickListener {
+public class BeforeDriveActivity extends Activity implements OnClickListener {
 
 	// declare logging variables
-	private static final String TAG = "DriveActivity";
+	private static final String TAG = "BeforeDriveFragment";
 
 	// declare preference variables and set defaults
 	public static final String PREFS_NAME = "MyPrefsFile";
@@ -35,10 +37,13 @@ public class DriveActivity extends Activity implements OnClickListener {
 
 	// declare data variables
 	public static final String DATA_NAME = "MyDataFile";
-	int currentRange = 100;
+	int currentRange = 120;
 	int driveLength = 0;
+	int rangeUsed = 0;
 	int accMistakes = 0;
 	int speedMistakes = 0;
+	int brakeMistakes = 0;
+	int routeFail = 0;
 	int chargedRange = 0;
 
 	// declare date setting
@@ -84,46 +89,17 @@ public class DriveActivity extends Activity implements OnClickListener {
 	LinearLayout ll;
 	GradientDrawable gdBackground;
 
-	// declare temporary calculation variables
-	double doubleDefaultRange;
-	double doubleCurrentRange;
-	double relativeRange;
-
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_drive);
+		setContentView(R.layout.activity_before_drive);
+		init();
+		setFonts();
 		loadSettings();
 		loadData();
 		loadDate();
-		init();
-		setFonts();
 		calc();
-		draw();
-	}
-
-	public void setFonts() {
-		// initialize typefaces
-		Typeface tfHelvetica = Typeface.createFromAsset(getAssets(),
-				"fonts/helvetica_bold_oblique.ttf");
-		Typeface tfMyriadRegular = Typeface.createFromAsset(getAssets(),
-				"fonts/myriad_regular.ttf");
-		Typeface tfMyriadItalic = Typeface.createFromAsset(getAssets(),
-				"fonts/myriad_italic.ttf");
-
-		// set correct fonts to views
-		tvLogo.setTypeface(tfHelvetica);
-		tvStartingRange.setTypeface(tfHelvetica);
-		tvEstRangeRemain.setTypeface(tfMyriadItalic);
-		tvKm1.setTypeface(tfMyriadRegular);
-		tvKm2.setTypeface(tfMyriadRegular);
-		tvKm3.setTypeface(tfMyriadRegular);
-		tvHighwayDesc.setTypeface(tfMyriadItalic);
-		tvHighwayRange.setTypeface(tfHelvetica);
-		tvCityDesc.setTypeface(tfMyriadItalic);
-		tvCityRange.setTypeface(tfHelvetica);
-		tvTimeParked.setTypeface(tfMyriadRegular);
-		tvChargeGained.setTypeface(tfMyriadRegular);
+		drawBars();
 	}
 
 	public void init() {
@@ -175,11 +151,36 @@ public class DriveActivity extends Activity implements OnClickListener {
 		statSource.open();
 	}
 
+	public void setFonts() {
+		// initialize typefaces
+		Typeface tfHelvetica = Typeface.createFromAsset(getAssets(),
+				"fonts/helvetica_bold_oblique.ttf");
+		Typeface tfMyriadRegular = Typeface.createFromAsset(getAssets(),
+				"fonts/myriad_regular.otf");
+		Typeface tfMyriadItalic = Typeface.createFromAsset(getAssets(),
+				"fonts/myriad_italic.otf");
+
+		// set correct fonts to views
+		tvLogo.setTypeface(tfHelvetica);
+		tvStartingRange.setTypeface(tfHelvetica);
+		tvEstRangeRemain.setTypeface(tfMyriadItalic);
+		tvKm1.setTypeface(tfMyriadRegular);
+		tvKm2.setTypeface(tfMyriadRegular);
+		tvKm3.setTypeface(tfMyriadRegular);
+		tvHighwayDesc.setTypeface(tfMyriadItalic);
+		tvHighwayRange.setTypeface(tfHelvetica);
+		tvCityDesc.setTypeface(tfMyriadItalic);
+		tvCityRange.setTypeface(tfHelvetica);
+		tvTimeParked.setTypeface(tfMyriadRegular);
+		tvChargeGained.setTypeface(tfMyriadRegular);
+	}
+
 	public void calc() {
 		// calculate range and charge time
 		long timeDifference = System.currentTimeMillis() - lastTime;
 		if (lastTime == 0) {
 			currentRange = defaultRange;
+			tvTimeParked.setText("Time Parked: 00:00:00");
 		} else {
 			chargedRange = (int) (double) (timeDifference / 300000);
 			if (currentRange + chargedRange >= defaultRange) {
@@ -187,28 +188,27 @@ public class DriveActivity extends Activity implements OnClickListener {
 			} else {
 				currentRange = currentRange + chargedRange;
 			}
+			tvTimeParked.setText("Time Parked: "
+					+ TimeUnit.MILLISECONDS.toDays(timeDifference) + ":"
+					+ TimeUnit.MILLISECONDS.toHours(timeDifference) + ":"
+					+ TimeUnit.MILLISECONDS.toMinutes(timeDifference) + "");
 		}
-
-		// calculate relative range
-		doubleCurrentRange = (double) currentRange;
-		doubleDefaultRange = (double) defaultRange;
-		relativeRange = doubleCurrentRange / doubleDefaultRange;
 
 		// set textviews and calculate highway and city range
 		tvStartingRange.setText("" + currentRange + "");
 		tvHighwayRange.setText("" + (int) (currentRange * 0.75) + "");
 		tvCityRange.setText("" + (int) (currentRange * 1.2) + "");
-		tvTimeParked.setText("Time Parked: "
-				+ TimeUnit.MILLISECONDS.toDays(timeDifference) + ":"
-				+ TimeUnit.MILLISECONDS.toHours(timeDifference) + ":"
-				+ TimeUnit.MILLISECONDS.toMinutes(timeDifference) + "");
+
 		tvChargeGained.setText("Charge Gained: " + chargedRange + " km");
 
 		saveData();
 	}
 
-	public void draw() {
+	public void drawBars() {
 		// check relative range and set background and bars accordingly
+		double doubleCurrentRange = (double) currentRange;
+		double doubleDefaultRange = (double) defaultRange;
+		double relativeRange = doubleCurrentRange / doubleDefaultRange;
 		if (relativeRange <= 1 && relativeRange > 0.9) {
 			ll.setBackgroundResource(R.drawable.gradgreenyellow);
 		} else if (relativeRange <= 0.9 && relativeRange > 0.8) {
@@ -235,7 +235,7 @@ public class DriveActivity extends Activity implements OnClickListener {
 			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
-			ll.setBackgroundResource(R.drawable.gradgreenorange);
+			ll.setBackgroundResource(R.drawable.gradyelloworange);
 		} else if (relativeRange <= 0.4 && relativeRange > 0.3) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
@@ -292,8 +292,11 @@ public class DriveActivity extends Activity implements OnClickListener {
 		SharedPreferences data = getSharedPreferences(DATA_NAME, 0);
 		currentRange = data.getInt("currentRange", currentRange);
 		driveLength = data.getInt("driveLength", driveLength);
+		rangeUsed = data.getInt("rangeUsed", rangeUsed);
 		accMistakes = data.getInt("accMistakes", accMistakes);
 		speedMistakes = data.getInt("speedMistakes", speedMistakes);
+		brakeMistakes = data.getInt("brakeMistakes", brakeMistakes);
+		routeFail = data.getInt("routeFail", routeFail);
 		chargedRange = data.getInt("chargedRange", chargedRange);
 	}
 
@@ -316,8 +319,11 @@ public class DriveActivity extends Activity implements OnClickListener {
 		SharedPreferences.Editor editor = data.edit();
 		editor.putInt("currentRange", currentRange);
 		editor.putInt("driveLength", driveLength);
+		editor.putInt("rangeUsed", rangeUsed);
 		editor.putInt("accMistakes", accMistakes);
 		editor.putInt("speedMistakes", speedMistakes);
+		editor.putInt("brakeMistakes", brakeMistakes);
+		editor.putInt("routeFail", routeFail);
 		editor.putInt("chargedRange", chargedRange);
 		editor.commit();
 	}
@@ -504,7 +510,7 @@ public class DriveActivity extends Activity implements OnClickListener {
 	}
 
 	@Override
-	protected void onPause() {
+	public void onPause() {
 		super.onPause();
 		saveSettings();
 	}
