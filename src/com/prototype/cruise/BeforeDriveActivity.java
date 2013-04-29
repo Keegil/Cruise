@@ -87,7 +87,13 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 
 	// declare background and gradient
 	LinearLayout ll;
-	GradientDrawable gdBackground;
+
+	// declare temporary calculcation variables
+	long timeDifference;
+	boolean firstTime;
+	double doubleCurrentRange;
+	double doubleDefaultRange;
+	double relativeRange;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -99,6 +105,7 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 		loadData();
 		loadDate();
 		calc();
+		setTextViews();
 		drawBars();
 	}
 
@@ -116,10 +123,6 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 
 		// initialize background and gradient
 		ll = (LinearLayout) findViewById(R.id.ll_main);
-		gdBackground = new GradientDrawable(
-				GradientDrawable.Orientation.TOP_BOTTOM, new int[] {
-						Color.rgb(2, 104, 56), Color.rgb(0, 147, 69) });
-		gdBackground.setCornerRadius(0f);
 
 		// initialize textviews
 		tvStartingRange = (TextView) findViewById(R.id.tv_starting_range);
@@ -151,6 +154,56 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 		statSource.open();
 	}
 
+	public GradientDrawable setGradient(double rr) {
+		double redStart = 95 + (2013 * rr) - (5311 * rr * rr)
+				+ (3204 * rr * rr * rr);
+		if (redStart > 255) {
+			redStart = 255;
+		} else if (redStart < 0) {
+			redStart = 0;
+		}
+		double redStop = 155 + (402 * rr) - (593 * rr * rr)
+				+ (290 * rr * rr * rr);
+		if (redStop > 255) {
+			redStop = 255;
+		} else if (redStop < 0) {
+			redStop = 0;
+		}
+		double greenStart = 129 + (294 * rr) - (328 * rr * rr);
+		if (greenStart > 255) {
+			greenStart = 255;
+		} else if (greenStart < 0) {
+			greenStart = 0;
+		}
+		double greenStop = 14 + (164 * rr) + (42 * rr * rr);
+		if (greenStop > 255) {
+			greenStop = 255;
+		} else if (greenStop < 0) {
+			greenStop = 0;
+		}
+		double blueStart = 66 - (472 * rr) + (1191 * rr * rr)
+				- (728 * rr * rr * rr);
+		if (blueStart > 255) {
+			blueStart = 255;
+		} else if (blueStart < 0) {
+			blueStart = 0;
+		}
+		double blueStop = 45 + (12 * rr) - (72 * rr * rr) + (37 * rr * rr * rr);
+		if (blueStop > 255) {
+			blueStop = 255;
+		} else if (blueStop < 0) {
+			blueStop = 0;
+		}
+		GradientDrawable gdBackground = new GradientDrawable(
+				GradientDrawable.Orientation.TOP_BOTTOM, new int[] {
+						Color.rgb((int) redStart, (int) greenStart,
+								(int) blueStart),
+						Color.rgb((int) redStop, (int) greenStop,
+								(int) blueStop) });
+		gdBackground.setCornerRadius(0f);
+		return gdBackground;
+	}
+
 	public void setFonts() {
 		// initialize typefaces
 		Typeface tfHelvetica = Typeface.createFromAsset(getAssets(),
@@ -177,10 +230,10 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 
 	public void calc() {
 		// calculate range and charge time
-		long timeDifference = System.currentTimeMillis() - lastTime;
+		timeDifference = System.currentTimeMillis() - lastTime;
 		if (lastTime == 0) {
+			firstTime = true;
 			currentRange = defaultRange;
-			tvTimeParked.setText("Time Parked: 00:00:00");
 		} else {
 			chargedRange = (int) (double) (timeDifference / 300000);
 			if (currentRange + chargedRange >= defaultRange) {
@@ -188,54 +241,64 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 			} else {
 				currentRange = currentRange + chargedRange;
 			}
-			tvTimeParked.setText("Time Parked: "
-					+ TimeUnit.MILLISECONDS.toDays(timeDifference) + ":"
-					+ TimeUnit.MILLISECONDS.toHours(timeDifference) + ":"
-					+ TimeUnit.MILLISECONDS.toMinutes(timeDifference) + "");
 		}
+		doubleCurrentRange = (double) currentRange;
+		doubleDefaultRange = (double) defaultRange;
+		relativeRange = doubleCurrentRange / doubleDefaultRange;
+		saveData();
+	}
 
-		// set textviews and calculate highway and city range
+	public String setDate(long l) {
+		final long days = TimeUnit.MILLISECONDS.toDays(l);
+		final long hrs = TimeUnit.MILLISECONDS.toHours(l
+				- TimeUnit.DAYS.toMillis(days));
+		final long mins = TimeUnit.MILLISECONDS.toMinutes(l
+				- TimeUnit.DAYS.toMillis(days) - TimeUnit.HOURS.toMillis(hrs));
+		return String.format("%02d:%02d:%02d", days, hrs, mins);
+	}
+
+	public void setTextViews() {
+		if (firstTime) {
+			tvTimeParked.setText("Time Parked: 00:00:00");
+		} else {
+			tvTimeParked
+					.setText("Time Parked: " + setDate(timeDifference) + "");
+		}
 		tvStartingRange.setText("" + currentRange + "");
 		tvHighwayRange.setText("" + (int) (currentRange * 0.75) + "");
 		tvCityRange.setText("" + (int) (currentRange * 1.2) + "");
-
 		tvChargeGained.setText("Charge Gained: " + chargedRange + " km");
-
-		saveData();
 	}
 
 	public void drawBars() {
 		// check relative range and set background and bars accordingly
-		double doubleCurrentRange = (double) currentRange;
-		double doubleDefaultRange = (double) defaultRange;
-		double relativeRange = doubleCurrentRange / doubleDefaultRange;
 		if (relativeRange <= 1 && relativeRange > 0.9) {
-			ll.setBackgroundResource(R.drawable.gradgreenyellow);
+			// ll.setBackgroundResource(R.drawable.gradgreenyellow);
 		} else if (relativeRange <= 0.9 && relativeRange > 0.8) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
-			ll.setBackgroundResource(R.drawable.gradgreenyellow);
+			// ll.setBackgroundResource(R.drawable.gradgreenyellow);
 		} else if (relativeRange <= 0.8 && relativeRange > 0.7) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
-			ll.setBackgroundResource(R.drawable.gradgreenyellow);
+			// ll.setBackgroundResource(R.drawable.gradgreenyellow);
 		} else if (relativeRange <= 0.7 && relativeRange > 0.6) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
-			ll.setBackgroundResource(R.drawable.gradgreenorange);
+			// ll.setBackgroundResource(R.drawable.gradgreenorange);
 		} else if (relativeRange <= 0.6 && relativeRange > 0.5) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
-			ll.setBackgroundResource(R.drawable.gradgreenorange);
+			// ll.setBackgroundResource(R.drawable.gradgreenorange);
 		} else if (relativeRange <= 0.5 && relativeRange > 0.4) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
-			ll.setBackgroundResource(R.drawable.gradyelloworange);
+			// ll.setBackgroundResource(R.drawable.gradyelloworange);
 		} else if (relativeRange <= 0.4 && relativeRange > 0.3) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
@@ -243,7 +306,7 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
-			ll.setBackgroundResource(R.drawable.gradyelloworange);
+			// ll.setBackgroundResource(R.drawable.gradyelloworange);
 		} else if (relativeRange <= 0.3 && relativeRange > 0.2) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
@@ -252,7 +315,7 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
-			ll.setBackgroundResource(R.drawable.gradyelloworange);
+			// ll.setBackgroundResource(R.drawable.gradyelloworange);
 		} else if (relativeRange <= 0.2 && relativeRange > 0.1) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
@@ -262,7 +325,7 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar8.setBackgroundResource(R.drawable.whiteemptybar);
-			ll.setBackgroundResource(R.drawable.gradorangered);
+			// ll.setBackgroundResource(R.drawable.gradorangered);
 		} else if (relativeRange <= 0.1 && relativeRange >= 0) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
@@ -273,8 +336,9 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar8.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar9.setBackgroundResource(R.drawable.whiteemptybar);
-			ll.setBackgroundResource(R.drawable.gradorangered);
+			// ll.setBackgroundResource(R.drawable.gradorangered);
 		}
+		ll.setBackgroundDrawable(setGradient(relativeRange));
 	}
 
 	public void loadSettings() {

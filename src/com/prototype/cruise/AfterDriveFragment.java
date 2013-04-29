@@ -10,14 +10,14 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,6 +72,12 @@ public class AfterDriveFragment extends Fragment {
 
 	long statSize;
 
+	double previousRelativeRange;
+
+	double doubleCurrentRange;
+	double doubleDefaultRange;
+	double relativeRange;
+
 	// declare textviews
 	TextView tvLogo;
 	TextView tvDriveCompleted;
@@ -91,7 +97,6 @@ public class AfterDriveFragment extends Fragment {
 
 	// declare background and gradient
 	LinearLayout ll;
-	GradientDrawable gdBackground;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -111,6 +116,12 @@ public class AfterDriveFragment extends Fragment {
 		getJSON();
 		drawBars();
 		return view;
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+
 	}
 
 	public void init(View v) {
@@ -160,7 +171,80 @@ public class AfterDriveFragment extends Fragment {
 		tvChargeLeft.setTypeface(tfMyriadRegular);
 	}
 
+	public GradientDrawable setGradient(double rr) {
+		double redStart = 95 + (2013 * rr) - (5311 * rr * rr)
+				+ (3204 * rr * rr * rr);
+		if (redStart > 255) {
+			redStart = 255;
+		} else if (redStart < 0) {
+			redStart = 0;
+		}
+		double redStop = 155 + (402 * rr) - (593 * rr * rr)
+				+ (290 * rr * rr * rr);
+		if (redStop > 255) {
+			redStop = 255;
+		} else if (redStop < 0) {
+			redStop = 0;
+		}
+		double greenStart = 129 + (294 * rr) - (328 * rr * rr);
+		if (greenStart > 255) {
+			greenStart = 255;
+		} else if (greenStart < 0) {
+			greenStart = 0;
+		}
+		double greenStop = 14 + (164 * rr) + (42 * rr * rr);
+		if (greenStop > 255) {
+			greenStop = 255;
+		} else if (greenStop < 0) {
+			greenStop = 0;
+		}
+		double blueStart = 66 - (472 * rr) + (1191 * rr * rr)
+				- (728 * rr * rr * rr);
+		if (blueStart > 255) {
+			blueStart = 255;
+		} else if (blueStart < 0) {
+			blueStart = 0;
+		}
+		double blueStop = 45 + (12 * rr) - (72 * rr * rr) + (37 * rr * rr * rr);
+		if (blueStop > 255) {
+			blueStop = 255;
+		} else if (blueStop < 0) {
+			blueStop = 0;
+		}
+		GradientDrawable gdBackground = new GradientDrawable(
+				GradientDrawable.Orientation.TOP_BOTTOM, new int[] {
+						Color.rgb((int) redStart, (int) greenStart,
+								(int) blueStart),
+						Color.rgb((int) redStop, (int) greenStop,
+								(int) blueStop) });
+		gdBackground.setCornerRadius(0f);
+		return gdBackground;
+	}
+
+	public void drawBackground() {
+		Runnable runnable = new Runnable() {
+			@Override
+			public void run() {
+				double rr = previousRelativeRange;
+				while (rr > relativeRange) {
+					Message msg = new Message();
+					msg.obj = setGradient(rr);
+					bgHandler.sendMessage(msg);
+					try {
+						Thread.sleep(30);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					rr = rr - 0.01;
+				}
+			}
+		};
+		new Thread(runnable).start();
+	}
+
 	public void calc() {
+
+		previousRelativeRange = (double) ((double) currentRange / (double) defaultRange);
 
 		// calculate points
 		double aa = (double) defaultAccMistakes;
@@ -187,6 +271,10 @@ public class AfterDriveFragment extends Fragment {
 			currentRange = 0;
 		}
 
+		doubleCurrentRange = (double) currentRange;
+		doubleDefaultRange = (double) defaultRange;
+		relativeRange = doubleCurrentRange / doubleDefaultRange;
+
 		// get correct time
 		lastTime = System.currentTimeMillis();
 
@@ -203,36 +291,28 @@ public class AfterDriveFragment extends Fragment {
 
 	public void drawBars() {
 		// check relative range and set background and bars accordingly
-		double doubleCurrentRange = (double) currentRange;
-		double doubleDefaultRange = (double) defaultRange;
-		double relativeRange = doubleCurrentRange / doubleDefaultRange;
 		if (relativeRange <= 1 && relativeRange > 0.9) {
-			ll.setBackgroundResource(R.drawable.gradgreenyellow);
+
 		} else if (relativeRange <= 0.9 && relativeRange > 0.8) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
-			ll.setBackgroundResource(R.drawable.gradgreenyellow);
 		} else if (relativeRange <= 0.8 && relativeRange > 0.7) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
-			ll.setBackgroundResource(R.drawable.gradgreenyellow);
 		} else if (relativeRange <= 0.7 && relativeRange > 0.6) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
-			ll.setBackgroundResource(R.drawable.gradgreenorange);
 		} else if (relativeRange <= 0.6 && relativeRange > 0.5) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
-			ll.setBackgroundResource(R.drawable.gradgreenorange);
 		} else if (relativeRange <= 0.5 && relativeRange > 0.4) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
-			ll.setBackgroundResource(R.drawable.gradyelloworange);
 		} else if (relativeRange <= 0.4 && relativeRange > 0.3) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
@@ -240,7 +320,6 @@ public class AfterDriveFragment extends Fragment {
 			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
-			ll.setBackgroundResource(R.drawable.gradyelloworange);
 		} else if (relativeRange <= 0.3 && relativeRange > 0.2) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
@@ -249,7 +328,6 @@ public class AfterDriveFragment extends Fragment {
 			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
-			ll.setBackgroundResource(R.drawable.gradyelloworange);
 		} else if (relativeRange <= 0.2 && relativeRange > 0.1) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
@@ -259,7 +337,6 @@ public class AfterDriveFragment extends Fragment {
 			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar8.setBackgroundResource(R.drawable.whiteemptybar);
-			ll.setBackgroundResource(R.drawable.gradorangered);
 		} else if (relativeRange <= 0.1 && relativeRange >= 0) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
@@ -270,9 +347,20 @@ public class AfterDriveFragment extends Fragment {
 			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar8.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar9.setBackgroundResource(R.drawable.whiteemptybar);
-			ll.setBackgroundResource(R.drawable.gradorangered);
 		}
 	}
+
+	final Handler bgHandler = new Handler() {
+		public void handleMessage(Message msg) {
+			ll.setBackgroundDrawable((Drawable) msg.obj);
+		}
+	};
+
+	final Handler jsonHandler = new Handler() {
+		public void handleMessage(Message msg) {
+			drawBackground();
+		}
+	};
 
 	public void getJSON() {
 		JSONParser jParser = new JSONParser();
@@ -309,22 +397,24 @@ public class AfterDriveFragment extends Fragment {
 						if (strValues[6].charAt(0) == 'W') {
 							longitude = -longitude;
 						}
-						/* gpsDataSource.createGPSData(statSource
-								.getAllDrivingStats().size(), time, latitude,
-								longitude); */
+						/*
+						 * gpsDataSource.createGPSData(statSource
+						 * .getAllDrivingStats().size(), time, latitude,
+						 * longitude);
+						 */
 						pdParsing.incrementProgressBy(1);
 						if (pdParsing.getProgress() >= pdParsing.getMax()) {
 							pdParsing.dismiss();
-							GPSData gpsData = gpsDataSource
-									.getGPSData(statSource.getAllDrivingStats()
-											.size());
-							Log.d(TAG,
-									"ID: " + gpsData.getId() + "\n" + "Time: "
-											+ gpsData.getTime() + "\n"
-											+ "Latitude: "
-											+ gpsData.getLatitude() + "\n"
-											+ "Longitude: "
-											+ gpsData.getLongitude());
+							Message msg = Message.obtain();
+							jsonHandler.dispatchMessage(msg);
+							/*
+							 * GPSData gpsData = gpsDataSource
+							 * .getGPSData(statSource.getAllDrivingStats()
+							 * .size()); Log.d(TAG, "ID: " + gpsData.getId() +
+							 * "\n" + "Time: " + gpsData.getTime() + "\n" +
+							 * "Latitude: " + gpsData.getLatitude() + "\n" +
+							 * "Longitude: " + gpsData.getLongitude());
+							 */
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
