@@ -399,11 +399,9 @@ public class AfterDriveFragment extends Fragment {
 						if (strValues[6].charAt(0) == 'W') {
 							longitude = -longitude;
 						}
-						/*
-						 * gpsDataSource.createGPSData(statSource
-						 * .getAllDrivingStats().size(), time, latitude,
-						 * longitude);
-						 */
+						gpsDataSource.createGPSData(statSource
+								.getAllDrivingStats().size(), time, latitude,
+								longitude);
 						pdParsing.incrementProgressBy(1);
 						if (pdParsing.getProgress() >= pdParsing.getMax()) {
 							pdParsing.dismiss();
