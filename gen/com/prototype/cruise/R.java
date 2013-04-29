@@ -34,15 +34,16 @@ public final class R {
          */
         public static final int activity_horizontal_margin=0x7f050000;
         public static final int activity_vertical_margin=0x7f050002;
+        public static final int bar_height=0x7f050004;
         public static final int bar_spacing=0x7f050003;
-        public static final int bottom_section_margin=0x7f05000b;
-        public static final int font_large=0x7f050006;
-        public static final int font_larger=0x7f050005;
-        public static final int font_logo=0x7f050007;
-        public static final int font_medium=0x7f050009;
-        public static final int font_medium_large=0x7f050008;
-        public static final int font_small=0x7f05000a;
-        public static final int star_size=0x7f050004;
+        public static final int bottom_section_margin=0x7f05000c;
+        public static final int font_large=0x7f050007;
+        public static final int font_larger=0x7f050006;
+        public static final int font_logo=0x7f050008;
+        public static final int font_medium=0x7f05000a;
+        public static final int font_medium_large=0x7f050009;
+        public static final int font_small=0x7f05000b;
+        public static final int star_size=0x7f050005;
     }
     public static final class drawable {
         public static final int acc_icon=0x7f020000;

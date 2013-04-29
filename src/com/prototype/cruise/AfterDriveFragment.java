@@ -8,6 +8,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -18,7 +21,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,7 +123,6 @@ public class AfterDriveFragment extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-
 	}
 
 	public void init(View v) {
@@ -289,6 +290,7 @@ public class AfterDriveFragment extends Fragment {
 				driveLength, 0, rangeUsed, currentRange, iPoints, 0);
 	}
 
+	@SuppressLint("NewApi")
 	public void drawBars() {
 		// check relative range and set background and bars accordingly
 		if (relativeRange <= 1 && relativeRange > 0.9) {
