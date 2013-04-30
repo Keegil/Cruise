@@ -104,6 +104,11 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 		loadSettings();
 		loadData();
 		loadDate();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
 		calc();
 		setTextViews();
 		drawBars();
@@ -236,6 +241,9 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 			currentRange = defaultRange;
 		} else {
 			chargedRange = (int) (double) (timeDifference / 300000);
+			if (chargedRange > rangeUsed) {
+				chargedRange = rangeUsed;
+			}
 			if (currentRange + chargedRange >= defaultRange) {
 				currentRange = defaultRange;
 			} else {

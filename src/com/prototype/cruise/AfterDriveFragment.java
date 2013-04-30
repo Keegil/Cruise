@@ -62,7 +62,7 @@ public class AfterDriveFragment extends Fragment {
 	private String date;
 
 	// declare JSON parsing variables
-	private static String filename = "gpslog20.txt";
+	private static String filename = "gpslog30.txt";
 	private static final String TAG_DRIVE_DATA = "driveData";
 	private static final String TAG_GPS_DATA = "gpsData";
 	JSONArray driveData = null;
@@ -116,6 +116,8 @@ public class AfterDriveFragment extends Fragment {
 		loadData();
 		calc();
 		getJSON();
+		Message msg = Message.obtain();
+		jsonHandler.dispatchMessage(msg);
 		drawBars();
 		return view;
 	}
@@ -373,13 +375,13 @@ public class AfterDriveFragment extends Fragment {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		final ProgressDialog pdParsing = new ProgressDialog(getActivity());
+		/* final ProgressDialog pdParsing = new ProgressDialog(getActivity());
 		pdParsing.setTitle("Parsing " + filename + "...");
 		pdParsing.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		pdParsing.setProgress(0);
 		pdParsing.setMax(driveData.length());
 		pdParsing.setCancelable(false);
-		pdParsing.show();
+		pdParsing.show(); */
 		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
@@ -402,20 +404,14 @@ public class AfterDriveFragment extends Fragment {
 						gpsDataSource.createGPSData(statSource
 								.getAllDrivingStats().size(), time, latitude,
 								longitude);
-						pdParsing.incrementProgressBy(1);
+						/* pdParsing.incrementProgressBy(1);
 						if (pdParsing.getProgress() >= pdParsing.getMax()) {
 							pdParsing.dismiss();
 							Message msg = Message.obtain();
 							jsonHandler.dispatchMessage(msg);
-							/*
-							 * GPSData gpsData = gpsDataSource
-							 * .getGPSData(statSource.getAllDrivingStats()
-							 * .size()); Log.d(TAG, "ID: " + gpsData.getId() +
-							 * "\n" + "Time: " + gpsData.getTime() + "\n" +
-							 * "Latitude: " + gpsData.getLatitude() + "\n" +
-							 * "Longitude: " + gpsData.getLongitude());
-							 */
-						}
+							GPSData gpsData = gpsDataSource.getGPSData(statSource.getAllDrivingStats().size()); 
+							Log.d(TAG, "ID: " + gpsData.getId() + "\n" + "Time: " + gpsData.getTime() + "\n" + "Latitude: " + gpsData.getLatitude() + "\n" + "Longitude: " + gpsData.getLongitude());
+						} */
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
