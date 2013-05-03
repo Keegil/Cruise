@@ -7,5 +7,12 @@
     <color name="light_green">#95d838</color>
     <color name="mustard">#efc500</color>
     <color name="wine_red">#db4251</color>
+    
+    <color name="bg_green1">#026838</color>
+    <color name="bg_green2">#009345</color>
+    <color name="bg_yellow">#FFDD15</color>
+    <color name="bg_orange1">#FF921E</color>
+    <color name="bg_orange2">#F05A28</color>
+    <color name="bg_red">#BE1E2D</color>
 
 </resources>
