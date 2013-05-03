@@ -1,0 +1,90 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".DriveActivity" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/battery_range"
+        android:layout_marginBottom="3dp"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/tv_starting_range"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_double_vertical_margin"
+        android:background="@color/light_green"
+        android:gravity="center"
+        android:padding="2dp"
+        android:text="@string/example_km"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_double_vertical_margin" >
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="75dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/battery" />
+
+        <ImageView
+            android:id="@+id/iv_pre_battery_fill"
+            android:layout_width="134dp"
+            android:layout_height="74dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="6dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/green" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_grey"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:gravity="center" >
+
+        <EditText
+            android:id="@+id/et_distance"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/drive_distance"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/et_acc_mistakes"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/acc_mistakes"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/et_speed_mistakes"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/speed_mistakes"
+            android:inputType="phone" />
+
+        <Button
+            android:id="@+id/b_drive"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/drive_button" />
+    </LinearLayout>
+
+</LinearLayout>
