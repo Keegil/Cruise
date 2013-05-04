@@ -47,5 +47,8 @@
     <string name="speed_decrease">Too high speed</string>
     <string name="title_activity_after_drive_fragment2">AfterDriveFragment2</string>
     <string name="action_settings">Settings</string>
+    <string name="find_bt">Find BT</string>
+    <string name="open_bt">Open BT</string>
+    <string name="close_bt">Close BT</string>
 
 </resources>

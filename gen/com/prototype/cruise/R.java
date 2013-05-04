@@ -106,9 +106,11 @@ public final class R {
         public static final int bar9=0x7f090015;
         public static final int bar9_after=0x7f090029;
         public static final int bar9_after2=0x7f090034;
+        public static final int close_bt=0x7f09006f;
         public static final int et_acc_mistakes=0x7f090019;
         public static final int et_distance=0x7f090018;
         public static final int et_speed_mistakes=0x7f09001a;
+        public static final int find_bt=0x7f09006d;
         public static final int group=0x7f09005a;
         public static final int group1=0x7f09005b;
         public static final int group2=0x7f09005d;
@@ -150,6 +152,7 @@ public final class R {
         public static final int ll_main=0x7f090000;
         public static final int ll_main_after=0x7f09001c;
         public static final int ll_main_after2=0x7f09002b;
+        public static final int open_bt=0x7f09006e;
         public static final int pager=0x7f090065;
         public static final int tv_acc_desc=0x7f090045;
         public static final int tv_brake_desc=0x7f090053;
@@ -212,6 +215,7 @@ public final class R {
         public static final int charge_gained_ex=0x7f060023;
         public static final int city_desc=0x7f060020;
         public static final int city_ex=0x7f060021;
+        public static final int close_bt=0x7f060030;
         public static final int distance_traveled_desc=0x7f06001c;
         public static final int distance_traveled_ex=0x7f06001f;
         public static final int drive_button=0x7f06000e;
@@ -220,10 +224,12 @@ public final class R {
         public static final int est_range_remain=0x7f060012;
         public static final int ev_compatible=0x7f060027;
         public static final int example_km=0x7f06000f;
+        public static final int find_bt=0x7f06002e;
         public static final int hello_world=0x7f060011;
         public static final int highway_desc=0x7f060014;
         public static final int highway_ex=0x7f060015;
         public static final int km=0x7f060013;
+        public static final int open_bt=0x7f06002f;
         public static final int points=0x7f060002;
         public static final int range_decrease=0x7f060029;
         public static final int range_decrease_desc=0x7f06001b;
