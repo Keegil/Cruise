@@ -125,6 +125,7 @@ public class AfterDriveFragment extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		setTextViews();
 	}
 
 	public void init(View v) {
@@ -224,6 +225,17 @@ public class AfterDriveFragment extends Fragment {
 		return gdBackground;
 	}
 
+	public void setTextViews() {
+		if (relativeRange >= 0.6) {
+			tvChargeLeft
+					.setText(getResources().getString(R.string.good_charge));
+		} else if (relativeRange < 0.6 && relativeRange >= 0.15) {
+			tvChargeLeft.setText(getResources().getString(R.string.bad_charge));
+		} else if (relativeRange < 0.15) {
+			tvChargeLeft.setText(getResources().getString(R.string.no_charge));
+		}
+	}
+
 	public void drawBackground() {
 		Runnable runnable = new Runnable() {
 			@Override
@@ -246,7 +258,7 @@ public class AfterDriveFragment extends Fragment {
 	}
 
 	public void calc() {
-
+		chargedRange = 0;
 		previousRelativeRange = (double) ((double) currentRange / (double) defaultRange);
 
 		// calculate points
@@ -375,13 +387,13 @@ public class AfterDriveFragment extends Fragment {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		/* final ProgressDialog pdParsing = new ProgressDialog(getActivity());
-		pdParsing.setTitle("Parsing " + filename + "...");
-		pdParsing.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		pdParsing.setProgress(0);
-		pdParsing.setMax(driveData.length());
-		pdParsing.setCancelable(false);
-		pdParsing.show(); */
+		/*
+		 * final ProgressDialog pdParsing = new ProgressDialog(getActivity());
+		 * pdParsing.setTitle("Parsing " + filename + "...");
+		 * pdParsing.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		 * pdParsing.setProgress(0); pdParsing.setMax(driveData.length());
+		 * pdParsing.setCancelable(false); pdParsing.show();
+		 */
 		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
@@ -404,14 +416,18 @@ public class AfterDriveFragment extends Fragment {
 						gpsDataSource.createGPSData(statSource
 								.getAllDrivingStats().size(), time, latitude,
 								longitude);
-						/* pdParsing.incrementProgressBy(1);
-						if (pdParsing.getProgress() >= pdParsing.getMax()) {
-							pdParsing.dismiss();
-							Message msg = Message.obtain();
-							jsonHandler.dispatchMessage(msg);
-							GPSData gpsData = gpsDataSource.getGPSData(statSource.getAllDrivingStats().size()); 
-							Log.d(TAG, "ID: " + gpsData.getId() + "\n" + "Time: " + gpsData.getTime() + "\n" + "Latitude: " + gpsData.getLatitude() + "\n" + "Longitude: " + gpsData.getLongitude());
-						} */
+						/*
+						 * pdParsing.incrementProgressBy(1); if
+						 * (pdParsing.getProgress() >= pdParsing.getMax()) {
+						 * pdParsing.dismiss(); Message msg = Message.obtain();
+						 * jsonHandler.dispatchMessage(msg); GPSData gpsData =
+						 * gpsDataSource
+						 * .getGPSData(statSource.getAllDrivingStats().size());
+						 * Log.d(TAG, "ID: " + gpsData.getId() + "\n" + "Time: "
+						 * + gpsData.getTime() + "\n" + "Latitude: " +
+						 * gpsData.getLatitude() + "\n" + "Longitude: " +
+						 * gpsData.getLongitude()); }
+						 */
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}

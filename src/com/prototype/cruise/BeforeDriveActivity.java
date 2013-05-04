@@ -9,15 +9,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.InputType;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -94,6 +96,8 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 	double doubleCurrentRange;
 	double doubleDefaultRange;
 	double relativeRange;
+	int previousChargedRange;
+	double previousRelativeRange;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -112,6 +116,7 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 		calc();
 		setTextViews();
 		drawBars();
+		drawBackground();
 	}
 
 	public void init() {
@@ -234,20 +239,24 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 	}
 
 	public void calc() {
+		previousRelativeRange = (double) ((double) currentRange / (double) defaultRange);
 		// calculate range and charge time
 		timeDifference = System.currentTimeMillis() - lastTime;
 		if (lastTime == 0) {
 			firstTime = true;
 			currentRange = defaultRange;
 		} else {
-			chargedRange = (int) (double) (timeDifference / 300000);
+			previousChargedRange = chargedRange;
+			// chargedRange = (int) (double) (timeDifference / 300000);
+			chargedRange = (int) (double) (timeDifference / 3000);
 			if (chargedRange > rangeUsed) {
 				chargedRange = rangeUsed;
 			}
 			if (currentRange + chargedRange >= defaultRange) {
 				currentRange = defaultRange;
 			} else {
-				currentRange = currentRange + chargedRange;
+				currentRange = currentRange
+						+ (chargedRange - previousChargedRange);
 			}
 		}
 		doubleCurrentRange = (double) currentRange;
@@ -273,40 +282,34 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 					.setText("Time Parked: " + setDate(timeDifference) + "");
 		}
 		tvStartingRange.setText("" + currentRange + "");
-		tvHighwayRange.setText("" + (int) (currentRange * 0.75) + "");
-		tvCityRange.setText("" + (int) (currentRange * 1.2) + "");
+		tvHighwayRange.setText("" + (int) (currentRange * 0.8) + "");
+		tvCityRange.setText("" + currentRange + "");
 		tvChargeGained.setText("Charge Gained: " + chargedRange + " km");
 	}
 
 	public void drawBars() {
 		// check relative range and set background and bars accordingly
 		if (relativeRange <= 1 && relativeRange > 0.9) {
-			// ll.setBackgroundResource(R.drawable.gradgreenyellow);
 		} else if (relativeRange <= 0.9 && relativeRange > 0.8) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
-			// ll.setBackgroundResource(R.drawable.gradgreenyellow);
 		} else if (relativeRange <= 0.8 && relativeRange > 0.7) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
-			// ll.setBackgroundResource(R.drawable.gradgreenyellow);
 		} else if (relativeRange <= 0.7 && relativeRange > 0.6) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
-			// ll.setBackgroundResource(R.drawable.gradgreenorange);
 		} else if (relativeRange <= 0.6 && relativeRange > 0.5) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
-			// ll.setBackgroundResource(R.drawable.gradgreenorange);
 		} else if (relativeRange <= 0.5 && relativeRange > 0.4) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
-			// ll.setBackgroundResource(R.drawable.gradyelloworange);
 		} else if (relativeRange <= 0.4 && relativeRange > 0.3) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
@@ -314,7 +317,6 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
-			// ll.setBackgroundResource(R.drawable.gradyelloworange);
 		} else if (relativeRange <= 0.3 && relativeRange > 0.2) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
@@ -323,7 +325,6 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
-			// ll.setBackgroundResource(R.drawable.gradyelloworange);
 		} else if (relativeRange <= 0.2 && relativeRange > 0.1) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
@@ -333,7 +334,6 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar8.setBackgroundResource(R.drawable.whiteemptybar);
-			// ll.setBackgroundResource(R.drawable.gradorangered);
 		} else if (relativeRange <= 0.1 && relativeRange >= 0) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
@@ -344,10 +344,37 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar8.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar9.setBackgroundResource(R.drawable.whiteemptybar);
-			// ll.setBackgroundResource(R.drawable.gradorangered);
 		}
-		ll.setBackgroundDrawable(setGradient(relativeRange));
 	}
+
+	public void drawBackground() {
+		Runnable runnable = new Runnable() {
+			@Override
+			public void run() {
+				Log.d(TAG, "" + previousRelativeRange + " | " + relativeRange
+						+ "");
+				double rr = previousRelativeRange;
+				while (rr <= relativeRange) {
+					Message msg = new Message();
+					msg.obj = setGradient(rr);
+					bgHandler.sendMessage(msg);
+					try {
+						Thread.sleep(30);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					rr = rr + 0.01;
+				}
+			}
+		};
+		new Thread(runnable).start();
+	}
+
+	final Handler bgHandler = new Handler() {
+		public void handleMessage(Message msg) {
+			ll.setBackgroundDrawable((Drawable) msg.obj);
+		}
+	};
 
 	public void loadSettings() {
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);

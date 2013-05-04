@@ -47,5 +47,8 @@
     <string name="speed_decrease">Too high speed</string>
     <string name="title_activity_after_drive_fragment2">AfterDriveFragment2</string>
     <string name="action_settings">Settings</string>
+    <string name="good_charge">Your EV still has a good amount of charge remaining.</string>
+    <string name="bad_charge">Your EV might need charging before the next trip.</string>
+    <string name="no_charge">Your EV might not make this trip without charging.</string>
 
 </resources>

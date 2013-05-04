@@ -155,8 +155,8 @@ public final class R {
         public static final int tv_brake_desc=0x7f090053;
         public static final int tv_charge_gained=0x7f090017;
         public static final int tv_charge_left=0x7f09002a;
-        public static final int tv_city_desc=0x7f09000b;
-        public static final int tv_city_km=0x7f09000c;
+        public static final int tv_city_desc=0x7f09000c;
+        public static final int tv_city_km=0x7f09000b;
         public static final int tv_city_range=0x7f09000a;
         public static final int tv_distance_traveled=0x7f090059;
         public static final int tv_distance_traveled_desc=0x7f090056;
@@ -164,8 +164,8 @@ public final class R {
         public static final int tv_ending_range=0x7f090035;
         public static final int tv_est_range_remain=0x7f090004;
         public static final int tv_est_range_remain_after=0x7f090037;
-        public static final int tv_highway_desc=0x7f090007;
-        public static final int tv_highway_km=0x7f090008;
+        public static final int tv_highway_desc=0x7f090008;
+        public static final int tv_highway_km=0x7f090007;
         public static final int tv_highway_range=0x7f090006;
         public static final int tv_km=0x7f090003;
         public static final int tv_km_after=0x7f090036;
@@ -206,6 +206,7 @@ public final class R {
         public static final int action_settings=0x7f06002d;
         public static final int app_name=0x7f060000;
         public static final int app_name_caps=0x7f060001;
+        public static final int bad_charge=0x7f06002f;
         public static final int battery_range=0x7f06000a;
         public static final int brake_desc=0x7f060019;
         public static final int charge_ex=0x7f060025;
@@ -220,10 +221,12 @@ public final class R {
         public static final int est_range_remain=0x7f060012;
         public static final int ev_compatible=0x7f060027;
         public static final int example_km=0x7f06000f;
+        public static final int good_charge=0x7f06002e;
         public static final int hello_world=0x7f060011;
         public static final int highway_desc=0x7f060014;
         public static final int highway_ex=0x7f060015;
         public static final int km=0x7f060013;
+        public static final int no_charge=0x7f060030;
         public static final int points=0x7f060002;
         public static final int range_decrease=0x7f060029;
         public static final int range_decrease_desc=0x7f06001b;

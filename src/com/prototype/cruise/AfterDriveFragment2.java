@@ -147,6 +147,28 @@ public class AfterDriveFragment2 extends Fragment {
 		tvRangeDecrease = (TextView) v.findViewById(R.id.tv_range_decrease);
 		tvDistanceTraveled = (TextView) v
 				.findViewById(R.id.tv_distance_traveled);
+		
+		// initialize stars
+		ivSpeedStar1 = (ImageView) v.findViewById(R.id.iv_speed_star1);
+		ivSpeedStar2 = (ImageView) v.findViewById(R.id.iv_speed_star2);
+		ivSpeedStar3 = (ImageView) v.findViewById(R.id.iv_speed_star3);
+		ivSpeedStar4 = (ImageView) v.findViewById(R.id.iv_speed_star4);
+		ivSpeedStar5 = (ImageView) v.findViewById(R.id.iv_speed_star5);
+		ivAccStar1 = (ImageView) v.findViewById(R.id.iv_acc_star1);
+		ivAccStar2 = (ImageView) v.findViewById(R.id.iv_acc_star2);
+		ivAccStar3 = (ImageView) v.findViewById(R.id.iv_acc_star3);
+		ivAccStar4 = (ImageView) v.findViewById(R.id.iv_acc_star4);
+		ivAccStar5 = (ImageView) v.findViewById(R.id.iv_acc_star5);
+		ivBrakeStar1 = (ImageView) v.findViewById(R.id.iv_brake_star1);
+		ivBrakeStar2 = (ImageView) v.findViewById(R.id.iv_brake_star2);
+		ivBrakeStar3 = (ImageView) v.findViewById(R.id.iv_brake_star3);
+		ivBrakeStar4 = (ImageView) v.findViewById(R.id.iv_brake_star4);
+		ivBrakeStar5 = (ImageView) v.findViewById(R.id.iv_brake_star5);
+		ivRouteStar1 = (ImageView) v.findViewById(R.id.iv_route_star1);
+		ivRouteStar2 = (ImageView) v.findViewById(R.id.iv_route_star2);
+		ivRouteStar3 = (ImageView) v.findViewById(R.id.iv_route_star3);
+		ivRouteStar4 = (ImageView) v.findViewById(R.id.iv_route_star4);
+		ivRouteStar5 = (ImageView) v.findViewById(R.id.iv_route_star5);
 	}
 
 	public void setFonts() {
