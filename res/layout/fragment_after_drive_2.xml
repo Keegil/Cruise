@@ -172,7 +172,7 @@
                     android:layout_height="@dimen/star_size"
                     android:layout_toRightOf="@id/iv_speed"
                     android:scaleType="fitXY"
-                    android:src="@drawable/starfilled" />
+                    android:src="@drawable/starempty" />
 
                 <ImageView
                     android:id="@+id/iv_speed_star2"
@@ -180,7 +180,7 @@
                     android:layout_height="@dimen/star_size"
                     android:layout_toRightOf="@id/iv_speed_star1"
                     android:scaleType="fitXY"
-                    android:src="@drawable/starfilled" />
+                    android:src="@drawable/starempty" />
 
                 <ImageView
                     android:id="@+id/iv_speed_star3"
@@ -188,7 +188,7 @@
                     android:layout_height="@dimen/star_size"
                     android:layout_toRightOf="@id/iv_speed_star2"
                     android:scaleType="fitXY"
-                    android:src="@drawable/starfilled" />
+                    android:src="@drawable/starempty" />
 
                 <ImageView
                     android:id="@+id/iv_speed_star4"
@@ -196,7 +196,7 @@
                     android:layout_height="@dimen/star_size"
                     android:layout_toRightOf="@id/iv_speed_star3"
                     android:scaleType="fitXY"
-                    android:src="@drawable/starfilled" />
+                    android:src="@drawable/starempty" />
 
                 <ImageView
                     android:id="@+id/iv_speed_star5"
@@ -204,7 +204,7 @@
                     android:layout_height="@dimen/star_size"
                     android:layout_toRightOf="@id/iv_speed_star4"
                     android:scaleType="fitXY"
-                    android:src="@drawable/starfilled" />
+                    android:src="@drawable/starempty" />
 
                 <TextView
                     android:id="@+id/tv_speed_desc"
@@ -237,7 +237,7 @@
                     android:layout_height="@dimen/star_size"
                     android:layout_toRightOf="@id/iv_acc"
                     android:scaleType="fitXY"
-                    android:src="@drawable/starfilled" />
+                    android:src="@drawable/starempty" />
 
                 <ImageView
                     android:id="@+id/iv_acc_star2"
@@ -245,7 +245,7 @@
                     android:layout_height="@dimen/star_size"
                     android:layout_toRightOf="@id/iv_acc_star1"
                     android:scaleType="fitXY"
-                    android:src="@drawable/starfilled" />
+                    android:src="@drawable/starempty" />
 
                 <ImageView
                     android:id="@+id/iv_acc_star3"
@@ -253,7 +253,7 @@
                     android:layout_height="@dimen/star_size"
                     android:layout_toRightOf="@id/iv_acc_star2"
                     android:scaleType="fitXY"
-                    android:src="@drawable/starfilled" />
+                    android:src="@drawable/starempty" />
 
                 <ImageView
                     android:id="@+id/iv_acc_star4"
@@ -261,7 +261,7 @@
                     android:layout_height="@dimen/star_size"
                     android:layout_toRightOf="@id/iv_acc_star3"
                     android:scaleType="fitXY"
-                    android:src="@drawable/starfilled" />
+                    android:src="@drawable/starempty" />
 
                 <ImageView
                     android:id="@+id/iv_acc_star5"
@@ -269,7 +269,7 @@
                     android:layout_height="@dimen/star_size"
                     android:layout_toRightOf="@id/iv_acc_star4"
                     android:scaleType="fitXY"
-                    android:src="@drawable/starfilled" />
+                    android:src="@drawable/starempty" />
 
                 <TextView
                     android:id="@+id/tv_acc_desc"
@@ -302,7 +302,7 @@
                     android:layout_height="@dimen/star_size"
                     android:layout_toRightOf="@id/iv_route"
                     android:scaleType="fitXY"
-                    android:src="@drawable/starfilled" />
+                    android:src="@drawable/starempty" />
 
                 <ImageView
                     android:id="@+id/iv_route_star2"
@@ -310,7 +310,7 @@
                     android:layout_height="@dimen/star_size"
                     android:layout_toRightOf="@id/iv_route_star1"
                     android:scaleType="fitXY"
-                    android:src="@drawable/starfilled" />
+                    android:src="@drawable/starempty" />
 
                 <ImageView
                     android:id="@+id/iv_route_star3"
@@ -318,7 +318,7 @@
                     android:layout_height="@dimen/star_size"
                     android:layout_toRightOf="@id/iv_route_star2"
                     android:scaleType="fitXY"
-                    android:src="@drawable/starfilled" />
+                    android:src="@drawable/starempty" />
 
                 <ImageView
                     android:id="@+id/iv_route_star4"
@@ -326,7 +326,7 @@
                     android:layout_height="@dimen/star_size"
                     android:layout_toRightOf="@id/iv_route_star3"
                     android:scaleType="fitXY"
-                    android:src="@drawable/starfilled" />
+                    android:src="@drawable/starempty" />
 
                 <ImageView
                     android:id="@+id/iv_route_star5"
@@ -334,7 +334,7 @@
                     android:layout_height="@dimen/star_size"
                     android:layout_toRightOf="@id/iv_route_star4"
                     android:scaleType="fitXY"
-                    android:src="@drawable/starfilled" />
+                    android:src="@drawable/starempty" />
 
                 <TextView
                     android:id="@+id/tv_route_desc"
@@ -367,7 +367,7 @@
                     android:layout_height="@dimen/star_size"
                     android:layout_toRightOf="@id/iv_brake"
                     android:scaleType="fitXY"
-                    android:src="@drawable/starfilled" />
+                    android:src="@drawable/starempty" />
 
                 <ImageView
                     android:id="@+id/iv_brake_star2"
@@ -375,7 +375,7 @@
                     android:layout_height="@dimen/star_size"
                     android:layout_toRightOf="@id/iv_brake_star1"
                     android:scaleType="fitXY"
-                    android:src="@drawable/starfilled" />
+                    android:src="@drawable/starempty" />
 
                 <ImageView
                     android:id="@+id/iv_brake_star3"
@@ -383,7 +383,7 @@
                     android:layout_height="@dimen/star_size"
                     android:layout_toRightOf="@id/iv_brake_star2"
                     android:scaleType="fitXY"
-                    android:src="@drawable/starfilled" />
+                    android:src="@drawable/starempty" />
 
                 <ImageView
                     android:id="@+id/iv_brake_star4"
@@ -391,7 +391,7 @@
                     android:layout_height="@dimen/star_size"
                     android:layout_toRightOf="@id/iv_brake_star3"
                     android:scaleType="fitXY"
-                    android:src="@drawable/starfilled" />
+                    android:src="@drawable/starempty" />
 
                 <ImageView
                     android:id="@+id/iv_brake_star5"
@@ -399,7 +399,7 @@
                     android:layout_height="@dimen/star_size"
                     android:layout_toRightOf="@id/iv_brake_star4"
                     android:scaleType="fitXY"
-                    android:src="@drawable/starfilled" />
+                    android:src="@drawable/starempty" />
 
                 <TextView
                     android:id="@+id/tv_brake_desc"

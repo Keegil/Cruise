@@ -51,9 +51,10 @@ public final class R {
         public static final int ic_launcher=0x7f020005;
         public static final int route_icon=0x7f020006;
         public static final int speed_icon=0x7f020007;
-        public static final int starfilled=0x7f020008;
-        public static final int whitebar=0x7f020009;
-        public static final int whiteemptybar=0x7f02000a;
+        public static final int starempty=0x7f020008;
+        public static final int starfilled=0x7f020009;
+        public static final int whitebar=0x7f02000a;
+        public static final int whiteemptybar=0x7f02000b;
     }
     public static final class id {
         public static final int action_defaultacc=0x7f090069;

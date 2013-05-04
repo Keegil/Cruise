@@ -122,6 +122,13 @@ public class AfterDriveFragment2 extends Fragment {
 		return view;
 	}
 
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		setTextViews();
+		setStars();
+	}
+
 	public void init(View v) {
 		// initialize bars
 		llBar1 = (LinearLayout) v.findViewById(R.id.bar1_after2);
@@ -177,6 +184,109 @@ public class AfterDriveFragment2 extends Fragment {
 		ivRouteStar3 = (ImageView) v.findViewById(R.id.iv_route_star3);
 		ivRouteStar4 = (ImageView) v.findViewById(R.id.iv_route_star4);
 		ivRouteStar5 = (ImageView) v.findViewById(R.id.iv_route_star5);
+	}
+
+	public void setTextViews() {
+		tvEndingRange.setText("" + currentRange + "");
+		int startingRange = currentRange + rangeUsed;
+		tvStartRange.setText("" + startingRange + " km");
+		tvRangeDecrease.setText("" + rangeUsed + " km");
+		tvDistanceTraveled.setText("" + driveLength + " km");
+	}
+
+	public void setStars() {
+
+		// Set speed stars
+		if (speedScore == 1) {
+			ivSpeedStar1.setImageResource(R.drawable.starfilled);
+		} else if (speedScore == 2) {
+			ivSpeedStar1.setImageResource(R.drawable.starfilled);
+			ivSpeedStar2.setImageResource(R.drawable.starfilled);
+		} else if (speedScore == 3) {
+			ivSpeedStar1.setImageResource(R.drawable.starfilled);
+			ivSpeedStar2.setImageResource(R.drawable.starfilled);
+			ivSpeedStar3.setImageResource(R.drawable.starfilled);
+		} else if (speedScore == 4) {
+			ivSpeedStar1.setImageResource(R.drawable.starfilled);
+			ivSpeedStar2.setImageResource(R.drawable.starfilled);
+			ivSpeedStar3.setImageResource(R.drawable.starfilled);
+			ivSpeedStar4.setImageResource(R.drawable.starfilled);
+		} else if (speedScore == 5) {
+			ivSpeedStar1.setImageResource(R.drawable.starfilled);
+			ivSpeedStar2.setImageResource(R.drawable.starfilled);
+			ivSpeedStar3.setImageResource(R.drawable.starfilled);
+			ivSpeedStar4.setImageResource(R.drawable.starfilled);
+			ivSpeedStar5.setImageResource(R.drawable.starfilled);
+		}
+
+		// Set acceleration stars
+		if (accScore == 1) {
+			ivAccStar1.setImageResource(R.drawable.starfilled);
+		} else if (accScore == 2) {
+			ivAccStar1.setImageResource(R.drawable.starfilled);
+			ivAccStar2.setImageResource(R.drawable.starfilled);
+		} else if (accScore == 3) {
+			ivAccStar1.setImageResource(R.drawable.starfilled);
+			ivAccStar2.setImageResource(R.drawable.starfilled);
+			ivAccStar3.setImageResource(R.drawable.starfilled);
+		} else if (accScore == 4) {
+			ivAccStar1.setImageResource(R.drawable.starfilled);
+			ivAccStar2.setImageResource(R.drawable.starfilled);
+			ivAccStar3.setImageResource(R.drawable.starfilled);
+			ivAccStar4.setImageResource(R.drawable.starfilled);
+		} else if (accScore == 5) {
+			ivAccStar1.setImageResource(R.drawable.starfilled);
+			ivAccStar2.setImageResource(R.drawable.starfilled);
+			ivAccStar3.setImageResource(R.drawable.starfilled);
+			ivAccStar4.setImageResource(R.drawable.starfilled);
+			ivAccStar5.setImageResource(R.drawable.starfilled);
+		}
+
+		// Set brake stars
+		if (brakeScore == 1) {
+			ivBrakeStar1.setImageResource(R.drawable.starfilled);
+		} else if (brakeScore == 2) {
+			ivBrakeStar1.setImageResource(R.drawable.starfilled);
+			ivBrakeStar2.setImageResource(R.drawable.starfilled);
+		} else if (brakeScore == 3) {
+			ivBrakeStar1.setImageResource(R.drawable.starfilled);
+			ivBrakeStar2.setImageResource(R.drawable.starfilled);
+			ivBrakeStar3.setImageResource(R.drawable.starfilled);
+		} else if (brakeScore == 4) {
+			ivBrakeStar1.setImageResource(R.drawable.starfilled);
+			ivBrakeStar2.setImageResource(R.drawable.starfilled);
+			ivBrakeStar3.setImageResource(R.drawable.starfilled);
+			ivBrakeStar4.setImageResource(R.drawable.starfilled);
+		} else if (brakeScore == 5) {
+			ivBrakeStar1.setImageResource(R.drawable.starfilled);
+			ivBrakeStar2.setImageResource(R.drawable.starfilled);
+			ivBrakeStar3.setImageResource(R.drawable.starfilled);
+			ivBrakeStar4.setImageResource(R.drawable.starfilled);
+			ivBrakeStar5.setImageResource(R.drawable.starfilled);
+		}
+
+		// Set route stars
+		if (routeScore == 1) {
+			ivRouteStar1.setImageResource(R.drawable.starfilled);
+		} else if (routeScore == 2) {
+			ivRouteStar1.setImageResource(R.drawable.starfilled);
+			ivRouteStar2.setImageResource(R.drawable.starfilled);
+		} else if (routeScore == 3) {
+			ivRouteStar1.setImageResource(R.drawable.starfilled);
+			ivRouteStar2.setImageResource(R.drawable.starfilled);
+			ivRouteStar3.setImageResource(R.drawable.starfilled);
+		} else if (routeScore == 4) {
+			ivRouteStar1.setImageResource(R.drawable.starfilled);
+			ivRouteStar2.setImageResource(R.drawable.starfilled);
+			ivRouteStar3.setImageResource(R.drawable.starfilled);
+			ivRouteStar4.setImageResource(R.drawable.starfilled);
+		} else if (routeScore == 5) {
+			ivRouteStar1.setImageResource(R.drawable.starfilled);
+			ivRouteStar2.setImageResource(R.drawable.starfilled);
+			ivRouteStar3.setImageResource(R.drawable.starfilled);
+			ivRouteStar4.setImageResource(R.drawable.starfilled);
+			ivRouteStar5.setImageResource(R.drawable.starfilled);
+		}
 	}
 
 	public void setFonts() {
@@ -343,7 +453,7 @@ public class AfterDriveFragment2 extends Fragment {
 		routeFail = data.getInt("routeFail", routeFail);
 		chargedRange = data.getInt("chargedRange", chargedRange);
 	}
-	
+
 	public void loadScore() {
 		SharedPreferences data = getActivity().getSharedPreferences(SCORE_NAME,
 				0);

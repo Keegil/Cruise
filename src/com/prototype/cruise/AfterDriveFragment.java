@@ -238,6 +238,9 @@ public class AfterDriveFragment extends Fragment {
 		} else if (relativeRange < 0.15) {
 			tvChargeLeft.setText(getResources().getString(R.string.no_charge));
 		}
+		
+		int accumulatedScore = accScore + brakeScore + speedScore + routeScore;
+		tvStars.setText("" + accumulatedScore + "/20");
 	}
 
 	public void drawBackground() {
@@ -281,34 +284,34 @@ public class AfterDriveFragment extends Fragment {
 
 		// Calculate acceleration score
 		double accPerKm = accMistakes / driveLength;
-		if (accPerKm >= 42) {
+		if (accPerKm >= 45) {
 			accScore = 0;
-		} else if (accPerKm < 42 && accPerKm >= 35) {
+		} else if (accPerKm < 45 && accPerKm >= 36) {
 			accScore = 1;
-		} else if (accPerKm < 35 && accPerKm >= 28) {
+		} else if (accPerKm < 36 && accPerKm >= 27) {
 			accScore = 2;
-		} else if (accPerKm < 21 && accPerKm >= 14) {
+		} else if (accPerKm < 27 && accPerKm >= 18) {
 			accScore = 3;
-		} else if (accPerKm < 14 && accPerKm >= 7) {
+		} else if (accPerKm < 18 && accPerKm >= 9) {
 			accScore = 4;
-		} else if (accPerKm < 7 && accPerKm >= 0) {
+		} else if (accPerKm < 9 && accPerKm >= 0) {
 			accScore = 5;
 		}
 		Log.d(TAG, "accPerKm: " + accPerKm + "| accScore: " + accScore + "");
 
 		// Calculate brake score
 		double brakePerKm = brakeMistakes / driveLength;
-		if (brakePerKm >= 36) {
+		if (brakePerKm >= 45) {
 			brakeScore = 0;
-		} else if (brakePerKm < 36 && brakePerKm >= 30) {
+		} else if (brakePerKm < 45 && brakePerKm >= 36) {
 			brakeScore = 1;
-		} else if (brakePerKm < 30 && brakePerKm >= 24) {
+		} else if (brakePerKm < 36 && brakePerKm >= 27) {
 			brakeScore = 2;
-		} else if (brakePerKm < 24 && brakePerKm >= 18) {
+		} else if (brakePerKm < 27 && brakePerKm >= 18) {
 			brakeScore = 3;
-		} else if (brakePerKm < 12 && brakePerKm >= 6) {
+		} else if (brakePerKm < 18 && brakePerKm >= 9) {
 			brakeScore = 4;
-		} else if (brakePerKm < 6 && brakePerKm >= 0) {
+		} else if (brakePerKm < 9 && brakePerKm >= 0) {
 			brakeScore = 5;
 		}
 		Log.d(TAG, "brakePerKm: " + brakePerKm + "| brakeScore: " + brakeScore
@@ -316,17 +319,17 @@ public class AfterDriveFragment extends Fragment {
 
 		// Calculate speed score
 		double speedPerKm = speedMistakes / driveLength;
-		if (speedPerKm >= 36) {
+		if (speedPerKm >= 45) {
 			speedScore = 0;
-		} else if (speedPerKm < 36 && speedPerKm >= 30) {
+		} else if (speedPerKm < 45 && speedPerKm >= 36) {
 			speedScore = 1;
-		} else if (speedPerKm < 30 && speedPerKm >= 24) {
+		} else if (speedPerKm < 36 && speedPerKm >= 27) {
 			speedScore = 2;
-		} else if (speedPerKm < 24 && speedPerKm >= 18) {
+		} else if (speedPerKm < 27 && speedPerKm >= 18) {
 			speedScore = 3;
-		} else if (speedPerKm < 12 && speedPerKm >= 6) {
+		} else if (speedPerKm < 18 && speedPerKm >= 9) {
 			speedScore = 4;
-		} else if (speedPerKm < 6 && speedPerKm >= 0) {
+		} else if (speedPerKm < 9 && speedPerKm >= 0) {
 			speedScore = 5;
 		}
 		speedScore = 5;
