@@ -6,52 +6,41 @@ import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class AfterDriveFragment2 extends Fragment {
+public class AfterDriveFragmentDriveDetails extends Fragment {
 
-	// declare logging variables
-	private static final String TAG = "DriveActivity";
+	// Declare logging variable.
+	private static final String TAG = "AfterDriveFragmentDriveDetails";
 
-	// declare preference variables and set defaults
-	public static final String PREFS_NAME = "MyPrefsFile";
-	int defaultRange = 120;
-	int defaultAccMistakes = 4;
-	int defaultSpeedMistakes = 1;
-	int defaultDriveCycle = 11;
+	// Declare parent activity.
+	FragmentActivity afterDriveActivity;
 
-	// declare data variables
-	public static final String DATA_NAME = "MyDataFile";
-	int currentRange = 120;
-	int driveLength = 0;
-	int rangeUsed = 0;
-	int accMistakes = 0;
-	int speedMistakes = 0;
-	int brakeMistakes = 0;
-	int routeFail = 0;
-	int chargedRange = 0;
+	// Declare background and gradient.
+	LinearLayout ll;
+	GradientDrawable gdBackground;
 
-	// declare score variables
-	public static final String SCORE_NAME = "MyScoreFile";
-	int accScore = 0;
-	int brakeScore = 0;
-	int speedScore = 0;
-	int routeScore = 0;
+	// Declare bars.
+	LinearLayout llBar1;
+	LinearLayout llBar2;
+	LinearLayout llBar3;
+	LinearLayout llBar4;
+	LinearLayout llBar5;
+	LinearLayout llBar6;
+	LinearLayout llBar7;
+	LinearLayout llBar8;
+	LinearLayout llBar9;
 
-	// declare date setting
-	public static final String DATE_NAME = "MyDateFile";
-	long lastTime = 0;
-
-	// declare database
-	private GPSDataSource gpsDataSource;
-	private DrivingStatsDataSource statSource;
-
-	// declare textviews
+	// Declare TextViews.
 	TextView tvEndingRange;
 	TextView tvKm;
 	TextView tvEstRangeRemain;
@@ -65,21 +54,6 @@ public class AfterDriveFragment2 extends Fragment {
 	TextView tvStartRange;
 	TextView tvRangeDecrease;
 	TextView tvDistanceTraveled;
-
-	// declare bars
-	LinearLayout llBar1;
-	LinearLayout llBar2;
-	LinearLayout llBar3;
-	LinearLayout llBar4;
-	LinearLayout llBar5;
-	LinearLayout llBar6;
-	LinearLayout llBar7;
-	LinearLayout llBar8;
-	LinearLayout llBar9;
-
-	// declare background and gradient
-	LinearLayout ll;
-	GradientDrawable gdBackground;
 
 	// declare stars
 	ImageView ivSpeedStar1;
@@ -111,26 +85,25 @@ public class AfterDriveFragment2 extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_after_drive_2,
-				container, false);
+		View view = inflater
+				.inflate(R.layout.fragment_after_drive_drive_completed,
+						container, false);
 		init(view);
-		setFonts();
-		loadSettings();
-		loadData();
-		loadScore();
-		drawBars();
 		return view;
 	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		setFonts();
 		setTextViews();
 		setStars();
+		drawBars();
+		drawBackground();
 	}
 
 	public void init(View v) {
-		// initialize bars
+		// Initialize bars.
 		llBar1 = (LinearLayout) v.findViewById(R.id.bar1_after2);
 		llBar2 = (LinearLayout) v.findViewById(R.id.bar2_after2);
 		llBar3 = (LinearLayout) v.findViewById(R.id.bar3_after2);
@@ -187,31 +160,54 @@ public class AfterDriveFragment2 extends Fragment {
 	}
 
 	public void setTextViews() {
-		tvEndingRange.setText("" + currentRange + "");
-		int startingRange = currentRange + rangeUsed;
+		// Set length of TextViews to avoid font clipping.
+		int length = 0;
+		int width = 0;
+		int height = (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_SP, 90, getResources()
+						.getDisplayMetrics());
+		RelativeLayout.LayoutParams layoutParams;
+		length = String.valueOf(AfterDriveActivity.currentRange).length();
+		Log.d(TAG, "" + length + "");
+		if (length == 3) {
+			width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+					130, getResources().getDisplayMetrics());
+		} else if (length == 2) {
+			width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+					90, getResources().getDisplayMetrics());
+		} else if (length == 1) {
+			width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+					48, getResources().getDisplayMetrics());
+		}
+		layoutParams = new RelativeLayout.LayoutParams(width, height);
+		tvEndingRange.setLayoutParams(layoutParams);
+
+		// Set TextViews to display correct information.
+		tvEndingRange.setText("" + AfterDriveActivity.currentRange + "");
+		int startingRange = AfterDriveActivity.currentRange
+				+ AfterDriveActivity.rangeUsed;
 		tvStartRange.setText("" + startingRange + " km");
-		tvRangeDecrease.setText("" + rangeUsed + " km");
-		tvDistanceTraveled.setText("" + driveLength + " km");
+		tvRangeDecrease.setText("" + AfterDriveActivity.rangeUsed + " km");
+		tvDistanceTraveled.setText("" + AfterDriveActivity.driveLength + " km");
 	}
 
 	public void setStars() {
-
-		// Set speed stars
-		if (speedScore == 1) {
+		// Set speed stars.
+		if (AfterDriveActivity.speedScore == 1) {
 			ivSpeedStar1.setImageResource(R.drawable.starfilled);
-		} else if (speedScore == 2) {
+		} else if (AfterDriveActivity.speedScore == 2) {
 			ivSpeedStar1.setImageResource(R.drawable.starfilled);
 			ivSpeedStar2.setImageResource(R.drawable.starfilled);
-		} else if (speedScore == 3) {
+		} else if (AfterDriveActivity.speedScore == 3) {
 			ivSpeedStar1.setImageResource(R.drawable.starfilled);
 			ivSpeedStar2.setImageResource(R.drawable.starfilled);
 			ivSpeedStar3.setImageResource(R.drawable.starfilled);
-		} else if (speedScore == 4) {
+		} else if (AfterDriveActivity.speedScore == 4) {
 			ivSpeedStar1.setImageResource(R.drawable.starfilled);
 			ivSpeedStar2.setImageResource(R.drawable.starfilled);
 			ivSpeedStar3.setImageResource(R.drawable.starfilled);
 			ivSpeedStar4.setImageResource(R.drawable.starfilled);
-		} else if (speedScore == 5) {
+		} else if (AfterDriveActivity.speedScore == 5) {
 			ivSpeedStar1.setImageResource(R.drawable.starfilled);
 			ivSpeedStar2.setImageResource(R.drawable.starfilled);
 			ivSpeedStar3.setImageResource(R.drawable.starfilled);
@@ -220,21 +216,21 @@ public class AfterDriveFragment2 extends Fragment {
 		}
 
 		// Set acceleration stars
-		if (accScore == 1) {
+		if (AfterDriveActivity.accScore == 1) {
 			ivAccStar1.setImageResource(R.drawable.starfilled);
-		} else if (accScore == 2) {
+		} else if (AfterDriveActivity.accScore == 2) {
 			ivAccStar1.setImageResource(R.drawable.starfilled);
 			ivAccStar2.setImageResource(R.drawable.starfilled);
-		} else if (accScore == 3) {
+		} else if (AfterDriveActivity.accScore == 3) {
 			ivAccStar1.setImageResource(R.drawable.starfilled);
 			ivAccStar2.setImageResource(R.drawable.starfilled);
 			ivAccStar3.setImageResource(R.drawable.starfilled);
-		} else if (accScore == 4) {
+		} else if (AfterDriveActivity.accScore == 4) {
 			ivAccStar1.setImageResource(R.drawable.starfilled);
 			ivAccStar2.setImageResource(R.drawable.starfilled);
 			ivAccStar3.setImageResource(R.drawable.starfilled);
 			ivAccStar4.setImageResource(R.drawable.starfilled);
-		} else if (accScore == 5) {
+		} else if (AfterDriveActivity.accScore == 5) {
 			ivAccStar1.setImageResource(R.drawable.starfilled);
 			ivAccStar2.setImageResource(R.drawable.starfilled);
 			ivAccStar3.setImageResource(R.drawable.starfilled);
@@ -243,21 +239,21 @@ public class AfterDriveFragment2 extends Fragment {
 		}
 
 		// Set brake stars
-		if (brakeScore == 1) {
+		if (AfterDriveActivity.brakeScore == 1) {
 			ivBrakeStar1.setImageResource(R.drawable.starfilled);
-		} else if (brakeScore == 2) {
+		} else if (AfterDriveActivity.brakeScore == 2) {
 			ivBrakeStar1.setImageResource(R.drawable.starfilled);
 			ivBrakeStar2.setImageResource(R.drawable.starfilled);
-		} else if (brakeScore == 3) {
+		} else if (AfterDriveActivity.brakeScore == 3) {
 			ivBrakeStar1.setImageResource(R.drawable.starfilled);
 			ivBrakeStar2.setImageResource(R.drawable.starfilled);
 			ivBrakeStar3.setImageResource(R.drawable.starfilled);
-		} else if (brakeScore == 4) {
+		} else if (AfterDriveActivity.brakeScore == 4) {
 			ivBrakeStar1.setImageResource(R.drawable.starfilled);
 			ivBrakeStar2.setImageResource(R.drawable.starfilled);
 			ivBrakeStar3.setImageResource(R.drawable.starfilled);
 			ivBrakeStar4.setImageResource(R.drawable.starfilled);
-		} else if (brakeScore == 5) {
+		} else if (AfterDriveActivity.brakeScore == 5) {
 			ivBrakeStar1.setImageResource(R.drawable.starfilled);
 			ivBrakeStar2.setImageResource(R.drawable.starfilled);
 			ivBrakeStar3.setImageResource(R.drawable.starfilled);
@@ -266,21 +262,21 @@ public class AfterDriveFragment2 extends Fragment {
 		}
 
 		// Set route stars
-		if (routeScore == 1) {
+		if (AfterDriveActivity.routeScore == 1) {
 			ivRouteStar1.setImageResource(R.drawable.starfilled);
-		} else if (routeScore == 2) {
+		} else if (AfterDriveActivity.routeScore == 2) {
 			ivRouteStar1.setImageResource(R.drawable.starfilled);
 			ivRouteStar2.setImageResource(R.drawable.starfilled);
-		} else if (routeScore == 3) {
+		} else if (AfterDriveActivity.routeScore == 3) {
 			ivRouteStar1.setImageResource(R.drawable.starfilled);
 			ivRouteStar2.setImageResource(R.drawable.starfilled);
 			ivRouteStar3.setImageResource(R.drawable.starfilled);
-		} else if (routeScore == 4) {
+		} else if (AfterDriveActivity.routeScore == 4) {
 			ivRouteStar1.setImageResource(R.drawable.starfilled);
 			ivRouteStar2.setImageResource(R.drawable.starfilled);
 			ivRouteStar3.setImageResource(R.drawable.starfilled);
 			ivRouteStar4.setImageResource(R.drawable.starfilled);
-		} else if (routeScore == 5) {
+		} else if (AfterDriveActivity.routeScore == 5) {
 			ivRouteStar1.setImageResource(R.drawable.starfilled);
 			ivRouteStar2.setImageResource(R.drawable.starfilled);
 			ivRouteStar3.setImageResource(R.drawable.starfilled);
@@ -290,7 +286,7 @@ public class AfterDriveFragment2 extends Fragment {
 	}
 
 	public void setFonts() {
-		// initialize typefaces
+		// Declare & initialize typefaces.
 		Typeface tfHelvetica = Typeface.createFromAsset(getActivity()
 				.getAssets(), "fonts/helvetica_bold_oblique.ttf");
 		Typeface tfMyriadRegular = Typeface.createFromAsset(getActivity()
@@ -298,7 +294,7 @@ public class AfterDriveFragment2 extends Fragment {
 		Typeface tfMyriadItalic = Typeface.createFromAsset(getActivity()
 				.getAssets(), "fonts/myriad_italic.otf");
 
-		// set correct fonts to views
+		// Set correct fonts to views.
 		tvEndingRange.setTypeface(tfHelvetica);
 		tvKm.setTypeface(tfMyriadRegular);
 		tvEstRangeRemain.setTypeface(tfMyriadItalic);
@@ -312,6 +308,78 @@ public class AfterDriveFragment2 extends Fragment {
 		tvStartRange.setTypeface(tfMyriadRegular);
 		tvRangeDecrease.setTypeface(tfMyriadRegular);
 		tvDistanceTraveled.setTypeface(tfMyriadRegular);
+	}
+
+	public void drawBars() {
+		// Check relative range and set bars accordingly.
+		if (AfterDriveActivity.relativeRange <= 0.9
+				&& AfterDriveActivity.relativeRange > 0.8) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+		} else if (AfterDriveActivity.relativeRange <= 0.8
+				&& AfterDriveActivity.relativeRange > 0.7) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+		} else if (AfterDriveActivity.relativeRange <= 0.7
+				&& AfterDriveActivity.relativeRange > 0.6) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+		} else if (AfterDriveActivity.relativeRange <= 0.6
+				&& AfterDriveActivity.relativeRange > 0.5) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+		} else if (AfterDriveActivity.relativeRange <= 0.5
+				&& AfterDriveActivity.relativeRange > 0.4) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+		} else if (AfterDriveActivity.relativeRange <= 0.4
+				&& AfterDriveActivity.relativeRange > 0.3) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
+		} else if (AfterDriveActivity.relativeRange <= 0.3
+				&& AfterDriveActivity.relativeRange > 0.2) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
+		} else if (AfterDriveActivity.relativeRange <= 0.2
+				&& AfterDriveActivity.relativeRange > 0.1) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar8.setBackgroundResource(R.drawable.whiteemptybar);
+		} else if (AfterDriveActivity.relativeRange <= 0.1
+				&& AfterDriveActivity.relativeRange >= 0) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar8.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar9.setBackgroundResource(R.drawable.whiteemptybar);
+		}
+	}
+
+	public void drawBackground() {
+		ll.setBackgroundDrawable(setGradient(AfterDriveActivity.relativeRange));
 	}
 
 	public GradientDrawable setGradient(double rr) {
@@ -363,143 +431,4 @@ public class AfterDriveFragment2 extends Fragment {
 		gdBackground.setCornerRadius(0f);
 		return gdBackground;
 	}
-
-	public void drawBars() {
-		// check relative range and set background and bars accordingly
-		double doubleCurrentRange = (double) currentRange;
-		double doubleDefaultRange = (double) defaultRange;
-		double relativeRange = doubleCurrentRange / doubleDefaultRange;
-		if (relativeRange <= 1 && relativeRange > 0.9) {
-
-		} else if (relativeRange <= 0.9 && relativeRange > 0.8) {
-			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
-		} else if (relativeRange <= 0.8 && relativeRange > 0.7) {
-			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
-		} else if (relativeRange <= 0.7 && relativeRange > 0.6) {
-			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
-		} else if (relativeRange <= 0.6 && relativeRange > 0.5) {
-			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
-		} else if (relativeRange <= 0.5 && relativeRange > 0.4) {
-			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
-		} else if (relativeRange <= 0.4 && relativeRange > 0.3) {
-			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
-		} else if (relativeRange <= 0.3 && relativeRange > 0.2) {
-			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
-		} else if (relativeRange <= 0.2 && relativeRange > 0.1) {
-			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar8.setBackgroundResource(R.drawable.whiteemptybar);
-		} else if (relativeRange <= 0.1 && relativeRange >= 0) {
-			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar8.setBackgroundResource(R.drawable.whiteemptybar);
-			llBar9.setBackgroundResource(R.drawable.whiteemptybar);
-		}
-		ll.setBackgroundDrawable(setGradient(relativeRange));
-	}
-
-	public void loadSettings() {
-		SharedPreferences settings = getActivity().getSharedPreferences(
-				PREFS_NAME, 0);
-		defaultRange = settings.getInt("defaultRange", defaultRange);
-		defaultAccMistakes = settings.getInt("defaultAccMistakes",
-				defaultAccMistakes);
-		defaultSpeedMistakes = settings.getInt("defaultSpeedMistakes",
-				defaultSpeedMistakes);
-		defaultDriveCycle = settings.getInt("defaultDriveCycle",
-				defaultDriveCycle);
-	}
-
-	public void loadData() {
-		SharedPreferences data = getActivity().getSharedPreferences(DATA_NAME,
-				0);
-		currentRange = data.getInt("currentRange", currentRange);
-		driveLength = data.getInt("driveLength", driveLength);
-		rangeUsed = data.getInt("rangeUsed", rangeUsed);
-		accMistakes = data.getInt("accMistakes", accMistakes);
-		speedMistakes = data.getInt("speedMistakes", speedMistakes);
-		brakeMistakes = data.getInt("brakeMistakes", brakeMistakes);
-		routeFail = data.getInt("routeFail", routeFail);
-		chargedRange = data.getInt("chargedRange", chargedRange);
-	}
-
-	public void loadScore() {
-		SharedPreferences data = getActivity().getSharedPreferences(SCORE_NAME,
-				0);
-		accScore = data.getInt("accScore", accScore);
-		brakeScore = data.getInt("brakeScore", brakeScore);
-		speedScore = data.getInt("speedScore", speedScore);
-		routeScore = data.getInt("routeScore", routeScore);
-	}
-
-	public void loadDate() {
-		SharedPreferences date = getActivity().getSharedPreferences(DATE_NAME,
-				0);
-		lastTime = date.getLong("lastTime", lastTime);
-	}
-
-	public void saveSettings() {
-		SharedPreferences settings = getActivity().getSharedPreferences(
-				PREFS_NAME, 0);
-		SharedPreferences.Editor editor = settings.edit();
-		editor.putInt("defaultRange", defaultRange);
-		editor.putInt("defaultAccMistakes", defaultAccMistakes);
-		editor.putInt("defaultSpeedMistakes", defaultSpeedMistakes);
-		editor.commit();
-	}
-
-	public void saveData() {
-		SharedPreferences data = getActivity().getSharedPreferences(DATA_NAME,
-				0);
-		SharedPreferences.Editor editor = data.edit();
-		editor.putInt("currentRange", currentRange);
-		editor.putInt("driveLength", driveLength);
-		editor.putInt("rangeUsed", rangeUsed);
-		editor.putInt("accMistakes", accMistakes);
-		editor.putInt("speedMistakes", speedMistakes);
-		editor.putInt("brakeMistakes", brakeMistakes);
-		editor.putInt("routeFail", routeFail);
-		editor.putInt("chargedRange", chargedRange);
-		editor.commit();
-	}
-
-	public void saveDate() {
-		SharedPreferences date = getActivity().getSharedPreferences(DATE_NAME,
-				0);
-		SharedPreferences.Editor editor = date.edit();
-		editor.putLong("lastTime", lastTime);
-		editor.commit();
-	}
-
 }

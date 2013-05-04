@@ -13,6 +13,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,19 +21,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		OnClickListener {
 
 	// Declare & initialize logging variable.
-	private static final String TAG = "BeforeDriveFragment";
+	private static final String TAG = "BeforeDriveFragmentCurrentStatus";
 
 	// Declare parent activity.
 	FragmentActivity beforeDriveActivity;
 
 	// Declare background.
-	LinearLayout ll;
+	static LinearLayout ll;
 
 	// Declare bars.
 	LinearLayout llBar1;
@@ -157,7 +160,29 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 	}
 
 	public void setTextViews() {
-		// Set textviews to display correct information.
+		// Set length of TextViews to avoid font clipping.
+		int length = 0;
+		int width = 0;
+		int height = (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_SP, 90, getResources()
+						.getDisplayMetrics());
+		RelativeLayout.LayoutParams layoutParams;
+		length = String.valueOf(BeforeDriveActivity.currentRange).length();
+		Log.d(TAG, "" + length + "");
+		if (length == 3) {
+			width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+					130, getResources().getDisplayMetrics());
+		} else if (length == 2) {
+			width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+					90, getResources().getDisplayMetrics());
+		} else if (length == 1) {
+			width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+					48, getResources().getDisplayMetrics());
+		}
+		layoutParams = new RelativeLayout.LayoutParams(width, height);
+		tvStartingRange.setLayoutParams(layoutParams);
+
+		// Set TextViews to display correct information.
 		if (BeforeDriveActivity.firstTime) {
 			tvTimeParked.setText("Time Parked: 00:00:00");
 		} else {
@@ -327,7 +352,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 	}
 
 	// UI handler for changing gradient.
-	final Handler bgHandler = new Handler() {
+	static final Handler bgHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			ll.setBackgroundDrawable((Drawable) msg.obj);
 		}

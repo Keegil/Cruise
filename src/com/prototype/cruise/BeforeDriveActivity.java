@@ -1,7 +1,5 @@
 package com.prototype.cruise;
 
-import java.util.ArrayList;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,17 +11,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.EditText;
 
 public class BeforeDriveActivity extends FragmentActivity {
 
 	// Declare & initialize logging variable.
-	private static final String TAG = "BeforeDriveFragment";
+	private static final String TAG = "BeforeDriveActivity";
 
 	// Declare fragments.
 	BeforeDriveFragmentCurrentStatus beforeDriveFragmentCurrentStatus;
@@ -51,11 +46,9 @@ public class BeforeDriveActivity extends FragmentActivity {
 	public static final String DATE_NAME = "MyDateFile";
 	public static long lastTime = 0;
 
-	// declare temporary calculation variables
+	// Declare temporary calculation variables.
 	public static long timeDifference;
 	public static boolean firstTime;
-	public static double doubleCurrentRange;
-	public static double doubleDefaultRange;
 	public static double relativeRange;
 	public static int previousChargedRange;
 	public static double previousRelativeRange;
@@ -122,9 +115,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 						+ (chargedRange - previousChargedRange);
 			}
 		}
-		doubleCurrentRange = (double) currentRange;
-		doubleDefaultRange = (double) defaultRange;
-		relativeRange = doubleCurrentRange / doubleDefaultRange;
+		relativeRange = (double) currentRange / (double) defaultRange;
 		saveData();
 	}
 
