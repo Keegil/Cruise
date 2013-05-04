@@ -3,7 +3,7 @@
     android:id="@+id/ll_main_after2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradgreenyellow"
+    android:background="@color/bg_green1"
     android:gravity="center"
     android:orientation="vertical"
     android:weightSum="1"

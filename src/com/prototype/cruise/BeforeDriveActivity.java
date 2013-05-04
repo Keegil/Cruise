@@ -59,6 +59,7 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 	// declare simulation views
 	EditText etDistance;
 	EditText etAccMistakes;
+	EditText etBrakeMistakes;
 	EditText etSpeedMistakes;
 	Button bDrive;
 
@@ -151,6 +152,7 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 		// initialize edittexts
 		etDistance = (EditText) findViewById(R.id.et_distance);
 		etAccMistakes = (EditText) findViewById(R.id.et_acc_mistakes);
+		etBrakeMistakes = (EditText) findViewById(R.id.et_brake_mistakes);
 		etSpeedMistakes = (EditText) findViewById(R.id.et_speed_mistakes);
 
 		// initialize button and set listener
@@ -620,6 +622,7 @@ public class BeforeDriveActivity extends Activity implements OnClickListener {
 		case R.id.b_drive:
 			driveLength = Integer.parseInt(etDistance.getText().toString());
 			accMistakes = Integer.parseInt(etAccMistakes.getText().toString());
+			brakeMistakes = Integer.parseInt(etBrakeMistakes.getText().toString());
 			speedMistakes = Integer.parseInt(etSpeedMistakes.getText()
 					.toString());
 			saveData();

@@ -8,10 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -21,6 +18,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +48,13 @@ public class AfterDriveFragment extends Fragment {
 	int routeFail = 0;
 	int chargedRange = 0;
 
+	// declare score variables
+	public static final String SCORE_NAME = "MyScoreFile";
+	int accScore = 0;
+	int brakeScore = 0;
+	int speedScore = 0;
+	int routeScore = 0;
+
 	// declare date setting
 	public static final String DATE_NAME = "MyDateFile";
 	long lastTime = 0;
@@ -70,7 +75,6 @@ public class AfterDriveFragment extends Fragment {
 	int iPoints = 0;
 	double dPoints = 0;
 	double dUsedRange = 0;
-	double modifier = 0;
 
 	long statSize;
 
@@ -261,24 +265,84 @@ public class AfterDriveFragment extends Fragment {
 		chargedRange = 0;
 		previousRelativeRange = (double) ((double) currentRange / (double) defaultRange);
 
-		// calculate points
-		double aa = (double) defaultAccMistakes;
-		double a = (double) accMistakes;
-		double da = (double) defaultDriveCycle;
-		double d = (double) driveLength;
-		double sa = (double) defaultSpeedMistakes;
-		double s = (double) speedMistakes;
-		double x = ((aa * (d / da)) / ((aa * (d / da)) + a));
-		x = 1 + Math.pow(x, 1.1);
-		double y = ((sa * (d / da)) / ((sa * (d / da)) + s));
-		y = 1 + Math.pow(y, 1.1);
-		dPoints = (1 / (2 / ((0.8 * x) + (0.2 * y)))) * 100;
-		iPoints = (int) dPoints;
+		/*
+		 * // calculate points double aa = (double) defaultAccMistakes; double a
+		 * = (double) accMistakes; double da = (double) defaultDriveCycle;
+		 * double d = (double) driveLength; double sa = (double)
+		 * defaultSpeedMistakes; double s = (double) speedMistakes; double x =
+		 * ((aa * (d / da)) / ((aa * (d / da)) + a)); x = 1 + Math.pow(x, 1.1);
+		 * double y = ((sa * (d / da)) / ((sa * (d / da)) + s)); y = 1 +
+		 * Math.pow(y, 1.1); dPoints = (1 / (2 / ((0.8 * x) + (0.2 * y)))) *
+		 * 100; iPoints = (int) dPoints;
+		 * 
+		 * // calculate and apply modifier modifier = (1 / (dPoints / 100));
+		 * dUsedRange = d * modifier; rangeUsed = (int) dUsedRange;
+		 */
 
-		// calculate and apply modifier
-		modifier = (1 / (dPoints / 100));
-		dUsedRange = d * modifier;
-		rangeUsed = (int) dUsedRange;
+		// Calculate acceleration score
+		double accPerKm = accMistakes / driveLength;
+		if (accPerKm >= 42) {
+			accScore = 0;
+		} else if (accPerKm < 42 && accPerKm >= 35) {
+			accScore = 1;
+		} else if (accPerKm < 35 && accPerKm >= 28) {
+			accScore = 2;
+		} else if (accPerKm < 21 && accPerKm >= 14) {
+			accScore = 3;
+		} else if (accPerKm < 14 && accPerKm >= 7) {
+			accScore = 4;
+		} else if (accPerKm < 7 && accPerKm >= 0) {
+			accScore = 5;
+		}
+		Log.d(TAG, "accPerKm: " + accPerKm + "| accScore: " + accScore + "");
+
+		// Calculate brake score
+		double brakePerKm = brakeMistakes / driveLength;
+		if (brakePerKm >= 36) {
+			brakeScore = 0;
+		} else if (brakePerKm < 36 && brakePerKm >= 30) {
+			brakeScore = 1;
+		} else if (brakePerKm < 30 && brakePerKm >= 24) {
+			brakeScore = 2;
+		} else if (brakePerKm < 24 && brakePerKm >= 18) {
+			brakeScore = 3;
+		} else if (brakePerKm < 12 && brakePerKm >= 6) {
+			brakeScore = 4;
+		} else if (brakePerKm < 6 && brakePerKm >= 0) {
+			brakeScore = 5;
+		}
+		Log.d(TAG, "brakePerKm: " + brakePerKm + "| brakeScore: " + brakeScore
+				+ "");
+
+		// Calculate speed score
+		double speedPerKm = speedMistakes / driveLength;
+		if (speedPerKm >= 36) {
+			speedScore = 0;
+		} else if (speedPerKm < 36 && speedPerKm >= 30) {
+			speedScore = 1;
+		} else if (speedPerKm < 30 && speedPerKm >= 24) {
+			speedScore = 2;
+		} else if (speedPerKm < 24 && speedPerKm >= 18) {
+			speedScore = 3;
+		} else if (speedPerKm < 12 && speedPerKm >= 6) {
+			speedScore = 4;
+		} else if (speedPerKm < 6 && speedPerKm >= 0) {
+			speedScore = 5;
+		}
+		speedScore = 5;
+		Log.d(TAG, "speedPerKm: " + speedPerKm + "| speedScore: " + speedScore
+				+ "");
+
+		// Calculate route score?
+		routeScore = 5;
+		Log.d(TAG, "routeScore: " + routeScore + "");
+
+		// Calculate and apply modifier
+		double modifier = 1 - (((double) accScore + (double) brakeScore + (double) speedScore) / 15);
+		double extraRangeInterval = ((double) driveLength * 1.3)
+				- ((double) driveLength);
+		double extraRange = extraRangeInterval * modifier;
+		rangeUsed = driveLength + (int) extraRange;
 
 		// calculate current range
 		currentRange = currentRange - rangeUsed;
@@ -296,6 +360,7 @@ public class AfterDriveFragment extends Fragment {
 		// save data and date
 		saveData();
 		saveDate();
+		saveScore();
 
 		// save to database
 		cal = Calendar.getInstance();
@@ -463,22 +528,6 @@ public class AfterDriveFragment extends Fragment {
 		chargedRange = data.getInt("chargedRange", chargedRange);
 	}
 
-	public void loadDate() {
-		SharedPreferences date = getActivity().getSharedPreferences(DATE_NAME,
-				0);
-		lastTime = date.getLong("lastTime", lastTime);
-	}
-
-	public void saveSettings() {
-		SharedPreferences settings = getActivity().getSharedPreferences(
-				PREFS_NAME, 0);
-		SharedPreferences.Editor editor = settings.edit();
-		editor.putInt("defaultRange", defaultRange);
-		editor.putInt("defaultAccMistakes", defaultAccMistakes);
-		editor.putInt("defaultSpeedMistakes", defaultSpeedMistakes);
-		editor.commit();
-	}
-
 	public void saveData() {
 		SharedPreferences data = getActivity().getSharedPreferences(DATA_NAME,
 				0);
@@ -491,6 +540,17 @@ public class AfterDriveFragment extends Fragment {
 		editor.putInt("brakeMistakes", brakeMistakes);
 		editor.putInt("routeFail", routeFail);
 		editor.putInt("chargedRange", chargedRange);
+		editor.commit();
+	}
+
+	public void saveScore() {
+		SharedPreferences data = getActivity().getSharedPreferences(SCORE_NAME,
+				0);
+		SharedPreferences.Editor editor = data.edit();
+		editor.putInt("accScore", accScore);
+		editor.putInt("brakeScore", brakeScore);
+		editor.putInt("speedScore", speedScore);
+		editor.putInt("routeScore", routeScore);
 		editor.commit();
 	}
 

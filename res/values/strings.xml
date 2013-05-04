@@ -1,28 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- App/activity/fragment name strings -->
     <string name="app_name">Cruise</string>
     <string name="app_name_caps">CRUISE</string>
-    <string name="points">Points</string>
+    <string name="title_activity_after_drive">AfterDriveActivity</string>
+    <string name="title_activity_after_drive_fragment2">AfterDriveFragment2</string>
+
+    <!-- Menu -->
+    <string name="action_settings">Settings</string>
     <string name="action_reset">Reset all values</string>
-    <string name="remaining_range">Remaining range</string>
     <string name="action_defaultrange">Set default range</string>
     <string name="action_defaultacc">Set average acc. mistakes</string>
     <string name="action_defaultspeed">Set average speed mistakes</string>
     <string name="action_defaultdrivecycle">Set average drive cycle distance</string>
     <string name="action_reset_db">Clear GPS database table</string>
-    <string name="battery_range">BATTERY RANGE</string>
-    <string name="drive_distance">Enter length of drive in km</string>
-    <string name="acc_mistakes">Enter number of acc. mistakes</string>
-    <string name="speed_mistakes">Enter number of speed mistakes</string>
-    <string name="drive_button">Simulate</string>
+
+    <!-- Example/placeholder -->
     <string name="example_km">120</string>
-    <string name="title_activity_after_drive">AfterDriveActivity</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="est_range_remain">Estimated Range Remaining</string>
-    <string name="km">km</string>
-    <string name="highway_desc">Highway</string>
     <string name="highway_ex">80</string>
+    <string name="city_ex">110</string>
+
+    <!-- General -->
+    <string name="km">km</string>
+    <string name="est_range_remain">Estimated Range Remaining</string>
+
+    <!-- BeforeDriveActivity -->
+    <string name="highway_desc">Highway</string>
+    <string name="city_desc">City driving</string>
+    <string name="time_parked_ex">Time Parked: 00:02:56 hrs</string>
+    <string name="charge_gained_ex">Charge Gained: 35 km</string>
+    <string name="drive_distance">Distance</string>
+    <string name="acc_mistakes">Acc. mistakes</string>
+    <string name="brake_mistakes">Brake mistakes</string>
+    <string name="speed_mistakes">Speed mistakes</string>
+    <string name="drive_button">Simulate</string>
+
+    <!-- AfterDriveFragment -->
+    <string name="drive_completed">Drive Completed!</string>
+    <string name="stars_ex">11/20</string>
+    <string name="good_charge">Your EV still has a good amount of charge remaining.</string>
+    <string name="bad_charge">Your EV might need charging before the next trip.</string>
+    <string name="no_charge">Your EV might not make this trip without charging.</string>
+
+    <!-- AfterDriveFragment2 -->
     <string name="speed_desc">Speed</string>
     <string name="acc_desc">Acceleration</string>
     <string name="route_desc">Route</string>
@@ -33,22 +54,5 @@
     <string name="start_range_ex">120 km</string>
     <string name="range_decrease_ex">48 km</string>
     <string name="distance_traveled_ex">36 km</string>
-    <string name="city_desc">City driving</string>
-    <string name="city_ex">110</string>
-    <string name="time_parked_ex">Time Parked: 00:02:56 hrs</string>
-    <string name="charge_gained_ex">Charge Gained: 35 km</string>
-    <string name="stars_ex">11/20</string>
-    <string name="charge_ex">Your EV still has a good amount of charge remaining.</string>
-    <string name="drive_completed">Drive Completed!</string>
-    <string name="ev_compatible">EV COMPATIBLE DRIVE</string>
-    <string name="statistics">Statistics</string>
-    <string name="range_decrease">Range decreasing factors</string>
-    <string name="acc_decrease">Too much aggressive acceleration</string>
-    <string name="speed_decrease">Too high speed</string>
-    <string name="title_activity_after_drive_fragment2">AfterDriveFragment2</string>
-    <string name="action_settings">Settings</string>
-    <string name="good_charge">Your EV still has a good amount of charge remaining.</string>
-    <string name="bad_charge">Your EV might need charging before the next trip.</string>
-    <string name="no_charge">Your EV might not make this trip without charging.</string>
 
 </resources>

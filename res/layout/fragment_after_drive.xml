@@ -3,7 +3,7 @@
     android:id="@+id/ll_main_after"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradgreenyellow"
+    android:background="@color/bg_green1"
     android:gravity="center"
     android:orientation="vertical"
     android:weightSum="1"
@@ -175,7 +175,7 @@
             android:id="@+id/tv_charge_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/charge_ex"
+            android:text="@string/good_charge"
             android:textSize="@dimen/font_medium"
             android:gravity="center"
             android:textColor="@color/white" />

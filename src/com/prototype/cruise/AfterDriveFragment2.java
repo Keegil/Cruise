@@ -36,6 +36,13 @@ public class AfterDriveFragment2 extends Fragment {
 	int routeFail = 0;
 	int chargedRange = 0;
 
+	// declare score variables
+	public static final String SCORE_NAME = "MyScoreFile";
+	int accScore = 0;
+	int brakeScore = 0;
+	int speedScore = 0;
+	int routeScore = 0;
+
 	// declare date setting
 	public static final String DATE_NAME = "MyDateFile";
 	long lastTime = 0;
@@ -110,6 +117,7 @@ public class AfterDriveFragment2 extends Fragment {
 		setFonts();
 		loadSettings();
 		loadData();
+		loadScore();
 		drawBars();
 		return view;
 	}
@@ -147,7 +155,7 @@ public class AfterDriveFragment2 extends Fragment {
 		tvRangeDecrease = (TextView) v.findViewById(R.id.tv_range_decrease);
 		tvDistanceTraveled = (TextView) v
 				.findViewById(R.id.tv_distance_traveled);
-		
+
 		// initialize stars
 		ivSpeedStar1 = (ImageView) v.findViewById(R.id.iv_speed_star1);
 		ivSpeedStar2 = (ImageView) v.findViewById(R.id.iv_speed_star2);
@@ -334,6 +342,15 @@ public class AfterDriveFragment2 extends Fragment {
 		brakeMistakes = data.getInt("brakeMistakes", brakeMistakes);
 		routeFail = data.getInt("routeFail", routeFail);
 		chargedRange = data.getInt("chargedRange", chargedRange);
+	}
+	
+	public void loadScore() {
+		SharedPreferences data = getActivity().getSharedPreferences(SCORE_NAME,
+				0);
+		accScore = data.getInt("accScore", accScore);
+		brakeScore = data.getInt("brakeScore", brakeScore);
+		speedScore = data.getInt("speedScore", speedScore);
+		routeScore = data.getInt("routeScore", routeScore);
 	}
 
 	public void loadDate() {
