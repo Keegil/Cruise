@@ -5,12 +5,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -220,7 +222,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 	}
 
 	public void reset() {
-		// reset all defaults and restart activity
+		// Reset all defaults and restart activity.
 		defaultRange = 120;
 		lastTime = 0;
 		currentRange = defaultRange;

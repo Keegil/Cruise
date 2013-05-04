@@ -22,7 +22,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 public class BeforeDriveFragmentCurrentStatus extends Fragment implements
@@ -357,7 +356,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 			ll.setBackgroundDrawable((Drawable) msg.obj);
 		}
 	};
-
+	
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
