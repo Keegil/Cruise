@@ -14,23 +14,29 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.EditText;
 
 public class BeforeDriveActivity extends FragmentActivity {
 
-	// declare logging variables
+	// Declare & initialize logging variable.
 	private static final String TAG = "BeforeDriveFragment";
 
-	// declare preference variables and set defaults
+	// Declare fragments.
+	BeforeDriveFragmentCurrentStatus beforeDriveFragmentCurrentStatus;
+
+	// Declare ViewPager & Adapter variables.
+	private MyAdapter mAdapter;
+	private ViewPager mPager;
+
+	// Declare & initialize preference variables and set defaults.
 	public static final String PREFS_NAME = "MyPrefsFile";
 	public static int defaultRange = 120;
-	public static int defaultAccMistakes = 4;
-	public static int defaultSpeedMistakes = 1;
-	public static int defaultDriveCycle = 11;
 
-	// declare data variables
+	// Declare & initialize data variables.
 	public static final String DATA_NAME = "MyDataFile";
 	public static int currentRange = 120;
 	public static int driveLength = 0;
@@ -41,14 +47,9 @@ public class BeforeDriveActivity extends FragmentActivity {
 	public static int routeFail = 0;
 	public static int chargedRange = 0;
 
-	// declare date setting
+	// Declare & initialize date setting.
 	public static final String DATE_NAME = "MyDateFile";
 	public static long lastTime = 0;
-
-	private MyAdapter mAdapter;
-	private ViewPager mPager;
-
-	BeforeDriveFragmentCurrentStatus beforeDriveFragmentCurrentStatus;
 
 	// declare temporary calculation variables
 	public static long timeDifference;
@@ -59,7 +60,6 @@ public class BeforeDriveActivity extends FragmentActivity {
 	public static int previousChargedRange;
 	public static double previousRelativeRange;
 
-	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -72,13 +72,67 @@ public class BeforeDriveActivity extends FragmentActivity {
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
 
-		beforeDriveFragmentCurrentStatus = ((BeforeDriveFragmentCurrentStatus) mAdapter
-				.getItem(mPager.getCurrentItem()));
-
+		beforeDriveFragmentCurrentStatus = (BeforeDriveFragmentCurrentStatus) mAdapter.getRegisteredFragment(0);
+		
 		loadSettings();
 		loadData();
 		loadDate();
 		calc();
+	}
+
+	public static class MyAdapter extends FragmentPagerAdapter {
+
+		SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
+		private FragmentManager fragmentManager;
+		private ArrayList<Class<? extends Fragment>> fragments;
+		private ArrayList<String> titles;
+
+		public MyAdapter(FragmentManager fm) {
+			super(fm);
+			fragmentManager = fm;
+			fragments = new ArrayList<Class<? extends Fragment>>();
+			titles = new ArrayList<String>();
+		}
+
+		public void addFragment(String title, Class<? extends Fragment> fragment) {
+			titles.add(title);
+			fragments.add(fragment);
+		}
+
+		@Override
+		public int getCount() {
+			return fragments.size();
+		}
+
+		@Override
+		public Object instantiateItem(ViewGroup container, int position) {
+			Fragment fragment = (Fragment) super.instantiateItem(container,
+					position);
+			registeredFragments.put(position, fragment);
+			return fragment;
+		}
+
+		@Override
+		public void destroyItem(ViewGroup container, int position, Object object) {
+			registeredFragments.remove(position);
+			super.destroyItem(container, position, object);
+		}
+
+		public Fragment getRegisteredFragment(int position) {
+			return registeredFragments.get(position);
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			try {
+				return fragments.get(position).newInstance();
+			} catch (InstantiationException e) {
+				Log.wtf(TAG, e);
+			} catch (IllegalAccessException e) {
+				Log.wtf(TAG, e);
+			}
+			return null;
+		}
 	}
 
 	@Override
@@ -127,42 +181,6 @@ public class BeforeDriveActivity extends FragmentActivity {
 		doubleDefaultRange = (double) defaultRange;
 		relativeRange = doubleCurrentRange / doubleDefaultRange;
 		saveData();
-	}
-
-	public static class MyAdapter extends FragmentPagerAdapter {
-
-		private FragmentManager fragmentManager;
-		private ArrayList<Class<? extends Fragment>> fragments;
-		private ArrayList<String> titles;
-
-		public MyAdapter(FragmentManager fm) {
-			super(fm);
-			fragmentManager = fm;
-			fragments = new ArrayList<Class<? extends Fragment>>();
-			titles = new ArrayList<String>();
-		}
-
-		public void addFragment(String title, Class<? extends Fragment> fragment) {
-			titles.add(title);
-			fragments.add(fragment);
-		}
-
-		@Override
-		public int getCount() {
-			return fragments.size();
-		}
-
-		@Override
-		public Fragment getItem(int position) {
-			try {
-				return fragments.get(position).newInstance();
-			} catch (InstantiationException e) {
-				Log.wtf(TAG, e);
-			} catch (IllegalAccessException e) {
-				Log.wtf(TAG, e);
-			}
-			return null;
-		}
 	}
 
 	public void setDefaultRange() {

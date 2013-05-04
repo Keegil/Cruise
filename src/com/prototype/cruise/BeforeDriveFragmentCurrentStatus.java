@@ -25,24 +25,27 @@ import android.widget.TextView;
 public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		OnClickListener {
 
-	// declare logging variables
+	// Declare & initialize logging variable.
 	private static final String TAG = "BeforeDriveFragment";
-	
-	// declare parent activity
+
+	// Declare parent activity.
 	FragmentActivity beforeDriveActivity;
-	
-	// declare database
-	private GPSDataSource gpsDataSource;
-	private DrivingStatsDataSource statSource;
 
-	// declare simulation views
-	EditText etDistance;
-	EditText etAccMistakes;
-	EditText etBrakeMistakes;
-	EditText etSpeedMistakes;
-	Button bDrive;
+	// Declare background.
+	LinearLayout ll;
 
-	// declare textviews
+	// Declare bars.
+	LinearLayout llBar1;
+	LinearLayout llBar2;
+	LinearLayout llBar3;
+	LinearLayout llBar4;
+	LinearLayout llBar5;
+	LinearLayout llBar6;
+	LinearLayout llBar7;
+	LinearLayout llBar8;
+	LinearLayout llBar9;
+
+	// Declare textviews.
 	TextView tvStartingRange;
 	TextView tvLogo;
 	TextView tvEstRangeRemain;
@@ -56,24 +59,16 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 	TextView tvTimeParked;
 	TextView tvChargeGained;
 
-	// declare bars
-	LinearLayout llBar1;
-	LinearLayout llBar2;
-	LinearLayout llBar3;
-	LinearLayout llBar4;
-	LinearLayout llBar5;
-	LinearLayout llBar6;
-	LinearLayout llBar7;
-	LinearLayout llBar8;
-	LinearLayout llBar9;
-
-	// declare background and gradient
-	LinearLayout ll;
+	// Declare simulation views.
+	EditText etDistance;
+	EditText etAccMistakes;
+	EditText etBrakeMistakes;
+	EditText etSpeedMistakes;
+	Button bDrive;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,24 +77,26 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 				.inflate(R.layout.fragment_before_drive_current_status,
 						container, false);
 		init(view);
-		setFonts();
-		setTextViews();
-		drawBars();
-		drawBackground();
 		return view;
 	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		setFonts();
+		setTextViews();
+		drawBars();
+		drawBackground();
 	}
 
 	public void init(View v) {
-		
-		// initialize parent activity
+		// Initialize parent activity.
 		beforeDriveActivity = (BeforeDriveActivity) getActivity();
 
-		// initialize bars
+		// Initialize background view.
+		ll = (LinearLayout) v.findViewById(R.id.ll_main);
+
+		// Initialize bars.
 		llBar1 = (LinearLayout) v.findViewById(R.id.bar1);
 		llBar2 = (LinearLayout) v.findViewById(R.id.bar2);
 		llBar3 = (LinearLayout) v.findViewById(R.id.bar3);
@@ -110,10 +107,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		llBar8 = (LinearLayout) v.findViewById(R.id.bar8);
 		llBar9 = (LinearLayout) v.findViewById(R.id.bar9);
 
-		// initialize background and gradient
-		ll = (LinearLayout) v.findViewById(R.id.ll_main);
-
-		// initialize textviews
+		// Initialize textviews.
 		tvStartingRange = (TextView) v.findViewById(R.id.tv_starting_range);
 		tvLogo = (TextView) v.findViewById(R.id.tv_logo);
 		tvEstRangeRemain = (TextView) v.findViewById(R.id.tv_est_range_remain);
@@ -127,75 +121,19 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		tvTimeParked = (TextView) v.findViewById(R.id.tv_time_parked);
 		tvChargeGained = (TextView) v.findViewById(R.id.tv_charge_gained);
 
-		// initialize edittexts
+		// Initialize edittexts.
 		etDistance = (EditText) v.findViewById(R.id.et_distance);
 		etAccMistakes = (EditText) v.findViewById(R.id.et_acc_mistakes);
 		etBrakeMistakes = (EditText) v.findViewById(R.id.et_brake_mistakes);
 		etSpeedMistakes = (EditText) v.findViewById(R.id.et_speed_mistakes);
 
-		// initialize button and set listener
+		// Initialize button and set listener.
 		bDrive = (Button) v.findViewById(R.id.b_drive);
 		bDrive.setOnClickListener(this);
-
-		// initialize database
-		gpsDataSource = new GPSDataSource(getActivity());
-		gpsDataSource.open();
-		statSource = new DrivingStatsDataSource(getActivity());
-		statSource.open();
-	}
-
-	public GradientDrawable setGradient(double rr) {
-		double redStart = 95 + (2013 * rr) - (5311 * rr * rr)
-				+ (3204 * rr * rr * rr);
-		if (redStart > 255) {
-			redStart = 255;
-		} else if (redStart < 0) {
-			redStart = 0;
-		}
-		double redStop = 155 + (402 * rr) - (593 * rr * rr)
-				+ (290 * rr * rr * rr);
-		if (redStop > 255) {
-			redStop = 255;
-		} else if (redStop < 0) {
-			redStop = 0;
-		}
-		double greenStart = 129 + (294 * rr) - (328 * rr * rr);
-		if (greenStart > 255) {
-			greenStart = 255;
-		} else if (greenStart < 0) {
-			greenStart = 0;
-		}
-		double greenStop = 14 + (164 * rr) + (42 * rr * rr);
-		if (greenStop > 255) {
-			greenStop = 255;
-		} else if (greenStop < 0) {
-			greenStop = 0;
-		}
-		double blueStart = 66 - (472 * rr) + (1191 * rr * rr)
-				- (728 * rr * rr * rr);
-		if (blueStart > 255) {
-			blueStart = 255;
-		} else if (blueStart < 0) {
-			blueStart = 0;
-		}
-		double blueStop = 45 + (12 * rr) - (72 * rr * rr) + (37 * rr * rr * rr);
-		if (blueStop > 255) {
-			blueStop = 255;
-		} else if (blueStop < 0) {
-			blueStop = 0;
-		}
-		GradientDrawable gdBackground = new GradientDrawable(
-				GradientDrawable.Orientation.TOP_BOTTOM, new int[] {
-						Color.rgb((int) redStart, (int) greenStart,
-								(int) blueStart),
-						Color.rgb((int) redStop, (int) greenStop,
-								(int) blueStop) });
-		gdBackground.setCornerRadius(0f);
-		return gdBackground;
 	}
 
 	public void setFonts() {
-		// initialize typefaces
+		// Initialize typefaces.
 		Typeface tfHelvetica = Typeface.createFromAsset(getActivity()
 				.getAssets(), "fonts/helvetica_bold_oblique.ttf");
 		Typeface tfMyriadRegular = Typeface.createFromAsset(getActivity()
@@ -203,7 +141,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		Typeface tfMyriadItalic = Typeface.createFromAsset(getActivity()
 				.getAssets(), "fonts/myriad_italic.otf");
 
-		// set correct fonts to views
+		// Set correct fonts to views.
 		tvLogo.setTypeface(tfHelvetica);
 		tvStartingRange.setTypeface(tfHelvetica);
 		tvEstRangeRemain.setTypeface(tfMyriadItalic);
@@ -218,21 +156,13 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		tvChargeGained.setTypeface(tfMyriadRegular);
 	}
 
-	public String setDate(long l) {
-		final long days = TimeUnit.MILLISECONDS.toDays(l);
-		final long hrs = TimeUnit.MILLISECONDS.toHours(l
-				- TimeUnit.DAYS.toMillis(days));
-		final long mins = TimeUnit.MILLISECONDS.toMinutes(l
-				- TimeUnit.DAYS.toMillis(days) - TimeUnit.HOURS.toMillis(hrs));
-		return String.format("%02d:%02d:%02d", days, hrs, mins);
-	}
-
 	public void setTextViews() {
+		// Set textviews to display correct information.
 		if (BeforeDriveActivity.firstTime) {
 			tvTimeParked.setText("Time Parked: 00:00:00");
 		} else {
 			tvTimeParked.setText("Time Parked: "
-					+ setDate(BeforeDriveActivity.timeDifference) + "");
+					+ setTime(BeforeDriveActivity.timeDifference) + "");
 		}
 		tvStartingRange.setText("" + BeforeDriveActivity.currentRange + "");
 		tvHighwayRange.setText(""
@@ -242,11 +172,19 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 				+ BeforeDriveActivity.chargedRange + " km");
 	}
 
+	public String setTime(long l) {
+		// Returns a string with correct time formatting.
+		final long days = TimeUnit.MILLISECONDS.toDays(l);
+		final long hrs = TimeUnit.MILLISECONDS.toHours(l
+				- TimeUnit.DAYS.toMillis(days));
+		final long mins = TimeUnit.MILLISECONDS.toMinutes(l
+				- TimeUnit.DAYS.toMillis(days) - TimeUnit.HOURS.toMillis(hrs));
+		return String.format("%02d:%02d:%02d", days, hrs, mins);
+	}
+
 	public void drawBars() {
-		// check relative range and set background and bars accordingly
-		if (BeforeDriveActivity.relativeRange <= 1
-				&& BeforeDriveActivity.relativeRange > 0.9) {
-		} else if (BeforeDriveActivity.relativeRange <= 0.9
+		// Check relative range and set bars accordingly.
+		if (BeforeDriveActivity.relativeRange <= 0.9
 				&& BeforeDriveActivity.relativeRange > 0.8) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 		} else if (BeforeDriveActivity.relativeRange <= 0.8
@@ -313,6 +251,8 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 	}
 
 	public void drawBackground() {
+		// Check relative range and set background accordingly.
+		// The transition is animated.
 		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
@@ -335,6 +275,58 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		new Thread(runnable).start();
 	}
 
+	public GradientDrawable setGradient(double rr) {
+		// Returns a gradient drawable based in relative range.
+		double redStart = 95 + (2013 * rr) - (5311 * rr * rr)
+				+ (3204 * rr * rr * rr);
+		if (redStart > 255) {
+			redStart = 255;
+		} else if (redStart < 0) {
+			redStart = 0;
+		}
+		double redStop = 155 + (402 * rr) - (593 * rr * rr)
+				+ (290 * rr * rr * rr);
+		if (redStop > 255) {
+			redStop = 255;
+		} else if (redStop < 0) {
+			redStop = 0;
+		}
+		double greenStart = 129 + (294 * rr) - (328 * rr * rr);
+		if (greenStart > 255) {
+			greenStart = 255;
+		} else if (greenStart < 0) {
+			greenStart = 0;
+		}
+		double greenStop = 14 + (164 * rr) + (42 * rr * rr);
+		if (greenStop > 255) {
+			greenStop = 255;
+		} else if (greenStop < 0) {
+			greenStop = 0;
+		}
+		double blueStart = 66 - (472 * rr) + (1191 * rr * rr)
+				- (728 * rr * rr * rr);
+		if (blueStart > 255) {
+			blueStart = 255;
+		} else if (blueStart < 0) {
+			blueStart = 0;
+		}
+		double blueStop = 45 + (12 * rr) - (72 * rr * rr) + (37 * rr * rr * rr);
+		if (blueStop > 255) {
+			blueStop = 255;
+		} else if (blueStop < 0) {
+			blueStop = 0;
+		}
+		GradientDrawable gdBackground = new GradientDrawable(
+				GradientDrawable.Orientation.TOP_BOTTOM, new int[] {
+						Color.rgb((int) redStart, (int) greenStart,
+								(int) blueStart),
+						Color.rgb((int) redStop, (int) greenStop,
+								(int) blueStop) });
+		gdBackground.setCornerRadius(0f);
+		return gdBackground;
+	}
+
+	// UI handler for changing gradient.
 	final Handler bgHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			ll.setBackgroundDrawable((Drawable) msg.obj);
