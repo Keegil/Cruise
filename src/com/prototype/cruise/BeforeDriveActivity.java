@@ -66,14 +66,13 @@ public class BeforeDriveActivity extends FragmentActivity {
 		setContentView(R.layout.viewpager);
 
 		mAdapter = new MyAdapter(getSupportFragmentManager());
-		mAdapter.addFragment("CurrentStatus",
-				BeforeDriveFragmentCurrentStatus.class);
 
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
 
-		beforeDriveFragmentCurrentStatus = (BeforeDriveFragmentCurrentStatus) mAdapter.getRegisteredFragment(0);
-		
+		beforeDriveFragmentCurrentStatus = (BeforeDriveFragmentCurrentStatus) mAdapter
+				.getItem(0);
+
 		loadSettings();
 		loadData();
 		loadDate();
@@ -82,77 +81,23 @@ public class BeforeDriveActivity extends FragmentActivity {
 
 	public static class MyAdapter extends FragmentPagerAdapter {
 
-		SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
-		private FragmentManager fragmentManager;
-		private ArrayList<Class<? extends Fragment>> fragments;
-		private ArrayList<String> titles;
-
 		public MyAdapter(FragmentManager fm) {
 			super(fm);
-			fragmentManager = fm;
-			fragments = new ArrayList<Class<? extends Fragment>>();
-			titles = new ArrayList<String>();
-		}
-
-		public void addFragment(String title, Class<? extends Fragment> fragment) {
-			titles.add(title);
-			fragments.add(fragment);
 		}
 
 		@Override
 		public int getCount() {
-			return fragments.size();
-		}
-
-		@Override
-		public Object instantiateItem(ViewGroup container, int position) {
-			Fragment fragment = (Fragment) super.instantiateItem(container,
-					position);
-			registeredFragments.put(position, fragment);
-			return fragment;
-		}
-
-		@Override
-		public void destroyItem(ViewGroup container, int position, Object object) {
-			registeredFragments.remove(position);
-			super.destroyItem(container, position, object);
-		}
-
-		public Fragment getRegisteredFragment(int position) {
-			return registeredFragments.get(position);
+			return 1;
 		}
 
 		@Override
 		public Fragment getItem(int position) {
-			try {
-				return fragments.get(position).newInstance();
-			} catch (InstantiationException e) {
-				Log.wtf(TAG, e);
-			} catch (IllegalAccessException e) {
-				Log.wtf(TAG, e);
+			switch (position) {
+			case 0:
+				return new BeforeDriveFragmentCurrentStatus();
+			default:
+				return null;
 			}
-			return null;
-		}
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.drive, menu);
-		return true;
-	}
-
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle item selection
-		switch (item.getItemId()) {
-		case R.id.action_defaultrange:
-			setDefaultRange();
-			return true;
-		case R.id.action_reset:
-			reset();
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
 		}
 	}
 
@@ -181,49 +126,6 @@ public class BeforeDriveActivity extends FragmentActivity {
 		doubleDefaultRange = (double) defaultRange;
 		relativeRange = doubleCurrentRange / doubleDefaultRange;
 		saveData();
-	}
-
-	public void setDefaultRange() {
-		AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-		alert.setTitle("Enter default range in km");
-
-		final EditText input = new EditText(this);
-		alert.setView(input);
-		input.setText("" + defaultRange + "");
-		input.setInputType(InputType.TYPE_CLASS_PHONE);
-
-		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				defaultRange = Integer.parseInt(input.getText().toString());
-				saveSettings();
-				Intent intent = getIntent();
-				finish();
-				startActivity(intent);
-			}
-		});
-
-		alert.setNegativeButton("Cancel",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-					}
-				});
-
-		alert.show();
-	}
-
-	public void reset() {
-		// reset all defaults and restart activity
-		defaultRange = 120;
-		lastTime = 0;
-		currentRange = defaultRange;
-		chargedRange = 0;
-		saveSettings();
-		saveData();
-		saveDate();
-		Intent intent = getIntent();
-		finish();
-		startActivity(intent);
 	}
 
 	public void loadSettings() {
@@ -274,5 +176,69 @@ public class BeforeDriveActivity extends FragmentActivity {
 		SharedPreferences.Editor editor = date.edit();
 		editor.putLong("lastTime", lastTime);
 		editor.commit();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.drive, menu);
+		return true;
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.action_defaultrange:
+			setDefaultRange();
+			return true;
+		case R.id.action_reset:
+			reset();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	public void setDefaultRange() {
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+		alert.setTitle("Enter default range in km");
+
+		final EditText input = new EditText(this);
+		alert.setView(input);
+		input.setText("" + defaultRange + "");
+		input.setInputType(InputType.TYPE_CLASS_PHONE);
+
+		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				defaultRange = Integer.parseInt(input.getText().toString());
+				saveSettings();
+				Intent intent = getIntent();
+				finish();
+				startActivity(intent);
+			}
+		});
+
+		alert.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+					}
+				});
+
+		alert.show();
+	}
+
+	public void reset() {
+		// reset all defaults and restart activity
+		defaultRange = 120;
+		lastTime = 0;
+		currentRange = defaultRange;
+		chargedRange = 0;
+		saveSettings();
+		saveData();
+		saveDate();
+		Intent intent = getIntent();
+		finish();
+		startActivity(intent);
 	}
 }
