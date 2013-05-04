@@ -7,7 +7,8 @@
     android:gravity="center"
     android:orientation="vertical"
     android:weightSum="1"
-    tools:context=".BeforeDriveActivity" >
+    android:tag="current_status"
+    tools:context=".BeforeDriveFragmentCurrentStatus" >
 
     <LinearLayout
         android:layout_width="fill_parent"
