@@ -172,7 +172,7 @@
             android:padding="30sp"
             android:text="@string/after_drive_hint1"
             android:textColor="@color/white"
-            android:textSize="@dimen/font_medium" />
+            android:textSize="@dimen/font_medium_small" />
     </FrameLayout>
 
     <LinearLayout

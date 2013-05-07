@@ -52,6 +52,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 	LinearLayout llBar7;
 	LinearLayout llBar8;
 	LinearLayout llBar9;
+	LinearLayout llBars;
 
 	// Declare textviews.
 	TextView tvStartingRange;
@@ -85,9 +86,8 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater
-				.inflate(R.layout.fragment_before_drive_current_status,
-						container, false);
+		View view = inflater.inflate(R.layout.frag_before_drive_status,
+				container, false);
 		init(view);
 		return view;
 	}
@@ -96,6 +96,11 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		setFonts();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
 		setTextViews();
 		drawBars();
 		drawBackground();
@@ -114,7 +119,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		// Initialize background view.
 		ll = (LinearLayout) v.findViewById(R.id.ll_main);
 
-		// Initialize bars.
+		// Initialize bars and set OnClickListener.
 		llBar1 = (LinearLayout) v.findViewById(R.id.bar1);
 		llBar2 = (LinearLayout) v.findViewById(R.id.bar2);
 		llBar3 = (LinearLayout) v.findViewById(R.id.bar3);
@@ -124,6 +129,8 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		llBar7 = (LinearLayout) v.findViewById(R.id.bar7);
 		llBar8 = (LinearLayout) v.findViewById(R.id.bar8);
 		llBar9 = (LinearLayout) v.findViewById(R.id.bar9);
+		llBars = (LinearLayout) v.findViewById(R.id.ll_bars_before);
+		llBars.setOnClickListener(this);
 
 		// Initialize textviews.
 		tvStartingRange = (TextView) v.findViewById(R.id.tv_starting_range);
@@ -384,12 +391,12 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		if (BeforeDriveActivity.firstTime) {
 			Animation fadeIn = new AlphaAnimation(0, 1);
 			fadeIn.setInterpolator(new DecelerateInterpolator());
-			fadeIn.setDuration(1500);
+			fadeIn.setDuration(1000);
 
 			Animation fadeOut = new AlphaAnimation(1, 0);
 			fadeOut.setInterpolator(new AccelerateInterpolator());
 			fadeOut.setStartOffset(6000);
-			fadeOut.setDuration(1500);
+			fadeOut.setDuration(1000);
 
 			animation.addAnimation(fadeIn);
 			animation.addAnimation(fadeOut);
@@ -439,6 +446,12 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 			Log.d(TAG, "lol");
 			tvHint.clearAnimation();
 			tvHint.setVisibility(View.GONE);
+			break;
+		case R.id.ll_bars_before:
+			i = new Intent(getActivity().getApplicationContext(),
+					HelpActivity.class);
+			i.putExtra("helpData", 4);
+			startActivity(i);
 			break;
 		}
 	}

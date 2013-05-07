@@ -473,12 +473,13 @@ public class AfterDriveFragmentDriveDetails extends Fragment implements
 		if (AfterDriveActivity.firstTime) {
 			Animation fadeIn = new AlphaAnimation(0, 1);
 			fadeIn.setInterpolator(new DecelerateInterpolator());
-			fadeIn.setDuration(1500);
+			fadeIn.setStartOffset(2000);
+			fadeIn.setDuration(1000);
 
 			Animation fadeOut = new AlphaAnimation(1, 0);
 			fadeOut.setInterpolator(new AccelerateInterpolator());
-			fadeOut.setStartOffset(9000);
-			fadeOut.setDuration(1500);
+			fadeOut.setStartOffset(8000);
+			fadeOut.setDuration(1000);
 
 			animation.addAnimation(fadeIn);
 			animation.addAnimation(fadeOut);
@@ -524,6 +525,18 @@ public class AfterDriveFragmentDriveDetails extends Fragment implements
 			i = new Intent(getActivity().getApplicationContext(),
 					HelpActivity.class);
 			i.putExtra("helpData", 1);
+			startActivity(i);
+			break;
+		case R.id.iv_route:
+			i = new Intent(getActivity().getApplicationContext(),
+					HelpActivity.class);
+			i.putExtra("helpData", 2);
+			startActivity(i);
+			break;
+		case R.id.iv_brake:
+			i = new Intent(getActivity().getApplicationContext(),
+					HelpActivity.class);
+			i.putExtra("helpData", 3);
 			startActivity(i);
 			break;
 		}

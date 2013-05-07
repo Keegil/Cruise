@@ -6,13 +6,17 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -54,7 +58,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 	public static double relativeRange;
 	public static int previousChargedRange;
 	public static double previousRelativeRange;
-	
+
 	// Declare & initialize bluetooth variables.
 	private BluetoothBackEnd bt = new BluetoothBackEnd();
 
@@ -70,7 +74,11 @@ public class BeforeDriveActivity extends FragmentActivity {
 
 		beforeDriveFragmentCurrentStatus = (BeforeDriveFragmentCurrentStatus) mAdapter
 				.getItem(0);
+	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
 		loadSettings();
 		loadData();
 		loadDate();
@@ -126,7 +134,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 		relativeRange = (double) currentRange / (double) defaultRange;
 		saveData();
 	}
-	
+
 	public void btConnect() {
 		bt.findBT(true, this);
 		try {

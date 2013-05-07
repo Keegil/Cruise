@@ -424,7 +424,7 @@
             android:padding="30sp"
             android:text="@string/after_drive_hint2"
             android:textColor="@color/white"
-            android:textSize="@dimen/font_medium" />
+            android:textSize="@dimen/font_medium_small" />
     </FrameLayout>
 
     <FrameLayout

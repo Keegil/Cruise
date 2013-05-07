@@ -1,13 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ll_help_acc"
+    android:id="@+id/ll_help_brake"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_green1"
     android:gravity="center"
     android:orientation="vertical"
     android:weightSum="1"
-    tools:context=".HelpFragmentAcc" >
+    tools:context=".HelpFragmentBrake" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -25,7 +25,7 @@
             android:src="@drawable/cruise_logo" />
 
         <TextView
-            android:id="@+id/tv_logo_help_acc"
+            android:id="@+id/tv_logo_help_brake"
             android:layout_width="120sp"
             android:layout_height="wrap_content"
             android:text="@string/app_name_caps"
@@ -47,24 +47,24 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/img_distance"
             android:scaleType="fitCenter"
-            android:src="@drawable/acc_icon" />
+            android:src="@drawable/brake_icon" />
 
         <TextView
-            android:id="@+id/tv_acc_head"
+            android:id="@+id/tv_brake_head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/text_distance"
             android:gravity="center"
-            android:text="@string/acc_desc"
+            android:text="@string/brake_desc"
             android:textColor="@color/white"
             android:textSize="@dimen/font_large" />
 
         <TextView
-            android:id="@+id/tv_acc_text"
+            android:id="@+id/tv_brake_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/acc_info"
+            android:text="@string/brake_info"
             android:textColor="@color/white"
             android:textSize="@dimen/font_medium" />
     </LinearLayout>

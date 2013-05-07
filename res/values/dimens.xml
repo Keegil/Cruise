@@ -11,11 +11,14 @@
     <dimen name="font_logo">30sp</dimen>
     <dimen name="font_medium_large">26sp</dimen>
     <dimen name="font_medium">22sp</dimen>
+    <dimen name="font_medium_small">18sp</dimen>
     <dimen name="font_small">14sp</dimen>
     <dimen name="bottom_section_margin">15dp</dimen>
     
     <!-- HelpActivity -->
     <dimen name="img_distance">40dp</dimen>
     <dimen name="text_distance">10dp</dimen>
+    <dimen name="bar_low_height">14dp</dimen>
+    <dimen name="bar_low_spacing">11dp</dimen>
 
 </resources>

@@ -13,10 +13,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class HelpFragmentAcc extends Fragment {
+public class HelpFragmentRoute extends Fragment {
 
 	// Declare & initialize logging variable.
-	private static final String TAG = "HelpFragmentAcc";
+	private static final String TAG = "HelpFragmentSpeed";
 
 	// Declare parent activity.
 	FragmentActivity helpActivity;
@@ -26,8 +26,8 @@ public class HelpFragmentAcc extends Fragment {
 
 	// Declare Textviews.
 	TextView tvLogo;
-	TextView tvAccHead;
-	TextView tvAccInfo;
+	TextView tvRouteHead;
+	TextView tvRouteInfo;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class HelpFragmentAcc extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater
-				.inflate(R.layout.frag_help_acc, container, false);
+				.inflate(R.layout.frag_help_route, container, false);
 		init(view);
 		return view;
 	}
@@ -54,12 +54,12 @@ public class HelpFragmentAcc extends Fragment {
 		helpActivity = (HelpActivity) getActivity();
 
 		// Initialize background view.
-		ll = (LinearLayout) v.findViewById(R.id.ll_help_acc);
+		ll = (LinearLayout) v.findViewById(R.id.ll_help_route);
 
 		// Initialize Textviews.
-		tvLogo = (TextView) v.findViewById(R.id.tv_logo_help_acc);
-		tvAccHead = (TextView) v.findViewById(R.id.tv_acc_head);
-		tvAccInfo = (TextView) v.findViewById(R.id.tv_acc_text);
+		tvLogo = (TextView) v.findViewById(R.id.tv_logo_help_route);
+		tvRouteHead = (TextView) v.findViewById(R.id.tv_route_head);
+		tvRouteInfo = (TextView) v.findViewById(R.id.tv_route_text);
 	}
 
 	public void setFonts() {
@@ -73,8 +73,8 @@ public class HelpFragmentAcc extends Fragment {
 
 		// Set correct fonts to views.
 		tvLogo.setTypeface(tfHelvetica);
-		tvAccHead.setTypeface(tfMyriadRegular);
-		tvAccInfo.setTypeface(tfMyriadRegular);
+		tvRouteHead.setTypeface(tfMyriadRegular);
+		tvRouteInfo.setTypeface(tfMyriadRegular);
 	}
 
 	public void drawBackground() {

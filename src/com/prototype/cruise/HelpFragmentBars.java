@@ -2,21 +2,21 @@ package com.prototype.cruise;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class HelpFragmentAcc extends Fragment {
+public class HelpFragmentBars extends Fragment implements Runnable, OnClickListener {
 
 	// Declare & initialize logging variable.
-	private static final String TAG = "HelpFragmentAcc";
+	private static final String TAG = "HelpFragmentSpeed";
 
 	// Declare parent activity.
 	FragmentActivity helpActivity;
@@ -26,8 +26,8 @@ public class HelpFragmentAcc extends Fragment {
 
 	// Declare Textviews.
 	TextView tvLogo;
-	TextView tvAccHead;
-	TextView tvAccInfo;
+	TextView tvBarsHead;
+	TextView tvBarsInfo;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class HelpFragmentAcc extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater
-				.inflate(R.layout.frag_help_acc, container, false);
+				.inflate(R.layout.frag_help_bars, container, false);
 		init(view);
 		return view;
 	}
@@ -54,16 +54,16 @@ public class HelpFragmentAcc extends Fragment {
 		helpActivity = (HelpActivity) getActivity();
 
 		// Initialize background view.
-		ll = (LinearLayout) v.findViewById(R.id.ll_help_acc);
+		ll = (LinearLayout) v.findViewById(R.id.ll_help_bars);
 
-		// Initialize Textviews.
-		tvLogo = (TextView) v.findViewById(R.id.tv_logo_help_acc);
-		tvAccHead = (TextView) v.findViewById(R.id.tv_acc_head);
-		tvAccInfo = (TextView) v.findViewById(R.id.tv_acc_text);
+		// Initialize TextViews.
+		tvLogo = (TextView) v.findViewById(R.id.tv_logo_help_bars);
+		tvBarsHead = (TextView) v.findViewById(R.id.tv_bars_head);
+		tvBarsInfo = (TextView) v.findViewById(R.id.tv_bars_text);
 	}
 
 	public void setFonts() {
-		// Initialize typefaces.
+		// Initialize TypeFaces.
 		Typeface tfHelvetica = Typeface.createFromAsset(getActivity()
 				.getAssets(), "fonts/helvetica_bold_oblique.ttf");
 		Typeface tfMyriadRegular = Typeface.createFromAsset(getActivity()
@@ -73,8 +73,8 @@ public class HelpFragmentAcc extends Fragment {
 
 		// Set correct fonts to views.
 		tvLogo.setTypeface(tfHelvetica);
-		tvAccHead.setTypeface(tfMyriadRegular);
-		tvAccInfo.setTypeface(tfMyriadRegular);
+		tvBarsHead.setTypeface(tfMyriadRegular);
+		tvBarsInfo.setTypeface(tfMyriadRegular);
 	}
 
 	public void drawBackground() {
@@ -82,7 +82,7 @@ public class HelpFragmentAcc extends Fragment {
 	}
 
 	public GradientDrawable setGradient(double rr) {
-		// Returns a gradient Drawable based in relative range.
+		// Returns a GradientDrawable based on relative range.
 		double redStart = 95 + (2013 * rr) - (5311 * rr * rr)
 				+ (3204 * rr * rr * rr);
 		if (redStart > 255) {
@@ -130,5 +130,17 @@ public class HelpFragmentAcc extends Fragment {
 								(int) blueStop) });
 		gdBackground.setCornerRadius(0f);
 		return gdBackground;
+	}
+
+	@Override
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
 }

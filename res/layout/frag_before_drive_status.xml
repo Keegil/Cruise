@@ -187,6 +187,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_bars_before"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|right"
@@ -284,7 +285,7 @@
             android:padding="30sp"
             android:text="@string/before_drive_hint"
             android:textColor="@color/white"
-            android:textSize="@dimen/font_medium" />
+            android:textSize="@dimen/font_medium_small" />
     </FrameLayout>
 
     <LinearLayout

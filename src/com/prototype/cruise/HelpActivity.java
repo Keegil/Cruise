@@ -18,6 +18,9 @@ public class HelpActivity extends FragmentActivity {
 	// Declare fragments.
 	HelpFragmentSpeed helpFragmentSpeed;
 	HelpFragmentAcc helpFragmentAcc;
+	HelpFragmentRoute helpFragmentRoute;
+	HelpFragmentBrake helpFragmentBrake;
+	HelpFragmentBars helpFragmentBars;
 
 	// Declare ViewPager & Adapter variables.
 	private MyAdapter mAdapter;
@@ -76,7 +79,7 @@ public class HelpActivity extends FragmentActivity {
 
 		@Override
 		public int getCount() {
-			return 2;
+			return 5;
 		}
 
 		@Override
@@ -86,6 +89,12 @@ public class HelpActivity extends FragmentActivity {
 				return new HelpFragmentSpeed();
 			case 1:
 				return new HelpFragmentAcc();
+			case 2:
+				return new HelpFragmentRoute();
+			case 3:
+				return new HelpFragmentBrake();
+			case 4:
+				return new HelpFragmentBars();
 			default:
 				return null;
 			}

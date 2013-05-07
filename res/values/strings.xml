@@ -37,7 +37,7 @@
     <string name="brake_mistakes">Brake mistakes</string>
     <string name="speed_mistakes">Speed mistakes</string>
     <string name="drive_button">Simulate</string>
-    <string name="before_drive_hint">Here you see the current status of your EV.</string>
+    <string name="before_drive_hint">Here you see the current status of your EV. Click any element on the screen for more information.</string>
 
     <!-- AfterDriveFragmentCompleted -->
     <string name="drive_completed">Drive Completed!</string>
@@ -58,12 +58,14 @@
     <string name="start_range_ex">120 km</string>
     <string name="range_decrease_ex">48 km</string>
     <string name="distance_traveled_ex">36 km</string>
-    <string name="after_drive_hint2">Here you see range estimates and driving efficiency stats.</string>
+    <string name="after_drive_hint2">Here you see range estimates and driving efficiency stats. Click any element on the screen for more information.</string>
 
-    <!-- HelpFragmentSpeed -->
+    <!-- HelpActivity -->
     <string name="speed_info">Driving faster than 100 km/h decreases your range significantly. Drive slower to preserve your range.</string>
-
-    <!-- HelpFragmentAcc -->
     <string name="acc_info">Hard acceleration has a negative impact on your range. Accelerate softly to get further with your EV.</string>
+    <string name="route_info">With an EV, the shortest route is not always the best route. Steep hills will drain your battery and reduce range. Consider this when you plan your drive.</string>
+    <string name="brake_info">With smoother and smarter braking, you capture more regenerative energy and conserve power.</string>
+    <string name="bars_desc">Range bar</string>
+    <string name="bars_info">The range bar, together with the background color gradient, indicates how much range you have left.</string>
 
 </resources>
