@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -75,6 +76,15 @@ public class AfterDriveActivity extends FragmentActivity {
 	public static double doubleDefaultRange;
 	public static double relativeRange;
 
+	// Declare & initialize bluetooth variables.
+	String btData;
+	private static final String TAG_DRI = "drive1Instants";
+	private static final String TAG_ACC = "hardAccels";
+	private static final String TAG_BRA = "hardBrakes";
+	private static final String TAG_SPE = "speedingCounts";
+	private static final String TAG_TOT = "totalCounts";
+	private static final String TAG_DIS = "distanceTraveled";
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -90,6 +100,15 @@ public class AfterDriveActivity extends FragmentActivity {
 		loadData();
 		loadDate();
 		getJSON();
+
+		Bundle extras = this.getIntent().getExtras();
+		btData = extras.getString("btdata");
+		Log.d(TAG, "" + btData + "");
+
+		if (!btData.equalsIgnoreCase("simulation")) {
+			btCalc();
+		}
+
 		calc();
 	}
 
@@ -163,6 +182,37 @@ public class AfterDriveActivity extends FragmentActivity {
 			}
 		};
 		new Thread(runnable).start();
+	}
+
+	public void btCalc() {
+		try {
+			// getting JSON string from URL
+			JSONObject json = new JSONObject(btData);
+			JSONArray drive = null;
+
+			// Getting Array of Contacts
+			drive = json.getJSONArray(TAG_DRI);
+
+			// looping through All Contacts
+			for (int i = 0; i < drive.length(); i++) {
+				JSONObject c = drive.getJSONObject(i);
+
+				// Storing each json item in variable
+				accMistakes = c.getInt(TAG_ACC);
+				brakeMistakes = c.getInt(TAG_BRA);
+				speedMistakes = c.getInt(TAG_SPE);
+				int tot = c.getInt(TAG_TOT);
+				driveLength = c.getInt(TAG_DIS);
+
+				Log.d("blue", "Acc: " + accMistakes + " - Bra: "
+						+ brakeMistakes + " - Spe: " + speedMistakes
+						+ " - Dri: " + driveLength);
+
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		saveData();
 	}
 
 	public void calc() {

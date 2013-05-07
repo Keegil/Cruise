@@ -372,6 +372,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 			((BeforeDriveActivity) beforeDriveActivity).saveData();
 			Intent i = new Intent(getActivity().getApplicationContext(),
 					AfterDriveActivity.class);
+			i.putExtra("btdata", "simulation");
 			startActivity(i);
 			getActivity().finish();
 			break;
