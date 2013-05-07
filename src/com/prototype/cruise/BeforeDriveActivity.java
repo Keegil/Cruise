@@ -1,18 +1,18 @@
 package com.prototype.cruise;
 
+import java.io.IOException;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -54,6 +54,9 @@ public class BeforeDriveActivity extends FragmentActivity {
 	public static double relativeRange;
 	public static int previousChargedRange;
 	public static double previousRelativeRange;
+	
+	// Declare & initialize bluetooth variables.
+	private BluetoothBackEnd bt = new BluetoothBackEnd();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 		loadData();
 		loadDate();
 		calc();
+		btConnect();
 	}
 
 	public static class MyAdapter extends FragmentPagerAdapter {
@@ -119,6 +123,15 @@ public class BeforeDriveActivity extends FragmentActivity {
 		}
 		relativeRange = (double) currentRange / (double) defaultRange;
 		saveData();
+	}
+	
+	public void btConnect() {
+		bt.findBT(true, this);
+		try {
+			bt.openBT(true, this);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void loadSettings() {
@@ -187,6 +200,14 @@ public class BeforeDriveActivity extends FragmentActivity {
 		case R.id.action_reset:
 			reset();
 			return true;
+		case R.id.action_connect_bt:
+			btConnect();
+		case R.id.action_close_bt:
+			try {
+				bt.closeBT(true, this);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		default:
 			return super.onOptionsItemSelected(item);
 		}
