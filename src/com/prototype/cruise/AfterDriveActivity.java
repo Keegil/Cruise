@@ -16,9 +16,11 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 
-public class AfterDriveActivity extends FragmentActivity {
+public class AfterDriveActivity extends FragmentActivity implements
+		OnPageChangeListener {
 
 	// Declare & initialize logging variables.
 	private static final String TAG = "AfterDriveActivity";
@@ -34,6 +36,7 @@ public class AfterDriveActivity extends FragmentActivity {
 	// Declare & initialize preference variables and set defaults.
 	public static final String PREFS_NAME = "MyPrefsFile";
 	public static int defaultRange = 120;
+	public static boolean firstTime = true;
 
 	// Declare & initialize data variables.
 	public static final String DATA_NAME = "MyDataFile";
@@ -295,6 +298,10 @@ public class AfterDriveActivity extends FragmentActivity {
 		relativeRange = doubleCurrentRange / doubleDefaultRange;
 
 		// get correct time
+		if (lastTime == 0) {
+			firstTime = true;
+			saveSettings();
+		}
 		lastTime = System.currentTimeMillis();
 
 		// save data and date
@@ -337,6 +344,7 @@ public class AfterDriveActivity extends FragmentActivity {
 	public void loadSettings() {
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		defaultRange = settings.getInt("defaultRange", defaultRange);
+		firstTime = settings.getBoolean("firstTime", firstTime);
 	}
 
 	public void loadData() {
@@ -368,6 +376,7 @@ public class AfterDriveActivity extends FragmentActivity {
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		SharedPreferences.Editor editor = settings.edit();
 		editor.putInt("defaultRange", defaultRange);
+		editor.putBoolean("firstTime", firstTime);
 		editor.commit();
 	}
 
@@ -400,5 +409,22 @@ public class AfterDriveActivity extends FragmentActivity {
 		SharedPreferences.Editor editor = date.edit();
 		editor.putLong("lastTime", lastTime);
 		editor.commit();
+	}
+
+	@Override
+	public void onPageScrollStateChanged(int arg0) {
+
+	}
+
+	@Override
+	public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+	}
+
+	@Override
+	public void onPageSelected(int position) {
+		if (position == 1) {
+
+		}
 	}
 }

@@ -11,13 +11,21 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class AfterDriveFragmentDriveDetails extends Fragment {
+public class AfterDriveFragmentDriveDetails extends Fragment implements
+		OnClickListener {
 
 	// Declare logging variable.
 	private static final String TAG = "AfterDriveFragmentDriveDetails";
@@ -77,6 +85,10 @@ public class AfterDriveFragmentDriveDetails extends Fragment {
 	ImageView ivRouteStar4;
 	ImageView ivRouteStar5;
 
+	// Declare hint.
+	TextView tvHint;
+	AnimationSet animation;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -85,9 +97,8 @@ public class AfterDriveFragmentDriveDetails extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater
-				.inflate(R.layout.fragment_after_drive_drive_completed,
-						container, false);
+		View view = inflater.inflate(R.layout.frag_after_drive_details,
+				container, false);
 		init(view);
 		return view;
 	}
@@ -100,8 +111,9 @@ public class AfterDriveFragmentDriveDetails extends Fragment {
 		setStars();
 		drawBars();
 		drawBackground();
+		showHint();
 	}
-
+	
 	public void init(View v) {
 		// Initialize bars.
 		llBar1 = (LinearLayout) v.findViewById(R.id.bar1_after2);
@@ -157,6 +169,38 @@ public class AfterDriveFragmentDriveDetails extends Fragment {
 		ivRouteStar3 = (ImageView) v.findViewById(R.id.iv_route_star3);
 		ivRouteStar4 = (ImageView) v.findViewById(R.id.iv_route_star4);
 		ivRouteStar5 = (ImageView) v.findViewById(R.id.iv_route_star5);
+
+		// Initialize hint and set background, animation and listener.
+		tvHint = (TextView) v.findViewById(R.id.tv_after_drive_hint2);
+		tvHint.getBackground().setAlpha(100);
+		tvHint.setOnClickListener(this);
+		animation = new AnimationSet(false);
+	}
+
+	public void setFonts() {
+		// Declare & initialize typefaces.
+		Typeface tfHelvetica = Typeface.createFromAsset(getActivity()
+				.getAssets(), "fonts/helvetica_bold_oblique.ttf");
+		Typeface tfMyriadRegular = Typeface.createFromAsset(getActivity()
+				.getAssets(), "fonts/myriad_regular.otf");
+		Typeface tfMyriadItalic = Typeface.createFromAsset(getActivity()
+				.getAssets(), "fonts/myriad_italic.otf");
+
+		// Set correct fonts to views.
+		tvEndingRange.setTypeface(tfHelvetica);
+		tvKm.setTypeface(tfMyriadRegular);
+		tvEstRangeRemain.setTypeface(tfMyriadItalic);
+		tvSpeed.setTypeface(tfMyriadItalic);
+		tvAcc.setTypeface(tfMyriadItalic);
+		tvBrake.setTypeface(tfMyriadItalic);
+		tvRoute.setTypeface(tfMyriadItalic);
+		tvStartRangeDesc.setTypeface(tfMyriadRegular);
+		tvRangeDecreaseDesc.setTypeface(tfMyriadRegular);
+		tvDistanceTraveledDesc.setTypeface(tfMyriadRegular);
+		tvStartRange.setTypeface(tfMyriadRegular);
+		tvRangeDecrease.setTypeface(tfMyriadRegular);
+		tvDistanceTraveled.setTypeface(tfMyriadRegular);
+		tvHint.setTypeface(tfMyriadRegular);
 	}
 
 	public void setTextViews() {
@@ -285,31 +329,6 @@ public class AfterDriveFragmentDriveDetails extends Fragment {
 		}
 	}
 
-	public void setFonts() {
-		// Declare & initialize typefaces.
-		Typeface tfHelvetica = Typeface.createFromAsset(getActivity()
-				.getAssets(), "fonts/helvetica_bold_oblique.ttf");
-		Typeface tfMyriadRegular = Typeface.createFromAsset(getActivity()
-				.getAssets(), "fonts/myriad_regular.otf");
-		Typeface tfMyriadItalic = Typeface.createFromAsset(getActivity()
-				.getAssets(), "fonts/myriad_italic.otf");
-
-		// Set correct fonts to views.
-		tvEndingRange.setTypeface(tfHelvetica);
-		tvKm.setTypeface(tfMyriadRegular);
-		tvEstRangeRemain.setTypeface(tfMyriadItalic);
-		tvSpeed.setTypeface(tfMyriadItalic);
-		tvAcc.setTypeface(tfMyriadItalic);
-		tvBrake.setTypeface(tfMyriadItalic);
-		tvRoute.setTypeface(tfMyriadItalic);
-		tvStartRangeDesc.setTypeface(tfMyriadRegular);
-		tvRangeDecreaseDesc.setTypeface(tfMyriadRegular);
-		tvDistanceTraveledDesc.setTypeface(tfMyriadRegular);
-		tvStartRange.setTypeface(tfMyriadRegular);
-		tvRangeDecrease.setTypeface(tfMyriadRegular);
-		tvDistanceTraveled.setTypeface(tfMyriadRegular);
-	}
-
 	public void drawBars() {
 		// Check relative range and set bars accordingly.
 		if (AfterDriveActivity.relativeRange <= 0.9
@@ -430,5 +449,53 @@ public class AfterDriveFragmentDriveDetails extends Fragment {
 								(int) blueStop) });
 		gdBackground.setCornerRadius(0f);
 		return gdBackground;
+	}
+	
+	public void showHint() {
+		Log.d(TAG, "" + AfterDriveActivity.firstTime + "");
+		if (AfterDriveActivity.firstTime) {
+			Animation fadeIn = new AlphaAnimation(0, 1);
+			fadeIn.setInterpolator(new DecelerateInterpolator());
+			fadeIn.setDuration(1500);
+
+			Animation fadeOut = new AlphaAnimation(1, 0);
+			fadeOut.setInterpolator(new AccelerateInterpolator());
+			fadeOut.setStartOffset(9000);
+			fadeOut.setDuration(1500);
+
+			animation.addAnimation(fadeIn);
+			animation.addAnimation(fadeOut);
+			animation.setAnimationListener(new AnimationListener() {
+
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					tvHint.setVisibility(View.GONE);
+				}
+
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+
+				}
+
+				@Override
+				public void onAnimationStart(Animation animation) {
+
+				}
+			});
+			tvHint.startAnimation(animation);
+		} else {
+			tvHint.setVisibility(View.GONE);
+		}
+	}
+
+	@Override
+	public void onClick(View view) {
+		switch (view.getId()) {
+		case R.id.tv_after_drive_hint2:
+			Log.d(TAG, "lol");
+			tvHint.clearAnimation();
+			tvHint.setVisibility(View.GONE);
+			break;
+		}
 	}
 }

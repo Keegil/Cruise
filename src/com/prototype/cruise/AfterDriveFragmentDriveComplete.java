@@ -9,13 +9,22 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class AfterDriveFragmentDriveComplete extends Fragment {
+public class AfterDriveFragmentDriveComplete extends Fragment implements
+		OnClickListener {
 
 	// declare logging variables
 	private static final String TAG = "AfterDriveFragmentDriveComplete";
@@ -43,6 +52,10 @@ public class AfterDriveFragmentDriveComplete extends Fragment {
 	TextView tvStars;
 	TextView tvChargeLeft;
 
+	// Declare hint.
+	TextView tvHint;
+	AnimationSet animation;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,8 +64,8 @@ public class AfterDriveFragmentDriveComplete extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_after_drive_drive_details, container,
-				false);
+		View view = inflater.inflate(
+				R.layout.frag_after_drive_completed, container, false);
 		init(view);
 		return view;
 	}
@@ -64,6 +77,7 @@ public class AfterDriveFragmentDriveComplete extends Fragment {
 		setTextViews();
 		drawBars();
 		drawBackground();
+		showHint();
 	}
 
 	public void init(View v) {
@@ -86,6 +100,12 @@ public class AfterDriveFragmentDriveComplete extends Fragment {
 		tvStars = (TextView) v.findViewById(R.id.tv_stars);
 		tvChargeLeft = (TextView) v.findViewById(R.id.tv_charge_left);
 		tvDriveCompleted = (TextView) v.findViewById(R.id.tv_drive_completed);
+
+		// Initialize hint and set background, animation and listener.
+		tvHint = (TextView) v.findViewById(R.id.tv_after_drive_hint1);
+		tvHint.getBackground().setAlpha(100);
+		tvHint.setOnClickListener(this);
+		animation = new AnimationSet(false);
 	}
 
 	public void setFonts() {
@@ -100,6 +120,7 @@ public class AfterDriveFragmentDriveComplete extends Fragment {
 		tvDriveCompleted.setTypeface(tfMyriadRegular);
 		tvStars.setTypeface(tfMyriadRegular);
 		tvChargeLeft.setTypeface(tfMyriadRegular);
+		tvHint.setTypeface(tfMyriadRegular);
 	}
 
 	public void setTextViews() {
@@ -266,4 +287,52 @@ public class AfterDriveFragmentDriveComplete extends Fragment {
 			ll.setBackgroundDrawable((Drawable) msg.obj);
 		}
 	};
+
+	public void showHint() {
+		Log.d(TAG, "" + AfterDriveActivity.firstTime + "");
+		if (AfterDriveActivity.firstTime) {
+			Animation fadeIn = new AlphaAnimation(0, 1);
+			fadeIn.setInterpolator(new DecelerateInterpolator());
+			fadeIn.setDuration(1500);
+
+			Animation fadeOut = new AlphaAnimation(1, 0);
+			fadeOut.setInterpolator(new AccelerateInterpolator());
+			fadeOut.setStartOffset(6000);
+			fadeOut.setDuration(1500);
+
+			animation.addAnimation(fadeIn);
+			animation.addAnimation(fadeOut);
+			animation.setAnimationListener(new AnimationListener() {
+
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					tvHint.setVisibility(View.GONE);
+				}
+
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+
+				}
+
+				@Override
+				public void onAnimationStart(Animation animation) {
+
+				}
+			});
+			tvHint.startAnimation(animation);
+		} else {
+			tvHint.setVisibility(View.GONE);
+		}
+	}
+
+	@Override
+	public void onClick(View view) {
+		switch (view.getId()) {
+		case R.id.tv_after_drive_hint1:
+			Log.d(TAG, "lol");
+			tvHint.clearAnimation();
+			tvHint.setVisibility(View.GONE);
+			break;
+		}
+	}
 }

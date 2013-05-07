@@ -26,7 +26,7 @@
     <string name="km">km</string>
     <string name="est_range_remain">Estimated Range Remaining</string>
 
-    <!-- BeforeDriveActivity -->
+    <!-- BeforeDriveFragmentCurrentStatus -->
     <string name="highway_desc">Highway</string>
     <string name="city_desc">City driving</string>
     <string name="time_parked_ex">Time Parked: 00:02:56 hrs</string>
@@ -36,15 +36,17 @@
     <string name="brake_mistakes">Brake mistakes</string>
     <string name="speed_mistakes">Speed mistakes</string>
     <string name="drive_button">Simulate</string>
+    <string name="before_drive_hint">Here you see the current status of your EV.</string>
 
-    <!-- AfterDriveFragment -->
+    <!-- AfterDriveFragmentCompleted -->
     <string name="drive_completed">Drive Completed!</string>
     <string name="stars_ex">11/20</string>
     <string name="good_charge">Your EV still has a good amount of charge remaining.</string>
     <string name="bad_charge">Your EV might need charging before the next trip.</string>
     <string name="no_charge">Your EV might not make this trip without charging.</string>
+    <string name="after_drive_hint1">Swipe left to get more information about a drive.</string>
 
-    <!-- AfterDriveFragment2 -->
+    <!-- AfterDriveFragmentDetails -->
     <string name="speed_desc">Speed</string>
     <string name="acc_desc">Acceleration</string>
     <string name="route_desc">Route</string>
@@ -55,5 +57,6 @@
     <string name="start_range_ex">120 km</string>
     <string name="range_decrease_ex">48 km</string>
     <string name="distance_traveled_ex">36 km</string>
+    <string name="after_drive_hint2">Here you see range estimates and driving efficiency stats.</string>
 
 </resources>

@@ -32,6 +32,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 	// Declare & initialize preference variables and set defaults.
 	public static final String PREFS_NAME = "MyPrefsFile";
 	public static int defaultRange = 120;
+	public static boolean firstTime = true;
 
 	// Declare & initialize data variables.
 	public static final String DATA_NAME = "MyDataFile";
@@ -50,7 +51,6 @@ public class BeforeDriveActivity extends FragmentActivity {
 
 	// Declare temporary calculation variables.
 	public static long timeDifference;
-	public static boolean firstTime;
 	public static double relativeRange;
 	public static int previousChargedRange;
 	public static double previousRelativeRange;
@@ -108,6 +108,8 @@ public class BeforeDriveActivity extends FragmentActivity {
 			firstTime = true;
 			currentRange = defaultRange;
 		} else {
+			firstTime = false;
+			saveSettings();
 			previousChargedRange = chargedRange;
 			// chargedRange = (int) (double) (timeDifference / 300000);
 			chargedRange = (int) (double) (timeDifference / 3000);
@@ -137,6 +139,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 	public void loadSettings() {
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		defaultRange = settings.getInt("defaultRange", defaultRange);
+		firstTime = settings.getBoolean("firstTime", firstTime);
 	}
 
 	public void loadData() {
@@ -160,6 +163,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		SharedPreferences.Editor editor = settings.edit();
 		editor.putInt("defaultRange", defaultRange);
+		editor.putBoolean("firstTime", firstTime);
 		editor.commit();
 	}
 

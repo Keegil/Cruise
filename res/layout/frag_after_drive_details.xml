@@ -413,6 +413,18 @@
                     android:textSize="@dimen/font_small" />
             </RelativeLayout>
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_after_drive_hint2"
+            android:layout_width="200sp"
+            android:layout_height="200sp"
+            android:layout_gravity="center"
+            android:background="@drawable/hintcircle"
+            android:gravity="center"
+            android:padding="30sp"
+            android:text="@string/after_drive_hint2"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_medium" />
     </FrameLayout>
 
     <FrameLayout
@@ -447,7 +459,7 @@
                 android:text="@string/range_decrease_desc"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_medium" />
-            
+
             <TextView
                 android:id="@+id/tv_distance_traveled_desc"
                 android:layout_width="wrap_content"
@@ -457,7 +469,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_medium" />
         </LinearLayout>
-        
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -481,7 +493,7 @@
                 android:text="@string/range_decrease_ex"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_medium" />
-            
+
             <TextView
                 android:id="@+id/tv_distance_traveled"
                 android:layout_width="wrap_content"

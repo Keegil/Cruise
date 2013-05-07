@@ -18,6 +18,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -61,6 +67,10 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 	TextView tvTimeParked;
 	TextView tvChargeGained;
 
+	// Declare hint.
+	TextView tvHint;
+	AnimationSet animation;
+
 	// Declare simulation views.
 	EditText etDistance;
 	EditText etAccMistakes;
@@ -89,6 +99,12 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		setTextViews();
 		drawBars();
 		drawBackground();
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		showHint();
 	}
 
 	public void init(View v) {
@@ -132,6 +148,12 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		// Initialize button and set listener.
 		bDrive = (Button) v.findViewById(R.id.b_drive);
 		bDrive.setOnClickListener(this);
+
+		// Initialize hint and set background, animation and listener.
+		tvHint = (TextView) v.findViewById(R.id.tv_before_drive_hint);
+		tvHint.getBackground().setAlpha(100);
+		tvHint.setOnClickListener(this);
+		animation = new AnimationSet(false);
 	}
 
 	public void setFonts() {
@@ -156,6 +178,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		tvCityRange.setTypeface(tfHelvetica);
 		tvTimeParked.setTypeface(tfMyriadRegular);
 		tvChargeGained.setTypeface(tfMyriadRegular);
+		tvHint.setTypeface(tfMyriadRegular);
 	}
 
 	public void setTextViews() {
@@ -182,7 +205,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		tvStartingRange.setLayoutParams(layoutParams);
 
 		// Set TextViews to display correct information.
-		if (BeforeDriveActivity.firstTime) {
+		if (BeforeDriveActivity.lastTime == 0) {
 			tvTimeParked.setText("Time Parked: 00:00:00");
 		} else {
 			tvTimeParked.setText("Time Parked: "
@@ -356,7 +379,43 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 			ll.setBackgroundDrawable((Drawable) msg.obj);
 		}
 	};
-	
+
+	public void showHint() {
+		if (BeforeDriveActivity.firstTime) {
+			Animation fadeIn = new AlphaAnimation(0, 1);
+			fadeIn.setInterpolator(new DecelerateInterpolator());
+			fadeIn.setDuration(1500);
+
+			Animation fadeOut = new AlphaAnimation(1, 0);
+			fadeOut.setInterpolator(new AccelerateInterpolator());
+			fadeOut.setStartOffset(6000);
+			fadeOut.setDuration(1500);
+
+			animation.addAnimation(fadeIn);
+			animation.addAnimation(fadeOut);
+			animation.setAnimationListener(new AnimationListener() {
+
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					tvHint.setVisibility(View.GONE);
+				}
+
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+
+				}
+
+				@Override
+				public void onAnimationStart(Animation animation) {
+
+				}
+			});
+			tvHint.startAnimation(animation);
+		} else {
+			tvHint.setVisibility(View.GONE);
+		}
+	}
+
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
@@ -376,7 +435,11 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 			startActivity(i);
 			getActivity().finish();
 			break;
+		case R.id.tv_before_drive_hint:
+			Log.d(TAG, "lol");
+			tvHint.clearAnimation();
+			tvHint.setVisibility(View.GONE);
+			break;
 		}
 	}
-
 }

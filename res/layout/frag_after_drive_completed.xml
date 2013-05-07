@@ -161,6 +161,18 @@
                 android:background="@drawable/whitebar" >
             </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_after_drive_hint1"
+            android:layout_width="200sp"
+            android:layout_height="200sp"
+            android:layout_gravity="center"
+            android:background="@drawable/hintcircle"
+            android:gravity="center"
+            android:padding="30sp"
+            android:text="@string/after_drive_hint1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_medium" />
     </FrameLayout>
 
     <LinearLayout
@@ -175,11 +187,10 @@
             android:id="@+id/tv_charge_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/good_charge"
-            android:textSize="@dimen/font_medium"
             android:gravity="center"
-            android:textColor="@color/white" />
-
+            android:text="@string/good_charge"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_medium" />
     </LinearLayout>
 
 </LinearLayout>
