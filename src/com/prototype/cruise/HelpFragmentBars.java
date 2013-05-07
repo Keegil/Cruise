@@ -7,13 +7,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.SurfaceHolder;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class HelpFragmentBars extends Fragment implements Runnable, OnClickListener {
+public class HelpFragmentBars extends Fragment implements OnTouchListener {
 
 	// Declare & initialize logging variable.
 	private static final String TAG = "HelpFragmentSpeed";
@@ -23,11 +25,18 @@ public class HelpFragmentBars extends Fragment implements Runnable, OnClickListe
 
 	// Declare background.
 	static LinearLayout ll;
+	
+	// Declare bars.
+	LinearLayout llBars;
 
 	// Declare Textviews.
 	TextView tvLogo;
 	TextView tvBarsHead;
 	TextView tvBarsInfo;
+	
+	// Declare touch variables.
+	float x, y;
+	DrawBars drawBars;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +64,9 @@ public class HelpFragmentBars extends Fragment implements Runnable, OnClickListe
 
 		// Initialize background view.
 		ll = (LinearLayout) v.findViewById(R.id.ll_help_bars);
+		
+		// Initialize bars and set OnClickListener.
+		llBars = (LinearLayout) v.findViewById(R.id.ll_bars_help);
 
 		// Initialize TextViews.
 		tvLogo = (TextView) v.findViewById(R.id.tv_logo_help_bars);
@@ -133,14 +145,9 @@ public class HelpFragmentBars extends Fragment implements Runnable, OnClickListe
 	}
 
 	@Override
-	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
+	public boolean onTouch(View arg0, MotionEvent arg1) {
+		x = arg1.getX();
+		y = arg1.getY();
+		return true;
 	}
 }
