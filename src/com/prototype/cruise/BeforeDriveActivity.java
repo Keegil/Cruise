@@ -113,8 +113,8 @@ public class BeforeDriveActivity extends FragmentActivity {
 			previousChargedRange = chargedRange;
 			// chargedRange = (int) (double) (timeDifference / 300000);
 			chargedRange = (int) (double) (timeDifference / 3000);
-			if (chargedRange > rangeUsed) {
-				chargedRange = rangeUsed;
+			if (chargedRange > (defaultRange - currentRange)) {
+				chargedRange = (defaultRange - currentRange);
 			}
 			if (currentRange + chargedRange >= defaultRange) {
 				currentRange = defaultRange;

@@ -1,5 +1,6 @@
 package com.prototype.cruise;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -63,7 +64,13 @@ public class AfterDriveFragmentDriveDetails extends Fragment implements
 	TextView tvRangeDecrease;
 	TextView tvDistanceTraveled;
 
-	// declare stars
+	// Declare icons.
+	ImageView ivSpeed;
+	ImageView ivAcc;
+	ImageView ivRoute;
+	ImageView ivBrake;
+
+	// Declare stars.
 	ImageView ivSpeedStar1;
 	ImageView ivSpeedStar2;
 	ImageView ivSpeedStar3;
@@ -113,7 +120,7 @@ public class AfterDriveFragmentDriveDetails extends Fragment implements
 		drawBackground();
 		showHint();
 	}
-	
+
 	public void init(View v) {
 		// Initialize bars.
 		llBar1 = (LinearLayout) v.findViewById(R.id.bar1_after2);
@@ -148,7 +155,17 @@ public class AfterDriveFragmentDriveDetails extends Fragment implements
 		tvDistanceTraveled = (TextView) v
 				.findViewById(R.id.tv_distance_traveled);
 
-		// initialize stars
+		// Initialize ImageViews and set OnClickListeners.
+		ivSpeed = (ImageView) v.findViewById(R.id.iv_speed);
+		ivAcc = (ImageView) v.findViewById(R.id.iv_acc);
+		ivRoute = (ImageView) v.findViewById(R.id.iv_route);
+		ivBrake = (ImageView) v.findViewById(R.id.iv_brake);
+		ivSpeed.setOnClickListener(this);
+		ivAcc.setOnClickListener(this);
+		ivRoute.setOnClickListener(this);
+		ivBrake.setOnClickListener(this);
+
+		// Initialize stars.
 		ivSpeedStar1 = (ImageView) v.findViewById(R.id.iv_speed_star1);
 		ivSpeedStar2 = (ImageView) v.findViewById(R.id.iv_speed_star2);
 		ivSpeedStar3 = (ImageView) v.findViewById(R.id.iv_speed_star3);
@@ -450,7 +467,7 @@ public class AfterDriveFragmentDriveDetails extends Fragment implements
 		gdBackground.setCornerRadius(0f);
 		return gdBackground;
 	}
-	
+
 	public void showHint() {
 		Log.d(TAG, "" + AfterDriveActivity.firstTime + "");
 		if (AfterDriveActivity.firstTime) {
@@ -490,11 +507,24 @@ public class AfterDriveFragmentDriveDetails extends Fragment implements
 
 	@Override
 	public void onClick(View view) {
+		Intent i;
 		switch (view.getId()) {
 		case R.id.tv_after_drive_hint2:
 			Log.d(TAG, "lol");
 			tvHint.clearAnimation();
 			tvHint.setVisibility(View.GONE);
+			break;
+		case R.id.iv_speed:
+			i = new Intent(getActivity().getApplicationContext(),
+					HelpActivity.class);
+			i.putExtra("helpData", 0);
+			startActivity(i);
+			break;
+		case R.id.iv_acc:
+			i = new Intent(getActivity().getApplicationContext(),
+					HelpActivity.class);
+			i.putExtra("helpData", 1);
+			startActivity(i);
 			break;
 		}
 	}

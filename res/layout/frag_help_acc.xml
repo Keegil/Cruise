@@ -1,0 +1,81 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_help_acc"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_green1"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:weightSum="1"
+    tools:context=".HelpFragmentAcc" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.15"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp" >
+
+        <ImageView
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/cruise_logo" />
+
+        <TextView
+            android:id="@+id/tv_logo_acc_speed"
+            android:layout_width="120sp"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name_caps"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_logo" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp" >
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/img_distance"
+            android:scaleType="fitCenter"
+            android:src="@drawable/acc_icon" />
+
+        <TextView
+            android:id="@+id/tv_acc_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/text_distance"
+            android:gravity="center"
+            android:text="@string/acc_desc"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_large" />
+
+        <TextView
+            android:id="@+id/tv_acc_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/acc_info"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_medium" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.15"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="5dp" >
+    </LinearLayout>
+
+</LinearLayout>

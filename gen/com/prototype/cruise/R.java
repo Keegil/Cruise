@@ -23,8 +23,7 @@ public final class R {
     }
     public static final class dimen {
         public static final int activity_double_vertical_margin=0x7f050001;
-        /**  Default screen margins, per the Android Design guidelines. 
-
+        /** 
          Customize dimensions originally defined in res/values/dimens.xml (such as
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
@@ -40,7 +39,11 @@ public final class R {
         public static final int font_medium=0x7f05000a;
         public static final int font_medium_large=0x7f050009;
         public static final int font_small=0x7f05000b;
+        /**  HelpActivity 
+         */
+        public static final int img_distance=0x7f05000d;
         public static final int star_size=0x7f050005;
+        public static final int text_distance=0x7f05000e;
     }
     public static final class drawable {
         public static final int acc_icon=0x7f020000;
@@ -58,46 +61,46 @@ public final class R {
         public static final int whiteemptybar=0x7f02000c;
     }
     public static final class id {
-        public static final int action_close_bt=0x7f09006d;
-        public static final int action_connect_bt=0x7f09006c;
-        public static final int action_defaultrange=0x7f09006a;
-        public static final int action_reset=0x7f09006b;
-        public static final int b_drive=0x7f09005d;
-        public static final int bar1=0x7f09004d;
+        public static final int action_close_bt=0x7f090075;
+        public static final int action_connect_bt=0x7f090074;
+        public static final int action_defaultrange=0x7f090072;
+        public static final int action_reset=0x7f090073;
+        public static final int b_drive=0x7f090065;
+        public static final int bar1=0x7f090055;
         public static final int bar1_after=0x7f090005;
         public static final int bar1_after2=0x7f090011;
-        public static final int bar2=0x7f09004e;
+        public static final int bar2=0x7f090056;
         public static final int bar2_after=0x7f090006;
         public static final int bar2_after2=0x7f090012;
-        public static final int bar3=0x7f09004f;
+        public static final int bar3=0x7f090057;
         public static final int bar3_after=0x7f090007;
         public static final int bar3_after2=0x7f090013;
-        public static final int bar4=0x7f090050;
+        public static final int bar4=0x7f090058;
         public static final int bar4_after=0x7f090008;
         public static final int bar4_after2=0x7f090014;
-        public static final int bar5=0x7f090051;
+        public static final int bar5=0x7f090059;
         public static final int bar5_after=0x7f090009;
         public static final int bar5_after2=0x7f090015;
-        public static final int bar6=0x7f090052;
+        public static final int bar6=0x7f09005a;
         public static final int bar6_after=0x7f09000a;
         public static final int bar6_after2=0x7f090016;
-        public static final int bar7=0x7f090053;
+        public static final int bar7=0x7f09005b;
         public static final int bar7_after=0x7f09000b;
         public static final int bar7_after2=0x7f090017;
-        public static final int bar8=0x7f090054;
+        public static final int bar8=0x7f09005c;
         public static final int bar8_after=0x7f09000c;
         public static final int bar8_after2=0x7f090018;
-        public static final int bar9=0x7f090055;
+        public static final int bar9=0x7f09005d;
         public static final int bar9_after=0x7f09000d;
         public static final int bar9_after2=0x7f090019;
-        public static final int et_acc_mistakes=0x7f09005a;
-        public static final int et_brake_mistakes=0x7f09005b;
-        public static final int et_distance=0x7f090059;
-        public static final int et_speed_mistakes=0x7f09005c;
-        public static final int group=0x7f09005e;
-        public static final int group1=0x7f09005f;
-        public static final int group2=0x7f090061;
-        public static final int group3=0x7f090064;
+        public static final int et_acc_mistakes=0x7f090062;
+        public static final int et_brake_mistakes=0x7f090063;
+        public static final int et_distance=0x7f090061;
+        public static final int et_speed_mistakes=0x7f090064;
+        public static final int group=0x7f090066;
+        public static final int group1=0x7f090067;
+        public static final int group2=0x7f090069;
+        public static final int group3=0x7f09006c;
         public static final int iv_acc=0x7f090024;
         public static final int iv_acc_star1=0x7f090025;
         public static final int iv_acc_star2=0x7f090026;
@@ -110,8 +113,8 @@ public final class R {
         public static final int iv_brake_star3=0x7f090035;
         public static final int iv_brake_star4=0x7f090036;
         public static final int iv_brake_star5=0x7f090037;
-        public static final int iv_city=0x7f090049;
-        public static final int iv_highway=0x7f090045;
+        public static final int iv_city=0x7f090051;
+        public static final int iv_highway=0x7f09004d;
         public static final int iv_route=0x7f09002b;
         public static final int iv_route_star1=0x7f09002c;
         public static final int iv_route_star2=0x7f09002d;
@@ -125,120 +128,138 @@ public final class R {
         public static final int iv_speed_star4=0x7f090021;
         public static final int iv_speed_star5=0x7f090022;
         public static final int iv_stars=0x7f090003;
-        public static final int li_accmist=0x7f090067;
-        public static final int li_date=0x7f090063;
-        public static final int li_dist=0x7f090065;
-        public static final int li_id=0x7f090066;
-        public static final int li_point=0x7f090060;
-        public static final int li_remdist=0x7f090062;
-        public static final int li_spmist=0x7f090068;
-        public static final int ll_main=0x7f090040;
+        public static final int li_accmist=0x7f09006f;
+        public static final int li_date=0x7f09006b;
+        public static final int li_dist=0x7f09006d;
+        public static final int li_id=0x7f09006e;
+        public static final int li_point=0x7f090068;
+        public static final int li_remdist=0x7f09006a;
+        public static final int li_spmist=0x7f090070;
+        public static final int ll_help_acc=0x7f090040;
+        public static final int ll_help_speed=0x7f090044;
+        public static final int ll_main=0x7f090048;
         public static final int ll_main_after=0x7f090000;
         public static final int ll_main_after2=0x7f090010;
-        public static final int pager=0x7f090069;
+        public static final int pager=0x7f090071;
         public static final int tv_acc_desc=0x7f09002a;
+        public static final int tv_acc_head=0x7f090042;
+        public static final int tv_acc_text=0x7f090043;
         public static final int tv_after_drive_hint1=0x7f09000e;
         public static final int tv_after_drive_hint2=0x7f090039;
-        public static final int tv_before_drive_hint=0x7f090056;
+        public static final int tv_before_drive_hint=0x7f09005e;
         public static final int tv_brake_desc=0x7f090038;
-        public static final int tv_charge_gained=0x7f090058;
+        public static final int tv_charge_gained=0x7f090060;
         public static final int tv_charge_left=0x7f09000f;
-        public static final int tv_city_desc=0x7f09004c;
-        public static final int tv_city_km=0x7f09004b;
-        public static final int tv_city_range=0x7f09004a;
+        public static final int tv_city_desc=0x7f090054;
+        public static final int tv_city_km=0x7f090053;
+        public static final int tv_city_range=0x7f090052;
         public static final int tv_distance_traveled=0x7f09003f;
         public static final int tv_distance_traveled_desc=0x7f09003c;
         public static final int tv_drive_completed=0x7f090002;
         public static final int tv_ending_range=0x7f09001a;
-        public static final int tv_est_range_remain=0x7f090044;
+        public static final int tv_est_range_remain=0x7f09004c;
         public static final int tv_est_range_remain_after=0x7f09001c;
-        public static final int tv_highway_desc=0x7f090048;
-        public static final int tv_highway_km=0x7f090047;
-        public static final int tv_highway_range=0x7f090046;
-        public static final int tv_km=0x7f090043;
+        public static final int tv_highway_desc=0x7f090050;
+        public static final int tv_highway_km=0x7f09004f;
+        public static final int tv_highway_range=0x7f09004e;
+        public static final int tv_km=0x7f09004b;
         public static final int tv_km_after=0x7f09001b;
-        public static final int tv_logo=0x7f090041;
+        public static final int tv_logo=0x7f090049;
+        public static final int tv_logo_acc_speed=0x7f090041;
         public static final int tv_logo_after=0x7f090001;
+        public static final int tv_logo_help_speed=0x7f090045;
         public static final int tv_range_decrease=0x7f09003e;
         public static final int tv_range_decrease_desc=0x7f09003b;
         public static final int tv_route_desc=0x7f090031;
         public static final int tv_speed_desc=0x7f090023;
+        public static final int tv_speed_head=0x7f090046;
+        public static final int tv_speed_text=0x7f090047;
         public static final int tv_stars=0x7f090004;
         public static final int tv_start_range=0x7f09003d;
         public static final int tv_start_range_desc=0x7f09003a;
-        public static final int tv_starting_range=0x7f090042;
-        public static final int tv_time_parked=0x7f090057;
+        public static final int tv_starting_range=0x7f09004a;
+        public static final int tv_time_parked=0x7f09005f;
     }
     public static final class layout {
         public static final int frag_after_drive_completed=0x7f030000;
         public static final int frag_after_drive_details=0x7f030001;
-        public static final int fragment_before_drive_current_status=0x7f030002;
-        public static final int list_item=0x7f030003;
-        public static final int viewpager=0x7f030004;
+        public static final int frag_help_acc=0x7f030002;
+        public static final int frag_help_speed=0x7f030003;
+        public static final int fragment_before_drive_current_status=0x7f030004;
+        public static final int list_item=0x7f030005;
+        public static final int viewpager=0x7f030006;
     }
     public static final class menu {
         public static final int after_drive=0x7f080000;
         public static final int drive=0x7f080001;
+        public static final int help=0x7f080002;
     }
     public static final class string {
-        public static final int acc_desc=0x7f060022;
-        public static final int acc_mistakes=0x7f060016;
-        public static final int action_close_bt=0x7f06000b;
-        public static final int action_connect_bt=0x7f06000a;
-        public static final int action_defaultacc=0x7f060006;
-        public static final int action_defaultdrivecycle=0x7f060008;
-        public static final int action_defaultrange=0x7f060005;
-        public static final int action_defaultspeed=0x7f060007;
+        public static final int acc_desc=0x7f060023;
+        /**  HelpFragmentAcc 
+         */
+        public static final int acc_info=0x7f06002e;
+        public static final int acc_mistakes=0x7f060017;
+        public static final int action_close_bt=0x7f06000c;
+        public static final int action_connect_bt=0x7f06000b;
+        public static final int action_defaultacc=0x7f060007;
+        public static final int action_defaultdrivecycle=0x7f060009;
+        public static final int action_defaultrange=0x7f060006;
+        public static final int action_defaultspeed=0x7f060008;
         /**  Menu 
          */
-        public static final int action_reset=0x7f060004;
-        public static final int action_reset_db=0x7f060009;
-        public static final int after_drive_hint1=0x7f060020;
-        public static final int after_drive_hint2=0x7f06002b;
+        public static final int action_reset=0x7f060005;
+        public static final int action_reset_db=0x7f06000a;
+        public static final int after_drive_hint1=0x7f060021;
+        public static final int after_drive_hint2=0x7f06002c;
         /**  App/activity/fragment name strings 
          */
         public static final int app_name=0x7f060000;
         public static final int app_name_caps=0x7f060001;
-        public static final int bad_charge=0x7f06001e;
-        public static final int before_drive_hint=0x7f06001a;
-        public static final int brake_desc=0x7f060024;
-        public static final int brake_mistakes=0x7f060017;
-        public static final int charge_gained_ex=0x7f060014;
-        public static final int city_desc=0x7f060012;
-        public static final int city_ex=0x7f06000e;
-        public static final int distance_traveled_desc=0x7f060027;
-        public static final int distance_traveled_ex=0x7f06002a;
-        public static final int drive_button=0x7f060019;
+        public static final int bad_charge=0x7f06001f;
+        public static final int before_drive_hint=0x7f06001b;
+        public static final int brake_desc=0x7f060025;
+        public static final int brake_mistakes=0x7f060018;
+        public static final int charge_gained_ex=0x7f060015;
+        public static final int city_desc=0x7f060013;
+        public static final int city_ex=0x7f06000f;
+        public static final int distance_traveled_desc=0x7f060028;
+        public static final int distance_traveled_ex=0x7f06002b;
+        public static final int drive_button=0x7f06001a;
         /**  AfterDriveFragmentCompleted 
          */
-        public static final int drive_completed=0x7f06001b;
-        public static final int drive_distance=0x7f060015;
-        public static final int est_range_remain=0x7f060010;
+        public static final int drive_completed=0x7f06001c;
+        public static final int drive_distance=0x7f060016;
+        public static final int est_range_remain=0x7f060011;
         /**  Example/placeholder 
          */
-        public static final int example_km=0x7f06000c;
-        public static final int good_charge=0x7f06001d;
+        public static final int example_km=0x7f06000d;
+        public static final int good_charge=0x7f06001e;
         /**  BeforeDriveFragmentCurrentStatus 
          */
-        public static final int highway_desc=0x7f060011;
-        public static final int highway_ex=0x7f06000d;
+        public static final int highway_desc=0x7f060012;
+        public static final int highway_ex=0x7f06000e;
         /**  General 
          */
-        public static final int km=0x7f06000f;
-        public static final int no_charge=0x7f06001f;
-        public static final int range_decrease_desc=0x7f060026;
-        public static final int range_decrease_ex=0x7f060029;
-        public static final int route_desc=0x7f060023;
+        public static final int km=0x7f060010;
+        public static final int no_charge=0x7f060020;
+        public static final int range_decrease_desc=0x7f060027;
+        public static final int range_decrease_ex=0x7f06002a;
+        public static final int route_desc=0x7f060024;
         /**  AfterDriveFragmentDetails 
          */
-        public static final int speed_desc=0x7f060021;
-        public static final int speed_mistakes=0x7f060018;
-        public static final int stars_ex=0x7f06001c;
-        public static final int start_range_desc=0x7f060025;
-        public static final int start_range_ex=0x7f060028;
-        public static final int time_parked_ex=0x7f060013;
+        public static final int speed_desc=0x7f060022;
+        /**  HelpFragmentSpeed 
+         */
+        public static final int speed_info=0x7f06002d;
+        public static final int speed_mistakes=0x7f060019;
+        public static final int stars_ex=0x7f06001d;
+        public static final int start_range_desc=0x7f060026;
+        public static final int start_range_ex=0x7f060029;
+        public static final int time_parked_ex=0x7f060014;
         public static final int title_activity_after_drive=0x7f060002;
         public static final int title_activity_after_drive_fragment2=0x7f060003;
+        public static final int title_activity_help=0x7f060004;
     }
     public static final class style {
         /** 
