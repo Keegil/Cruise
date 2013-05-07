@@ -202,12 +202,14 @@ public class BeforeDriveActivity extends FragmentActivity {
 			return true;
 		case R.id.action_connect_bt:
 			btConnect();
+			return true;
 		case R.id.action_close_bt:
 			try {
 				bt.closeBT(true, this);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
