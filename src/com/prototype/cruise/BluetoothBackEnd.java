@@ -67,7 +67,12 @@ public class BluetoothBackEnd {
 				if (device.getName().equals("RN42-DF28")) {
 					mmDevice = device;
 					findStatus = "Bluetooth Device Found";
-
+					try {
+						openBT(show, c);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					break;
 				}
 

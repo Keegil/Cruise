@@ -137,11 +137,6 @@ public class BeforeDriveActivity extends FragmentActivity {
 
 	public void btConnect() {
 		bt.findBT(true, this);
-		try {
-			bt.openBT(true, this);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void loadSettings() {
