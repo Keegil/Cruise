@@ -8,7 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,8 +15,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
+
+import com.viewpagerindicator.CirclePageIndicator;
 
 public class AfterDriveActivity extends FragmentActivity {
 
@@ -86,6 +86,9 @@ public class AfterDriveActivity extends FragmentActivity {
 	private static final String TAG_SPE = "speedingCounts";
 	private static final String TAG_TOT = "totalCounts";
 	private static final String TAG_DIS = "distanceTraveled";
+	
+	//Viewpager indicator
+	CirclePageIndicator mIndicator;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -96,6 +99,9 @@ public class AfterDriveActivity extends FragmentActivity {
 
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
+		
+        mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
+        mIndicator.setViewPager(mPager);
 
 		init();
 		loadSettings();
@@ -112,6 +118,12 @@ public class AfterDriveActivity extends FragmentActivity {
 		}
 
 		calc();
+	}
+	
+	public void setBackgroundIndicator(int c){
+		
+        mIndicator.setBackgroundColor(c);
+		
 	}
 
 	public void init() {

@@ -2,6 +2,8 @@ package com.prototype.cruise;
 
 import java.io.IOException;
 
+import com.viewpagerindicator.CirclePageIndicator;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +22,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 public class BeforeDriveActivity extends FragmentActivity {
 
@@ -58,9 +61,14 @@ public class BeforeDriveActivity extends FragmentActivity {
 	public static double relativeRange;
 	public static int previousChargedRange;
 	public static double previousRelativeRange;
+	
+	static LinearLayout vpl;
 
 	// Declare & initialize bluetooth variables.
 	private BluetoothBackEnd bt = new BluetoothBackEnd();
+	
+	//Viewpager indicator
+	CirclePageIndicator mIndicator;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +79,10 @@ public class BeforeDriveActivity extends FragmentActivity {
 
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
+		
+        mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
+
+        mIndicator.setViewPager(mPager);
 
 		beforeDriveFragmentCurrentStatus = (BeforeDriveFragmentCurrentStatus) mAdapter
 				.getItem(0);
@@ -84,6 +96,13 @@ public class BeforeDriveActivity extends FragmentActivity {
 		loadDate();
 		calc();
 		btConnect();
+	}
+	
+	
+	public void setBackgroundIndicator(int c){
+		
+        mIndicator.setBackgroundColor(c);
+		
 	}
 
 	public static class MyAdapter extends FragmentPagerAdapter {

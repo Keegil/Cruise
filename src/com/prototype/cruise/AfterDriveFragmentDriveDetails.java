@@ -465,6 +465,10 @@ public class AfterDriveFragmentDriveDetails extends Fragment implements
 						Color.rgb((int) redStop, (int) greenStop,
 								(int) blueStop) });
 		gdBackground.setCornerRadius(0f);
+		
+		((AfterDriveActivity) getActivity()).setBackgroundIndicator(Color.rgb((int) redStop, (int) greenStop,
+		(int) blueStop));
+		
 		return gdBackground;
 	}
 

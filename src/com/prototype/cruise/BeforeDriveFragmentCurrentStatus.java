@@ -42,6 +42,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 	// Declare background.
 	static LinearLayout ll;
 
+
 	// Declare bars.
 	LinearLayout llBar1;
 	LinearLayout llBar2;
@@ -118,6 +119,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 
 		// Initialize background view.
 		ll = (LinearLayout) v.findViewById(R.id.ll_main);
+
 
 		// Initialize bars and set OnClickListener.
 		llBar1 = (LinearLayout) v.findViewById(R.id.bar1);
@@ -377,13 +379,20 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 						Color.rgb((int) redStop, (int) greenStop,
 								(int) blueStop) });
 		gdBackground.setCornerRadius(0f);
+		
+		((BeforeDriveActivity) getActivity()).setBackgroundIndicator(Color.rgb((int) redStop, (int) greenStop,
+		(int) blueStop));
+		
 		return gdBackground;
 	}
+	
+
 
 	// UI handler for changing gradient.
 	static final Handler bgHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			ll.setBackgroundDrawable((Drawable) msg.obj);
+
 		}
 	};
 
