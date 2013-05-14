@@ -68,4 +68,9 @@
     <string name="bars_desc">Range bar</string>
     <string name="bars_info">The range bar, together with the background color gradient, indicates how much range you have left.</string>
 
+    <!-- SummaryFragment -->
+    <string name="eval_strong">Based on your current driving habits, you are a strong candidate for an electric vehicle. Driving an EV fits well with your lifestyle.</string>
+    <string name="eval_good">Based on your current driving habits, you are a good candidate for an electric vehicle. An EV will satisfy the majority of your needs.</string>
+    <string name="eval_weak">Based on your current driving habits, you are a weak candidate for an electric vehicle. Maybe an EV as a second car would be right for you?</string>
+
 </resources>

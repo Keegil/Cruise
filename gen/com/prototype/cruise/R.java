@@ -378,28 +378,29 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int brake_icon=0x7f020001;
         public static final int city_icon=0x7f020002;
         public static final int cruise_logo=0x7f020003;
-        public static final int highway_icon=0x7f020004;
-        public static final int hintcircle=0x7f020005;
-        public static final int ic_launcher=0x7f020006;
-        public static final int route_icon=0x7f020007;
-        public static final int speed_icon=0x7f020008;
-        public static final int starempty=0x7f020009;
-        public static final int starfilled=0x7f02000a;
-        public static final int vpi__tab_indicator=0x7f02000b;
-        public static final int vpi__tab_selected_focused_holo=0x7f02000c;
-        public static final int vpi__tab_selected_holo=0x7f02000d;
-        public static final int vpi__tab_selected_pressed_holo=0x7f02000e;
-        public static final int vpi__tab_unselected_focused_holo=0x7f02000f;
-        public static final int vpi__tab_unselected_holo=0x7f020010;
-        public static final int vpi__tab_unselected_pressed_holo=0x7f020011;
-        public static final int whitebar=0x7f020012;
-        public static final int whiteemptybar=0x7f020013;
+        public static final int ev=0x7f020004;
+        public static final int highway_icon=0x7f020005;
+        public static final int hintcircle=0x7f020006;
+        public static final int ic_launcher=0x7f020007;
+        public static final int route_icon=0x7f020008;
+        public static final int speed_icon=0x7f020009;
+        public static final int starempty=0x7f02000a;
+        public static final int starfilled=0x7f02000b;
+        public static final int vpi__tab_indicator=0x7f02000c;
+        public static final int vpi__tab_selected_focused_holo=0x7f02000d;
+        public static final int vpi__tab_selected_holo=0x7f02000e;
+        public static final int vpi__tab_selected_pressed_holo=0x7f02000f;
+        public static final int vpi__tab_unselected_focused_holo=0x7f020010;
+        public static final int vpi__tab_unselected_holo=0x7f020011;
+        public static final int vpi__tab_unselected_pressed_holo=0x7f020012;
+        public static final int whitebar=0x7f020013;
+        public static final int whiteemptybar=0x7f020014;
     }
     public static final class id {
-        public static final int action_close_bt=0x7f040093;
-        public static final int action_connect_bt=0x7f040092;
-        public static final int action_defaultrange=0x7f040090;
-        public static final int action_reset=0x7f040091;
+        public static final int action_close_bt=0x7f040095;
+        public static final int action_connect_bt=0x7f040094;
+        public static final int action_defaultrange=0x7f040092;
+        public static final int action_reset=0x7f040093;
         public static final int b_drive=0x7f040063;
         public static final int bar1=0x7f040053;
         public static final int bar1_after=0x7f04000a;
@@ -442,11 +443,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int et_brake_mistakes=0x7f040061;
         public static final int et_distance=0x7f04005f;
         public static final int et_speed_mistakes=0x7f040062;
-        public static final int group=0x7f040082;
-        public static final int group1=0x7f040083;
-        public static final int group2=0x7f040085;
-        public static final int group3=0x7f040088;
-        public static final int indicator=0x7f04008f;
+        public static final int group=0x7f040084;
+        public static final int group1=0x7f040085;
+        public static final int group2=0x7f040087;
+        public static final int group3=0x7f04008a;
+        public static final int indicator=0x7f040091;
         public static final int iv_acc=0x7f040029;
         public static final int iv_acc_star1=0x7f04002a;
         public static final int iv_acc_star2=0x7f04002b;
@@ -474,13 +475,13 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int iv_speed_star4=0x7f040026;
         public static final int iv_speed_star5=0x7f040027;
         public static final int iv_stars=0x7f040008;
-        public static final int li_accmist=0x7f04008b;
-        public static final int li_date=0x7f040087;
-        public static final int li_dist=0x7f040089;
-        public static final int li_id=0x7f04008a;
-        public static final int li_point=0x7f040084;
-        public static final int li_remdist=0x7f040086;
-        public static final int li_spmist=0x7f04008c;
+        public static final int li_accmist=0x7f04008d;
+        public static final int li_date=0x7f040089;
+        public static final int li_dist=0x7f04008b;
+        public static final int li_id=0x7f04008c;
+        public static final int li_point=0x7f040086;
+        public static final int li_remdist=0x7f040088;
+        public static final int li_spmist=0x7f04008e;
         public static final int ll_bars_before=0x7f040052;
         public static final int ll_bars_help=0x7f04006a;
         public static final int ll_help_acc=0x7f040064;
@@ -491,8 +492,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int ll_main=0x7f040045;
         public static final int ll_main_after=0x7f040005;
         public static final int ll_main_after2=0x7f040015;
+        public static final int ll_main_summary=0x7f040082;
         public static final int none=0x7f040000;
-        public static final int pager=0x7f04008e;
+        public static final int pager=0x7f040090;
         public static final int top=0x7f040004;
         public static final int triangle=0x7f040001;
         public static final int tv_acc_desc=0x7f04002f;
@@ -517,6 +519,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int tv_ending_range=0x7f04001f;
         public static final int tv_est_range_remain=0x7f040049;
         public static final int tv_est_range_remain_after=0x7f040021;
+        public static final int tv_eval=0x7f040083;
         public static final int tv_highway_desc=0x7f04004d;
         public static final int tv_highway_km=0x7f04004c;
         public static final int tv_highway_range=0x7f04004b;
@@ -543,7 +546,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int tv_starting_range=0x7f040047;
         public static final int tv_time_parked=0x7f04005d;
         public static final int underline=0x7f040002;
-        public static final int vpl=0x7f04008d;
+        public static final int vpl=0x7f04008f;
     }
     public static final class integer {
         public static final int default_circle_indicator_orientation=0x7f070000;
@@ -561,8 +564,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int frag_help_brake=0x7f030005;
         public static final int frag_help_route=0x7f030006;
         public static final int frag_help_speed=0x7f030007;
-        public static final int list_item=0x7f030008;
-        public static final int viewpager=0x7f030009;
+        public static final int frag_summary=0x7f030008;
+        public static final int list_item=0x7f030009;
+        public static final int viewpager=0x7f03000a;
     }
     public static final class menu {
         public static final int after_drive=0x7f0b0000;
@@ -607,6 +611,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int drive_completed=0x7f0a001c;
         public static final int drive_distance=0x7f0a0016;
         public static final int est_range_remain=0x7f0a0011;
+        public static final int eval_good=0x7f0a0034;
+        /**  SummaryFragment 
+         */
+        public static final int eval_strong=0x7f0a0033;
+        public static final int eval_weak=0x7f0a0035;
         /**  Example/placeholder 
          */
         public static final int example_km=0x7f0a000d;

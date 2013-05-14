@@ -2,27 +2,23 @@ package com.prototype.cruise;
 
 import java.io.IOException;
 
-import com.viewpagerindicator.CirclePageIndicator;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+
+import com.viewpagerindicator.CirclePageIndicator;
 
 public class BeforeDriveActivity extends FragmentActivity {
 
@@ -31,6 +27,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 
 	// Declare fragments.
 	BeforeDriveFragmentCurrentStatus beforeDriveFragmentCurrentStatus;
+	SummaryFragment summaryFragment;
 
 	// Declare ViewPager & Adapter variables.
 	private MyAdapter mAdapter;
@@ -61,13 +58,13 @@ public class BeforeDriveActivity extends FragmentActivity {
 	public static double relativeRange;
 	public static int previousChargedRange;
 	public static double previousRelativeRange;
-	
+
 	static LinearLayout vpl;
 
 	// Declare & initialize bluetooth variables.
 	private BluetoothBackEnd bt = new BluetoothBackEnd();
-	
-	//Viewpager indicator
+
+	// Viewpager indicator
 	static CirclePageIndicator mIndicator;
 
 	@Override
@@ -79,13 +76,16 @@ public class BeforeDriveActivity extends FragmentActivity {
 
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
-		
-        mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
 
-        mIndicator.setViewPager(mPager);
+		mIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
+
+		mIndicator.setViewPager(mPager);
 
 		beforeDriveFragmentCurrentStatus = (BeforeDriveFragmentCurrentStatus) mAdapter
-				.getItem(0);
+				.getItem(1);
+		summaryFragment = (SummaryFragment) mAdapter.getItem(0);
+		
+		mPager.setCurrentItem(1);
 	}
 
 	@Override
@@ -97,12 +97,9 @@ public class BeforeDriveActivity extends FragmentActivity {
 		calc();
 		btConnect();
 	}
-	
-	
-	public static void setBackgroundIndicator(int c){
-		
-        mIndicator.setBackgroundColor(c);
-		
+
+	public static void setBackgroundIndicator(int c) {
+		mIndicator.setBackgroundColor(c);
 	}
 
 	public static class MyAdapter extends FragmentPagerAdapter {
@@ -113,13 +110,15 @@ public class BeforeDriveActivity extends FragmentActivity {
 
 		@Override
 		public int getCount() {
-			return 1;
+			return 2;
 		}
 
 		@Override
 		public Fragment getItem(int position) {
 			switch (position) {
 			case 0:
+				return new SummaryFragment();
+			case 1:
 				return new BeforeDriveFragmentCurrentStatus();
 			default:
 				return null;

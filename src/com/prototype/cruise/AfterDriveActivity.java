@@ -86,8 +86,8 @@ public class AfterDriveActivity extends FragmentActivity {
 	private static final String TAG_SPE = "speedingCounts";
 	private static final String TAG_TOT = "totalCounts";
 	private static final String TAG_DIS = "distanceTraveled";
-	
-	//Viewpager indicator
+
+	// Viewpager indicator
 	static CirclePageIndicator mIndicator;
 
 	@Override
@@ -99,9 +99,14 @@ public class AfterDriveActivity extends FragmentActivity {
 
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
-		
-        mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
-        mIndicator.setViewPager(mPager);
+
+		mIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
+		mIndicator.setViewPager(mPager);
+
+		afterDriveFragmentDriveComplete = (AfterDriveFragmentDriveComplete) mAdapter
+				.getItem(0);
+		afterDriveFragmentDriveDetails = (AfterDriveFragmentDriveDetails) mAdapter
+				.getItem(1);
 
 		init();
 		loadSettings();
@@ -119,11 +124,11 @@ public class AfterDriveActivity extends FragmentActivity {
 
 		calc();
 	}
-	
-	public static void setBackgroundIndicator(int c){
-		
-        mIndicator.setBackgroundColor(c);
-		
+
+	public static void setBackgroundIndicator(int c) {
+
+		mIndicator.setBackgroundColor(c);
+
 	}
 
 	public void init() {
@@ -147,7 +152,7 @@ public class AfterDriveActivity extends FragmentActivity {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
+
 		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
@@ -304,7 +309,10 @@ public class AfterDriveActivity extends FragmentActivity {
 		// save to database
 		cal = Calendar.getInstance();
 		date = dateFormat.format(cal.getTime());
-		drivingStatsDataSource.createDrivingStats(date, accScore, speedScore, brakeScore, routeScore, driveLength, 0, 0, 0, 0, 0);
+		drivingStatsDataSource.createDrivingStats(date, accScore, speedScore,
+				brakeScore, routeScore, driveLength,
+				(int) (previousRelativeRange * 100), rangeUsed,
+				(int) (relativeRange * 100), 0, 0);
 	}
 
 	public static class MyAdapter extends FragmentPagerAdapter {
