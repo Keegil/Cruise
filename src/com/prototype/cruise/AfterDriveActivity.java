@@ -88,7 +88,7 @@ public class AfterDriveActivity extends FragmentActivity {
 	private static final String TAG_DIS = "distanceTraveled";
 	
 	//Viewpager indicator
-	CirclePageIndicator mIndicator;
+	static CirclePageIndicator mIndicator;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -120,7 +120,7 @@ public class AfterDriveActivity extends FragmentActivity {
 		calc();
 	}
 	
-	public void setBackgroundIndicator(int c){
+	public static void setBackgroundIndicator(int c){
 		
         mIndicator.setBackgroundColor(c);
 		

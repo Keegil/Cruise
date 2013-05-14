@@ -79,6 +79,10 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 	EditText etBrakeMistakes;
 	EditText etSpeedMistakes;
 	Button bDrive;
+	
+	static double redStop;
+	static double greenStop;
+	static double blueStop;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -340,7 +344,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		} else if (redStart < 0) {
 			redStart = 0;
 		}
-		double redStop = 155 + (402 * rr) - (593 * rr * rr)
+		redStop = 155 + (402 * rr) - (593 * rr * rr)
 				+ (290 * rr * rr * rr);
 		if (redStop > 255) {
 			redStop = 255;
@@ -353,7 +357,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		} else if (greenStart < 0) {
 			greenStart = 0;
 		}
-		double greenStop = 14 + (164 * rr) + (42 * rr * rr);
+		greenStop = 14 + (164 * rr) + (42 * rr * rr);
 		if (greenStop > 255) {
 			greenStop = 255;
 		} else if (greenStop < 0) {
@@ -366,7 +370,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		} else if (blueStart < 0) {
 			blueStart = 0;
 		}
-		double blueStop = 45 + (12 * rr) - (72 * rr * rr) + (37 * rr * rr * rr);
+		blueStop = 45 + (12 * rr) - (72 * rr * rr) + (37 * rr * rr * rr);
 		if (blueStop > 255) {
 			blueStop = 255;
 		} else if (blueStop < 0) {
@@ -379,10 +383,6 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 						Color.rgb((int) redStop, (int) greenStop,
 								(int) blueStop) });
 		gdBackground.setCornerRadius(0f);
-		
-		((BeforeDriveActivity) getActivity()).setBackgroundIndicator(Color.rgb((int) redStop, (int) greenStop,
-		(int) blueStop));
-		
 		return gdBackground;
 	}
 	
@@ -392,6 +392,8 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 	static final Handler bgHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			ll.setBackgroundDrawable((Drawable) msg.obj);
+			BeforeDriveActivity.setBackgroundIndicator(Color.rgb((int) redStop, (int) greenStop,
+					(int) blueStop));
 
 		}
 	};
