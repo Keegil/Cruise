@@ -19,6 +19,7 @@ public class DrivingStatsDataSource {
 			MySQLiteHelper.COLUMN_DRIVING_STATS_NUM_ACC_EVENT,
 			MySQLiteHelper.COLUMN_DRIVING_STATS_NUM_SPEED_EVENT,
 			MySQLiteHelper.COLUMN_DRIVING_STATS_NUM_BRAKE_EVENT,
+			MySQLiteHelper.COLUMN_DRIVING_STATS_NUM_ROUTE_EVENT,
 			MySQLiteHelper.COLUMN_DRIVING_STATS_DRIVE_DISTANCE,
 			MySQLiteHelper.COLUMN_DRIVING_STATS_RANGE_START,
 			MySQLiteHelper.COLUMN_DRIVING_STATS_RANGE_USED,
@@ -39,9 +40,9 @@ public class DrivingStatsDataSource {
 	}
 
 	public DrivingStats createDrivingStats(String date, int numAccEvent,
-			int numSpeedEvent, int numBrakeEvent, int driveDistance,
-			int rangeStart, int rangeUsed, int rangeEnd, double rangeModifier,
-			double fuelSavings) {
+			int numSpeedEvent, int numBrakeEvent, int numRouteEvent,
+			int driveDistance, int rangeStart, int rangeUsed, int rangeEnd,
+			int rangeModifier, int fuelSavings) {
 		ContentValues values = new ContentValues();
 		values.put(MySQLiteHelper.COLUMN_DRIVING_STATS_DATE, date);
 		values.put(MySQLiteHelper.COLUMN_DRIVING_STATS_NUM_ACC_EVENT,
@@ -50,6 +51,8 @@ public class DrivingStatsDataSource {
 				numSpeedEvent);
 		values.put(MySQLiteHelper.COLUMN_DRIVING_STATS_NUM_BRAKE_EVENT,
 				numAccEvent);
+		values.put(MySQLiteHelper.COLUMN_DRIVING_STATS_NUM_ROUTE_EVENT,
+				driveDistance);
 		values.put(MySQLiteHelper.COLUMN_DRIVING_STATS_DRIVE_DISTANCE,
 				driveDistance);
 		values.put(MySQLiteHelper.COLUMN_DRIVING_STATS_RANGE_START, rangeStart);
@@ -75,9 +78,10 @@ public class DrivingStatsDataSource {
 		database.delete(MySQLiteHelper.TABLE_DRIVING_STATS,
 				MySQLiteHelper.COLUMN_DRIVING_STATS_ID + " = " + id, null);
 	}
-	
+
 	public void deleteAllDrivingStats() {
-		String deleteDrivingStats = "DROP TABLE " + MySQLiteHelper.TABLE_DRIVING_STATS + ";";
+		String deleteDrivingStats = "DROP TABLE "
+				+ MySQLiteHelper.TABLE_DRIVING_STATS + ";";
 		database.execSQL(deleteDrivingStats);
 	}
 
@@ -110,7 +114,7 @@ public class DrivingStatsDataSource {
 				.getString(0)), cursor.getString(1), cursor.getInt(2),
 				cursor.getInt(3), cursor.getInt(4), cursor.getInt(5),
 				cursor.getInt(6), cursor.getInt(7), cursor.getInt(8),
-				cursor.getDouble(9), cursor.getDouble(10));
+				cursor.getInt(9), cursor.getDouble(10), cursor.getDouble(11));
 		return drivingStats;
 	}
 
@@ -121,12 +125,13 @@ public class DrivingStatsDataSource {
 		drivingStats.setNumAccEvent(cursor.getInt(2));
 		drivingStats.setNumSpeedEvent(cursor.getInt(3));
 		drivingStats.setNumBrakeEvent(cursor.getInt(4));
-		drivingStats.setDriveDistance(cursor.getInt(5));
-		drivingStats.setRangeStart(cursor.getInt(6));
-		drivingStats.setRangeUsed(cursor.getInt(7));
-		drivingStats.setRangeEnd(cursor.getInt(8));
-		drivingStats.setRangeModifier(cursor.getDouble(9));
-		drivingStats.setFuelSavings(cursor.getDouble(10));
+		drivingStats.setNumRouteEvent(cursor.getInt(5));
+		drivingStats.setDriveDistance(cursor.getInt(6));
+		drivingStats.setRangeStart(cursor.getInt(7));
+		drivingStats.setRangeUsed(cursor.getInt(8));
+		drivingStats.setRangeEnd(cursor.getInt(9));
+		drivingStats.setRangeModifier(cursor.getDouble(10));
+		drivingStats.setFuelSavings(cursor.getDouble(11));
 		return drivingStats;
 	}
 }
