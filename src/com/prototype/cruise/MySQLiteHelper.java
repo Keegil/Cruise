@@ -7,7 +7,7 @@ import android.util.Log;
 
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
-	private static final String DATABASE_NAME = "cruise14.db";
+	private static final String DATABASE_NAME = "cruise15.db";
 	private static final int DATABASE_VERSION = 1;
 
 	// driving stats table
@@ -17,6 +17,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_DRIVING_STATS_NUM_ACC_EVENT = "num_acc_event";
 	public static final String COLUMN_DRIVING_STATS_NUM_SPEED_EVENT = "num_speed_event";
 	public static final String COLUMN_DRIVING_STATS_NUM_BRAKE_EVENT = "num_brake_event";
+	public static final String COLUMN_DRIVING_STATS_NUM_ROUTE_EVENT = "num_route_event";
 	public static final String COLUMN_DRIVING_STATS_DRIVE_DISTANCE = "drive_distance";
 	public static final String COLUMN_DRIVING_STATS_RANGE_START = "range_start";
 	public static final String COLUMN_DRIVING_STATS_RANGE_USED = "range_used";
@@ -69,6 +70,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 			+ COLUMN_DRIVING_STATS_NUM_SPEED_EVENT
 			+ " text not null, "
 			+ COLUMN_DRIVING_STATS_NUM_BRAKE_EVENT
+			+ " text not null, "
+			+ COLUMN_DRIVING_STATS_NUM_ROUTE_EVENT
 			+ " text not null, "
 			+ COLUMN_DRIVING_STATS_DRIVE_DISTANCE
 			+ " text not null, "

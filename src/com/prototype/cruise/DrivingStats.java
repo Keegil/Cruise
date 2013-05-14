@@ -6,6 +6,7 @@ public class DrivingStats {
 	private int numAccEvent;
 	private int numSpeedEvent;
 	private int numBrakeEvent;
+	private int numRouteEvent;
 	private int driveDistance;
 	private int rangeStart;
 	private int rangeUsed;
@@ -20,7 +21,7 @@ public class DrivingStats {
 
 	// Constructor
 	public DrivingStats(long id, String date, int numAccEvent,
-			int numSpeedEvent, int numBrakeEvent, int driveDistance,
+			int numSpeedEvent, int numBrakeEvent, int numRouteEvent, int driveDistance,
 			int rangeStart, int rangeUsed, int rangeEnd, double rangeModifier,
 			double fuelSavings) {
 		this.id = id;
@@ -28,6 +29,7 @@ public class DrivingStats {
 		this.numAccEvent = numAccEvent;
 		this.numSpeedEvent = numSpeedEvent;
 		this.numBrakeEvent = numBrakeEvent;
+		this.numRouteEvent = numRouteEvent;
 		this.driveDistance = driveDistance;
 		this.rangeStart = rangeStart;
 		this.rangeUsed = rangeUsed;
@@ -74,6 +76,14 @@ public class DrivingStats {
 	
 	public void setNumBrakeEvent(int numBrakeEvent) {
 		this.numBrakeEvent = numBrakeEvent;
+	}
+	
+	public int getNumRouteEvent() {
+		return numRouteEvent;
+	}
+	
+	public void setNumRouteEvent(int numRouteEvent) {
+		this.numRouteEvent = numRouteEvent;
 	}
 
 	public int getDriveDistance() {

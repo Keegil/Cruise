@@ -68,7 +68,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 	private BluetoothBackEnd bt = new BluetoothBackEnd();
 	
 	//Viewpager indicator
-	CirclePageIndicator mIndicator;
+	static CirclePageIndicator mIndicator;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -99,7 +99,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 	}
 	
 	
-	public void setBackgroundIndicator(int c){
+	public static void setBackgroundIndicator(int c){
 		
         mIndicator.setBackgroundColor(c);
 		

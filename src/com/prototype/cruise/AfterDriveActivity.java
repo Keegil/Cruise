@@ -88,7 +88,7 @@ public class AfterDriveActivity extends FragmentActivity {
 	private static final String TAG_DIS = "distanceTraveled";
 	
 	//Viewpager indicator
-	CirclePageIndicator mIndicator;
+	static CirclePageIndicator mIndicator;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -120,7 +120,7 @@ public class AfterDriveActivity extends FragmentActivity {
 		calc();
 	}
 	
-	public void setBackgroundIndicator(int c){
+	public static void setBackgroundIndicator(int c){
 		
         mIndicator.setBackgroundColor(c);
 		
@@ -147,13 +147,7 @@ public class AfterDriveActivity extends FragmentActivity {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		/*
-		 * final ProgressDialog pdParsing = new ProgressDialog(getActivity());
-		 * pdParsing.setTitle("Parsing " + filename + "...");
-		 * pdParsing.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		 * pdParsing.setProgress(0); pdParsing.setMax(driveData.length());
-		 * pdParsing.setCancelable(false); pdParsing.show();
-		 */
+		
 		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
@@ -176,18 +170,6 @@ public class AfterDriveActivity extends FragmentActivity {
 						gpsDataSource.createGPSData(drivingStatsDataSource
 								.getAllDrivingStats().size(), time, latitude,
 								longitude);
-						/*
-						 * pdParsing.incrementProgressBy(1); if
-						 * (pdParsing.getProgress() >= pdParsing.getMax()) {
-						 * pdParsing.dismiss(); Message msg = Message.obtain();
-						 * jsonHandler.dispatchMessage(msg); GPSData gpsData =
-						 * gpsDataSource
-						 * .getGPSData(statSource.getAllDrivingStats().size());
-						 * Log.d(TAG, "ID: " + gpsData.getId() + "\n" + "Time: "
-						 * + gpsData.getTime() + "\n" + "Latitude: " +
-						 * gpsData.getLatitude() + "\n" + "Longitude: " +
-						 * gpsData.getLongitude()); }
-						 */
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -221,7 +203,6 @@ public class AfterDriveActivity extends FragmentActivity {
 				Log.d("blue", "Acc: " + accMistakes + " - Bra: "
 						+ brakeMistakes + " - Spe: " + speedMistakes
 						+ " - Dri: " + driveLength);
-
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -323,9 +304,7 @@ public class AfterDriveActivity extends FragmentActivity {
 		// save to database
 		cal = Calendar.getInstance();
 		date = dateFormat.format(cal.getTime());
-		drivingStatsDataSource
-				.createDrivingStats(date, accMistakes, speedMistakes, 0,
-						driveLength, 0, rangeUsed, currentRange, 0, 0);
+		drivingStatsDataSource.createDrivingStats(date, accScore, speedScore, brakeScore, routeScore, driveLength, 0, 0, 0, 0, 0);
 	}
 
 	public static class MyAdapter extends FragmentPagerAdapter {
