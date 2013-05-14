@@ -3,10 +3,14 @@ package com.prototype.cruise;
 import java.io.IOException;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -100,7 +104,12 @@ public class BeforeDriveActivity extends FragmentActivity {
 		loadData();
 		loadDate();
 		calc();
-		btConnect();
+	
+		
+		AsyncClass ac=new AsyncClass(this);
+
+		ac.execute();
+		
 	}
 
 	public static void setBackgroundIndicator(int c) {
@@ -165,7 +174,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 	}
 
 	public void btConnect() {
-		bt.findBT(true);
+		bt.findBT(false);
 	}
 
 	public void loadSettings() {
@@ -293,4 +302,42 @@ public class BeforeDriveActivity extends FragmentActivity {
 		finish();
 		startActivity(intent);
 	}
+	
+	
+	public class AsyncClass extends AsyncTask<Void, String, Void> {
+	    private Context context;
+	    ProgressDialog dialog;
+
+	        public AsyncClass(Context cxt) {
+	            context = cxt;
+	            dialog = new ProgressDialog(context);
+	        }
+
+	        @Override
+	        protected void onPreExecute() {
+	            dialog.setTitle("Please wait");
+	            dialog.show();
+	        }
+
+	        @Override
+	        protected Void doInBackground(Void... unused) {
+	            //SystemClock.sleep(10000);
+	            
+	        	btConnect();
+	        	
+	        	return (null);
+	        }
+
+	        @Override
+	        protected void onPostExecute(Void unused) {
+	            dialog.dismiss();
+	        }
+	    }
+	
+	
+	
+	
+	
+	
+	
 }

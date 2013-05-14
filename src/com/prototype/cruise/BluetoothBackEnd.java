@@ -14,6 +14,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 public class BluetoothBackEnd {
@@ -27,7 +28,7 @@ public class BluetoothBackEnd {
 	private byte[] readBuffer;
 	private int readBufferPosition;
 	private volatile boolean stopWorker;
-	private String data, findStatus = "Could not find device!",
+	private String findStatus = "Could not find device!",
 			openStatus = "Could not open device!";
 	static JSONObject jObj = null;
 	Context c;
@@ -42,10 +43,12 @@ public class BluetoothBackEnd {
 			findStatus = "No bluetooth adapter available";
 		}
 
-		if (!mBluetoothAdapter.isEnabled()) {
-			Intent enableBluetooth = new Intent(
-					BluetoothAdapter.ACTION_REQUEST_ENABLE);
-			((Activity) c).startActivityForResult(enableBluetooth, 0);
+		else {
+			if (!mBluetoothAdapter.isEnabled()) {
+				Intent enableBluetooth = new Intent(
+						BluetoothAdapter.ACTION_REQUEST_ENABLE);
+				((Activity) c).startActivityForResult(enableBluetooth, 0);
+			}
 		}
 	}
 
@@ -58,20 +61,21 @@ public class BluetoothBackEnd {
 	}
 
 	public String getData() {
-		return data;
+		return sb.toString();
 	}
 
 	public boolean isPaired() {
+		if (mBluetoothAdapter != null) {
+			Set<BluetoothDevice> pairedDevices = mBluetoothAdapter
+					.getBondedDevices();
+			if (pairedDevices.size() > 0) {
+				for (BluetoothDevice device : pairedDevices) {
+					if (device.getName().equals("RN42-DF28")) {
+						mmDevice = device;
+						findStatus = "Bluetooth Device Found";
+						return true;
 
-		Set<BluetoothDevice> pairedDevices = mBluetoothAdapter
-				.getBondedDevices();
-		if (pairedDevices.size() > 0) {
-			for (BluetoothDevice device : pairedDevices) {
-				if (device.getName().equals("RN42-DF28")) {
-					mmDevice = device;
-					findStatus = "Bluetooth Device Found";
-					return true;
-
+					}
 				}
 			}
 		}
