@@ -49,7 +49,7 @@
             android:padding="5dp"
             android:text="@string/beforewe"
             android:textColor="#FFFFFF"
-            android:textSize="30sp" />
+            android:textSize="@dimen/font_large" />
 
         <TextView
             android:id="@+id/tv_1_start_engine"
@@ -58,7 +58,7 @@
             android:padding="5dp"
             android:text="@string/one_turn"
             android:textColor="#FFFFFF"
-            android:textSize="15sp" />
+            android:textSize="@dimen/font_medium_small" />
 
         <TextView
             android:id="@+id/tv_2_settings"
@@ -67,7 +67,7 @@
             android:padding="5dp"
             android:text="@string/two_goto"
             android:textColor="#FFFFFF"
-            android:textSize="15sp" />
+            android:textSize="@dimen/font_medium_small" />
 
         <TextView
             android:id="@+id/tv_3_scan"
@@ -76,7 +76,7 @@
             android:padding="5dp"
             android:text="@string/three_scan"
             android:textColor="#FFFFFF"
-            android:textSize="15sp" />
+            android:textSize="@dimen/font_medium_small" />
 
         <TextView
             android:id="@+id/tv_4_pin"
@@ -85,7 +85,7 @@
             android:padding="5dp"
             android:text="@string/four_pin"
             android:textColor="#FFFFFF"
-            android:textSize="15sp" />
+            android:textSize="@dimen/font_medium_small" />
 
         <TextView
             android:id="@+id/tv_senseboard"
@@ -94,7 +94,7 @@
             android:padding="5dp"
             android:text="@string/senseboard"
             android:textColor="#FFFFFF"
-            android:textSize="15sp" />
+            android:textSize="@dimen/font_medium_small" />
 
         <TextView
             android:id="@+id/tv_goto_settings"
@@ -105,7 +105,7 @@
             android:clickable="true"
             android:textColor="#FFFFFF"
             android:text="@string/gotosettings"
-            android:textSize="20sp" 
+            android:textSize="@dimen/font_medium" 
             android:onClick="openBluetoothSettings"
             />
     </LinearLayout>
