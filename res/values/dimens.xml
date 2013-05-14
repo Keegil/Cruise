@@ -6,6 +6,8 @@
     <dimen name="bar_spacing">15dp</dimen>
     <dimen name="bar_height">20dp</dimen>
     <dimen name="star_size">15dp</dimen>
+    <dimen name="star_margin">5dp</dimen>
+    <dimen name="star_size_bigger">30dp</dimen>
     <dimen name="font_larger">75sp</dimen>
     <dimen name="font_large">34sp</dimen>
     <dimen name="font_logo">30sp</dimen>

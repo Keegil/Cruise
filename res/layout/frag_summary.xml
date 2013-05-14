@@ -25,7 +25,7 @@
             android:src="@drawable/cruise_logo" />
 
         <TextView
-            android:id="@+id/tv_logo_help_acc"
+            android:id="@+id/tv_logo_summary"
             android:layout_width="120sp"
             android:layout_height="wrap_content"
             android:text="@string/app_name_caps"
@@ -36,7 +36,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.7"
+        android:layout_weight="0.55"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingLeft="30dp"
@@ -45,9 +45,9 @@
         <ImageView
             android:layout_width="200dp"
             android:layout_height="100dp"
+            android:layout_marginBottom="10dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ev"
-            android:layout_marginBottom="10dp" />
+            android:src="@drawable/ev" />
 
         <TextView
             android:id="@+id/tv_eval"
@@ -62,7 +62,76 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.15"
+        android:layout_weight="0.2"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tv_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:text="@string/rating_ex"
+            android:textSize="@dimen/font_large" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:layout_gravity="center" >
+
+            <ImageView
+                android:id="@+id/iv_star1"
+                android:layout_width="@dimen/star_size_bigger"
+                android:layout_height="@dimen/star_size_bigger"
+                android:layout_marginRight="@dimen/star_margin"
+                android:layout_below="@id/tv_rating"
+                android:scaleType="fitXY"
+                android:src="@drawable/starempty" />
+
+            <ImageView
+                android:id="@+id/iv_star2"
+                android:layout_width="@dimen/star_size_bigger"
+                android:layout_height="@dimen/star_size_bigger"
+                android:layout_marginRight="@dimen/star_margin"
+                android:layout_toRightOf="@id/iv_star1"
+                android:scaleType="fitXY"
+                android:src="@drawable/starempty" />
+
+            <ImageView
+                android:id="@+id/iv_star3"
+                android:layout_width="@dimen/star_size_bigger"
+                android:layout_height="@dimen/star_size_bigger"
+                android:layout_marginRight="@dimen/star_margin"
+                android:layout_toRightOf="@id/iv_star2"
+                android:scaleType="fitXY"
+                android:src="@drawable/starempty" />
+
+            <ImageView
+                android:id="@+id/iv_star4"
+                android:layout_width="@dimen/star_size_bigger"
+                android:layout_height="@dimen/star_size_bigger"
+                android:layout_marginRight="@dimen/star_margin"
+                android:layout_toRightOf="@id/iv_star3"
+                android:scaleType="fitXY"
+                android:src="@drawable/starempty" />
+
+            <ImageView
+                android:id="@+id/iv_star5"
+                android:layout_width="@dimen/star_size_bigger"
+                android:layout_height="@dimen/star_size_bigger"
+                android:layout_toRightOf="@id/iv_star4"
+                android:scaleType="fitXY"
+                android:src="@drawable/starempty" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="5dp" >

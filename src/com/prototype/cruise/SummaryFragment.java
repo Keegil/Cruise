@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,15 +28,24 @@ public class SummaryFragment extends Fragment {
 	// Declare background.
 	static LinearLayout ll;
 
-	// Declare Textviews.
+	// Declare TextViews.
 	TextView tvLogo;
 	TextView tvEval;
+	TextView tvRating;
+
+	// Declare stars.
+	ImageView ivStar1;
+	ImageView ivStar2;
+	ImageView ivStar3;
+	ImageView ivStar4;
+	ImageView ivStar5;
 
 	// Declare candidacy calculation variables.
 	List<DrivingStats> drives = new ArrayList<DrivingStats>();
 	DrivingStats drivingStats;
 
 	double failTrain;
+	int rating;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +70,7 @@ public class SummaryFragment extends Fragment {
 		super.onResume();
 		calc();
 		setTextViews();
+		setStars();
 		drawBackground();
 	}
 
@@ -75,9 +86,17 @@ public class SummaryFragment extends Fragment {
 		// Initialize background view.
 		ll = (LinearLayout) v.findViewById(R.id.ll_main_summary);
 
-		// Initialize Textviews.
-		tvLogo = (TextView) v.findViewById(R.id.tv_logo_help_acc);
+		// Initialize TextViews.
+		tvLogo = (TextView) v.findViewById(R.id.tv_logo_summary);
 		tvEval = (TextView) v.findViewById(R.id.tv_eval);
+		tvRating = (TextView) v.findViewById(R.id.tv_rating);
+
+		// Initialize stars.
+		ivStar1 = (ImageView) v.findViewById(R.id.iv_star1);
+		ivStar2 = (ImageView) v.findViewById(R.id.iv_star2);
+		ivStar3 = (ImageView) v.findViewById(R.id.iv_star3);
+		ivStar4 = (ImageView) v.findViewById(R.id.iv_star4);
+		ivStar5 = (ImageView) v.findViewById(R.id.iv_star5);
 	}
 
 	public void setFonts() {
@@ -100,17 +119,23 @@ public class SummaryFragment extends Fragment {
 				.getAllDrivingStats();
 		int i = 0;
 		int fails = 0;
+		int stars = 0;
 		while (i < drives.size()) {
 			drivingStats = BeforeDriveActivity.drivingStatsDataSource
 					.getDrivingStats(i + 1);
 			if (drivingStats.getRangeEnd() == 0) {
 				fails++;
 			}
-			i++;
+			stars = stars + drivingStats.getNumAccEvent()
+					+ drivingStats.getNumBrakeEvent()
+					+ drivingStats.getNumRouteEvent()
+					+ drivingStats.getNumSpeedEvent();
 			failTrain = (double) ((double) fails / (double) drives.size());
+			i++;
+			rating = (stars / (drives.size() * 20)) / 5;
 		}
 		Log.d(TAG, "Drives: " + drives.size() + " | Fails: " + fails
-				+ " | Failtrain: " + failTrain + "");
+				+ " | Failtrain: " + failTrain + " | Rating: " + rating + "");
 	}
 
 	public void setTextViews() {
@@ -121,6 +146,34 @@ public class SummaryFragment extends Fragment {
 			tvEval.setText(getResources().getString(R.string.eval_good));
 		} else {
 			tvEval.setText(getResources().getString(R.string.eval_weak));
+		}
+		tvRating.setText("" + rating + "/20");
+	}
+
+	public void setStars() {
+		// Set correct amount of stars.
+		if (rating == 0) {
+
+		} else if (rating > 0 && rating <= 4) {
+			ivStar1.setImageResource(R.drawable.starfilled);
+		} else if (rating > 4 && rating <= 8) {
+			ivStar1.setImageResource(R.drawable.starfilled);
+			ivStar2.setImageResource(R.drawable.starfilled);
+		} else if (rating > 8 && rating <= 12) {
+			ivStar1.setImageResource(R.drawable.starfilled);
+			ivStar2.setImageResource(R.drawable.starfilled);
+			ivStar3.setImageResource(R.drawable.starfilled);
+		} else if (rating > 12 && rating <= 16) {
+			ivStar1.setImageResource(R.drawable.starfilled);
+			ivStar2.setImageResource(R.drawable.starfilled);
+			ivStar3.setImageResource(R.drawable.starfilled);
+			ivStar4.setImageResource(R.drawable.starfilled);
+		} else {
+			ivStar1.setImageResource(R.drawable.starfilled);
+			ivStar2.setImageResource(R.drawable.starfilled);
+			ivStar3.setImageResource(R.drawable.starfilled);
+			ivStar4.setImageResource(R.drawable.starfilled);
+			ivStar5.setImageResource(R.drawable.starfilled);
 		}
 	}
 
