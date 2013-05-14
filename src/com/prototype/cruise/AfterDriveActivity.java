@@ -129,6 +129,12 @@ public class AfterDriveActivity extends FragmentActivity {
 		calc();
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+		finish();
+	}
+
 	public static void setBackgroundIndicator(int c) {
 		mIndicator.setBackgroundColor(c);
 	}

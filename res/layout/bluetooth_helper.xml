@@ -37,8 +37,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.85"
-        android:gravity="left"
+        android:layout_weight="0.7"
+        android:gravity="center|left"
         android:orientation="vertical"
         android:padding="5dp" >
 
@@ -58,7 +58,7 @@
             android:padding="5dp"
             android:text="@string/one_turn"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/font_medium_small" />
+            android:textSize="@dimen/font_medium" />
 
         <TextView
             android:id="@+id/tv_2_settings"
@@ -67,7 +67,7 @@
             android:padding="5dp"
             android:text="@string/two_goto"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/font_medium_small" />
+            android:textSize="@dimen/font_medium" />
 
         <TextView
             android:id="@+id/tv_3_scan"
@@ -76,7 +76,7 @@
             android:padding="5dp"
             android:text="@string/three_scan"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/font_medium_small" />
+            android:textSize="@dimen/font_medium" />
 
         <TextView
             android:id="@+id/tv_4_pin"
@@ -85,7 +85,7 @@
             android:padding="5dp"
             android:text="@string/four_pin"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/font_medium_small" />
+            android:textSize="@dimen/font_medium" />
 
         <TextView
             android:id="@+id/tv_senseboard"
@@ -94,20 +94,28 @@
             android:padding="5dp"
             android:text="@string/senseboard"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/font_medium_small" />
+            android:textSize="@dimen/font_medium" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.15"
+        android:gravity="center|left"
+        android:orientation="vertical"
+        android:padding="5dp" >
 
         <TextView
             android:id="@+id/tv_goto_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:padding="5dp"
+            android:layout_gravity="center"
             android:clickable="true"
-            android:textColor="#FFFFFF"
-            android:text="@string/gotosettings"
-            android:textSize="@dimen/font_medium" 
             android:onClick="openBluetoothSettings"
-            />
+            android:padding="5dp"
+            android:text="@string/gotosettings"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/font_medium" />
     </LinearLayout>
 
 </LinearLayout>
