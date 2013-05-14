@@ -27,6 +27,7 @@ public class AfterDriveActivity extends FragmentActivity {
 	// Declare fragments.
 	AfterDriveFragmentDriveComplete afterDriveFragmentDriveComplete;
 	AfterDriveFragmentDriveDetails afterDriveFragmentDriveDetails;
+	SummaryFragment summaryFragment;
 
 	// Declare ViewPager & Adapter variables.
 	private MyAdapter mAdapter;
@@ -103,10 +104,13 @@ public class AfterDriveActivity extends FragmentActivity {
 		mIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
 		mIndicator.setViewPager(mPager);
 
+		summaryFragment = (SummaryFragment) mAdapter.getItem(0);
 		afterDriveFragmentDriveComplete = (AfterDriveFragmentDriveComplete) mAdapter
-				.getItem(0);
-		afterDriveFragmentDriveDetails = (AfterDriveFragmentDriveDetails) mAdapter
 				.getItem(1);
+		afterDriveFragmentDriveDetails = (AfterDriveFragmentDriveDetails) mAdapter
+				.getItem(2);
+		
+		mPager.setCurrentItem(1);
 
 		init();
 		loadSettings();
@@ -321,15 +325,17 @@ public class AfterDriveActivity extends FragmentActivity {
 
 		@Override
 		public int getCount() {
-			return 2;
+			return 3;
 		}
 
 		@Override
 		public Fragment getItem(int position) {
 			switch (position) {
 			case 0:
-				return new AfterDriveFragmentDriveComplete();
+				return new SummaryFragment();
 			case 1:
+				return new AfterDriveFragmentDriveComplete();
+			case 2:
 				return new AfterDriveFragmentDriveDetails();
 			default:
 				return null;

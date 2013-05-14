@@ -3,6 +3,7 @@ package com.prototype.cruise;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
@@ -23,7 +24,15 @@ public class SummaryFragment extends Fragment {
 	private static final String TAG = "SummaryFragment";
 
 	// Declare parent activity.
-	FragmentActivity beforeDriveActivity;
+	FragmentActivity fragmentActivity;
+
+	// Declare & initialize preference variables and set defaults.
+	final String PREFS_NAME = "MyPrefsFile";
+	int defaultRange = 120;
+
+	// Declare & initialize data variables.
+	final String DATA_NAME = "MyDataFile";
+	int currentRange = 120;
 
 	// Declare background.
 	static LinearLayout ll;
@@ -40,12 +49,16 @@ public class SummaryFragment extends Fragment {
 	ImageView ivStar4;
 	ImageView ivStar5;
 
+	// Declare database variables.
+	DrivingStatsDataSource drivingStatsDataSource;
+	DrivingStats drivingStats;
+
 	// Declare candidacy calculation variables.
 	List<DrivingStats> drives = new ArrayList<DrivingStats>();
-	DrivingStats drivingStats;
 
 	double failTrain;
 	int rating;
+	double relativeRange;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -68,6 +81,8 @@ public class SummaryFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		loadSettings();
+		loadData();
 		calc();
 		setTextViews();
 		setStars();
@@ -81,7 +96,7 @@ public class SummaryFragment extends Fragment {
 
 	public void init(View v) {
 		// Initialize parent activity.
-		beforeDriveActivity = (BeforeDriveActivity) getActivity();
+		fragmentActivity = getActivity();
 
 		// Initialize background view.
 		ll = (LinearLayout) v.findViewById(R.id.ll_main_summary);
@@ -97,6 +112,10 @@ public class SummaryFragment extends Fragment {
 		ivStar3 = (ImageView) v.findViewById(R.id.iv_star3);
 		ivStar4 = (ImageView) v.findViewById(R.id.iv_star4);
 		ivStar5 = (ImageView) v.findViewById(R.id.iv_star5);
+
+		// Initialize database.
+		drivingStatsDataSource = new DrivingStatsDataSource(fragmentActivity);
+		drivingStatsDataSource.open();
 	}
 
 	public void setFonts() {
@@ -115,14 +134,12 @@ public class SummaryFragment extends Fragment {
 
 	public void calc() {
 		// Determine strength of EV candidacy.
-		drives = BeforeDriveActivity.drivingStatsDataSource
-				.getAllDrivingStats();
+		drives = drivingStatsDataSource.getAllDrivingStats();
 		int i = 0;
 		int fails = 0;
 		int stars = 0;
 		while (i < drives.size()) {
-			drivingStats = BeforeDriveActivity.drivingStatsDataSource
-					.getDrivingStats(i + 1);
+			drivingStats = drivingStatsDataSource.getDrivingStats(i + 1);
 			if (drivingStats.getRangeEnd() == 0) {
 				fails++;
 			}
@@ -131,11 +148,23 @@ public class SummaryFragment extends Fragment {
 					+ drivingStats.getNumRouteEvent()
 					+ drivingStats.getNumSpeedEvent();
 			failTrain = (double) ((double) fails / (double) drives.size());
+			double dStars = (double) stars;
+			double dDrives = (double) drives.size();
+			rating = (int) ((dStars / (dDrives * 20)) * 20);
 			i++;
-			rating = (stars / (drives.size() * 20)) / 5;
+			Log.d(TAG,
+					"Drives: " + drives.size() + " | Fails: " + fails
+							+ " | Failtrain: " + failTrain + " | Stars: "
+							+ stars + " | Rating: " + rating + " [ accScore = "
+							+ drivingStats.getNumAccEvent()
+							+ " [ brakeScore = "
+							+ drivingStats.getNumBrakeEvent()
+							+ " [ routeScore = "
+							+ drivingStats.getNumRouteEvent()
+							+ " [ speedScore = "
+							+ drivingStats.getNumSpeedEvent() + "");
 		}
-		Log.d(TAG, "Drives: " + drives.size() + " | Fails: " + fails
-				+ " | Failtrain: " + failTrain + " | Rating: " + rating + "");
+
 	}
 
 	public void setTextViews() {
@@ -178,11 +207,12 @@ public class SummaryFragment extends Fragment {
 	}
 
 	public void drawBackground() {
-		ll.setBackgroundDrawable(setGradient(BeforeDriveActivity.relativeRange));
+		relativeRange = (double) currentRange / (double) defaultRange;
+		ll.setBackgroundDrawable(setGradient(relativeRange));
 	}
 
 	public GradientDrawable setGradient(double rr) {
-		// Returns a gradient drawable based in relative range.
+		// Returns a GradientDrawable based in relative range.
 		double redStart = 95 + (2013 * rr) - (5311 * rr * rr)
 				+ (3204 * rr * rr * rr);
 		if (redStart > 255) {
@@ -230,5 +260,17 @@ public class SummaryFragment extends Fragment {
 								(int) blueStop) });
 		gdBackground.setCornerRadius(0f);
 		return gdBackground;
+	}
+
+	public void loadSettings() {
+		SharedPreferences settings = fragmentActivity.getSharedPreferences(
+				PREFS_NAME, 0);
+		defaultRange = settings.getInt("defaultRange", defaultRange);
+	}
+
+	public void loadData() {
+		SharedPreferences data = fragmentActivity.getSharedPreferences(
+				DATA_NAME, 0);
+		currentRange = data.getInt("currentRange", currentRange);
 	}
 }
