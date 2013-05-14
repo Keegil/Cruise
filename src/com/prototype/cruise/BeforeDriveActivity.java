@@ -65,7 +65,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 	static LinearLayout vpl;
 
 	// Declare & initialize bluetooth variables.
-	private BluetoothBackEnd bt = new BluetoothBackEnd();
+	private BluetoothBackEnd bt;
 	
 	//Viewpager indicator
 	static CirclePageIndicator mIndicator;
@@ -86,6 +86,8 @@ public class BeforeDriveActivity extends FragmentActivity {
 
 		beforeDriveFragmentCurrentStatus = (BeforeDriveFragmentCurrentStatus) mAdapter
 				.getItem(0);
+		
+		 bt = new BluetoothBackEnd(this);
 	}
 
 	@Override
@@ -155,7 +157,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 	}
 
 	public void btConnect() {
-		bt.findBT(true, this);
+		bt.findBT(true);
 	}
 
 	public void loadSettings() {

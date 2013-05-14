@@ -27,12 +27,26 @@ public class BluetoothBackEnd {
 	private byte[] readBuffer;
 	private int readBufferPosition;
 	private volatile boolean stopWorker;
-	private String data, findStatus = "Could not find device!", openStatus = "Could not open device!";
+	private String data, findStatus = "Could not find device!",
+			openStatus = "Could not open device!";
 	static JSONObject jObj = null;
+	Context c;
+	private boolean show;
 
 	StringBuilder sb = new StringBuilder();
 
-	public BluetoothBackEnd() {
+	public BluetoothBackEnd(Context c) {
+		this.c = c;
+		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		if (mBluetoothAdapter == null) {
+			findStatus = "No bluetooth adapter available";
+		}
+
+		if (!mBluetoothAdapter.isEnabled()) {
+			Intent enableBluetooth = new Intent(
+					BluetoothAdapter.ACTION_REQUEST_ENABLE);
+			((Activity) c).startActivityForResult(enableBluetooth, 0);
+		}
 	}
 
 	public String getFindStatus() {
@@ -47,18 +61,7 @@ public class BluetoothBackEnd {
 		return data;
 	}
 
-	public void findBT(boolean show, Context c) {
-
-		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-		if (mBluetoothAdapter == null) {
-			findStatus = "No bluetooth adapter available";
-		}
-
-		if (!mBluetoothAdapter.isEnabled()) {
-			Intent enableBluetooth = new Intent(
-					BluetoothAdapter.ACTION_REQUEST_ENABLE);
-			((Activity) c).startActivityForResult(enableBluetooth, 0);
-		}
+	public boolean isPaired() {
 
 		Set<BluetoothDevice> pairedDevices = mBluetoothAdapter
 				.getBondedDevices();
@@ -67,16 +70,31 @@ public class BluetoothBackEnd {
 				if (device.getName().equals("RN42-DF28")) {
 					mmDevice = device;
 					findStatus = "Bluetooth Device Found";
-					try {
-						openBT(show, c);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					break;
-				}
+					return true;
 
+				}
 			}
+		}
+		return false;
+	}
+
+	public void findBT(boolean show) {
+		this.show = show;
+		if (isPaired()) {
+			try {
+				openBT();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		else {
+
+			Intent in = new Intent(c.getApplicationContext(),
+					BluetoothHelper.class);
+			c.startActivity(in);
 		}
 		if (show)
 			Toast.makeText(c.getApplicationContext(), findStatus,
@@ -84,7 +102,7 @@ public class BluetoothBackEnd {
 
 	}
 
-	public void openBT(boolean show, Context c) throws IOException {
+	public void openBT() throws IOException {
 		UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"); // Standard
 																				// SerialPortService
 																				// ID
@@ -127,10 +145,14 @@ public class BluetoothBackEnd {
 											encodedBytes, "US-ASCII");
 									readBufferPosition = 0;
 									sb.append(data);
-									
-									//Check if last line, then open afteractivity with the string from stringbuilder
+
+									// Check if last line, then open
+									// afteractivity with the string from
+									// stringbuilder
 									if (i + 1 == bytesAvailable) {
-										Intent in = new Intent(c.getApplicationContext(),AfterDriveActivity.class);
+										Intent in = new Intent(c
+												.getApplicationContext(),
+												AfterDriveActivity.class);
 										in.putExtra("btdata", sb.toString());
 										c.startActivity(in);
 									}
@@ -150,7 +172,6 @@ public class BluetoothBackEnd {
 
 		workerThread.start();
 	}
-
 
 	public void closeBT(boolean show, Context c) throws IOException {
 		stopWorker = true;

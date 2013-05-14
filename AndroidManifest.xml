@@ -36,6 +36,10 @@
             android:name="com.prototype.cruise.HelpActivity"
             android:label="@string/title_activity_help" >
         </activity>
+                <activity
+            android:name="com.prototype.cruise.BluetoothHelper"
+            android:label="@string/title_bluetoothhelper" >
+        </activity>
     </application>
 
 </manifest>
