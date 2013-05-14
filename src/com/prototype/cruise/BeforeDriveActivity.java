@@ -53,6 +53,9 @@ public class BeforeDriveActivity extends FragmentActivity {
 	public static final String DATE_NAME = "MyDateFile";
 	public static long lastTime = 0;
 
+	// Declare database variables.
+	public static DrivingStatsDataSource drivingStatsDataSource;
+
 	// Declare temporary calculation variables.
 	public static long timeDifference;
 	public static double relativeRange;
@@ -84,13 +87,14 @@ public class BeforeDriveActivity extends FragmentActivity {
 		beforeDriveFragmentCurrentStatus = (BeforeDriveFragmentCurrentStatus) mAdapter
 				.getItem(1);
 		summaryFragment = (SummaryFragment) mAdapter.getItem(0);
-		
+
 		mPager.setCurrentItem(1);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+		init();
 		loadSettings();
 		loadData();
 		loadDate();
@@ -100,6 +104,12 @@ public class BeforeDriveActivity extends FragmentActivity {
 
 	public static void setBackgroundIndicator(int c) {
 		mIndicator.setBackgroundColor(c);
+	}
+
+	public void init() {
+		// Initialize database.
+		drivingStatsDataSource = new DrivingStatsDataSource(this);
+		drivingStatsDataSource.open();
 	}
 
 	public static class MyAdapter extends FragmentPagerAdapter {

@@ -126,9 +126,7 @@ public class AfterDriveActivity extends FragmentActivity {
 	}
 
 	public static void setBackgroundIndicator(int c) {
-
 		mIndicator.setBackgroundColor(c);
-
 	}
 
 	public void init() {

@@ -1,11 +1,15 @@
 package com.prototype.cruise;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +30,12 @@ public class SummaryFragment extends Fragment {
 	// Declare Textviews.
 	TextView tvLogo;
 	TextView tvEval;
+
+	// Declare candidacy calculation variables.
+	List<DrivingStats> drives = new ArrayList<DrivingStats>();
+	DrivingStats drivingStats;
+
+	double failTrain;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +58,7 @@ public class SummaryFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		calc();
 		setTextViews();
 		drawBackground();
 	}
@@ -83,9 +94,34 @@ public class SummaryFragment extends Fragment {
 		tvEval.setTypeface(tfMyriadRegular);
 	}
 
+	public void calc() {
+		// Determine strength of EV candidacy.
+		drives = BeforeDriveActivity.drivingStatsDataSource
+				.getAllDrivingStats();
+		int i = 0;
+		int fails = 0;
+		while (i < drives.size()) {
+			drivingStats = BeforeDriveActivity.drivingStatsDataSource
+					.getDrivingStats(i + 1);
+			if (drivingStats.getRangeEnd() == 0) {
+				fails++;
+			}
+			i++;
+			failTrain = (double) ((double) fails / (double) drives.size());
+		}
+		Log.d(TAG, "Drives: " + drives.size() + " | Fails: " + fails
+				+ " | Failtrain: " + failTrain + "");
+	}
+
 	public void setTextViews() {
 		// Set TextViews to display correct information.
-		
+		if (failTrain < 0.1) {
+			tvEval.setText(getResources().getString(R.string.eval_strong));
+		} else if (failTrain > 0.1 && failTrain < 0.3) {
+			tvEval.setText(getResources().getString(R.string.eval_good));
+		} else {
+			tvEval.setText(getResources().getString(R.string.eval_weak));
+		}
 	}
 
 	public void drawBackground() {
@@ -101,7 +137,8 @@ public class SummaryFragment extends Fragment {
 		} else if (redStart < 0) {
 			redStart = 0;
 		}
-		double redStop = 155 + (402 * rr) - (593 * rr * rr) + (290 * rr * rr * rr);
+		double redStop = 155 + (402 * rr) - (593 * rr * rr)
+				+ (290 * rr * rr * rr);
 		if (redStop > 255) {
 			redStop = 255;
 		} else if (redStop < 0) {
