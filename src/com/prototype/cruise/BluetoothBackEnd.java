@@ -27,7 +27,7 @@ public class BluetoothBackEnd {
 	private byte[] readBuffer;
 	private int readBufferPosition;
 	private volatile boolean stopWorker;
-	private String data, findStatus, openStatus;
+	private String data, findStatus = "Could not find device!", openStatus = "Could not open device!";
 	static JSONObject jObj = null;
 
 	StringBuilder sb = new StringBuilder();
