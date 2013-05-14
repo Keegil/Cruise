@@ -109,12 +109,13 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		setTextViews();
 		drawBars();
 		drawBackground();
+		showHint();
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		showHint();
+		
 	}
 
 	public void init(View v) {

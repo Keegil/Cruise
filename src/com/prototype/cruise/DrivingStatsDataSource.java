@@ -52,7 +52,7 @@ public class DrivingStatsDataSource {
 		values.put(MySQLiteHelper.COLUMN_DRIVING_STATS_NUM_BRAKE_EVENT,
 				numAccEvent);
 		values.put(MySQLiteHelper.COLUMN_DRIVING_STATS_NUM_ROUTE_EVENT,
-				driveDistance);
+				numRouteEvent);
 		values.put(MySQLiteHelper.COLUMN_DRIVING_STATS_DRIVE_DISTANCE,
 				driveDistance);
 		values.put(MySQLiteHelper.COLUMN_DRIVING_STATS_RANGE_START, rangeStart);

@@ -27,6 +27,7 @@ public class AfterDriveActivity extends FragmentActivity {
 	// Declare fragments.
 	AfterDriveFragmentDriveComplete afterDriveFragmentDriveComplete;
 	AfterDriveFragmentDriveDetails afterDriveFragmentDriveDetails;
+	SummaryFragment summaryFragment;
 
 	// Declare ViewPager & Adapter variables.
 	private MyAdapter mAdapter;
@@ -86,8 +87,8 @@ public class AfterDriveActivity extends FragmentActivity {
 	private static final String TAG_SPE = "speedingCounts";
 	private static final String TAG_TOT = "totalCounts";
 	private static final String TAG_DIS = "distanceTraveled";
-	
-	//Viewpager indicator
+
+	// Viewpager indicator
 	static CirclePageIndicator mIndicator;
 
 	@Override
@@ -99,9 +100,17 @@ public class AfterDriveActivity extends FragmentActivity {
 
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
+
+		mIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
+		mIndicator.setViewPager(mPager);
+
+		summaryFragment = (SummaryFragment) mAdapter.getItem(0);
+		afterDriveFragmentDriveComplete = (AfterDriveFragmentDriveComplete) mAdapter
+				.getItem(1);
+		afterDriveFragmentDriveDetails = (AfterDriveFragmentDriveDetails) mAdapter
+				.getItem(2);
 		
-        mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
-        mIndicator.setViewPager(mPager);
+		mPager.setCurrentItem(1);
 
 		init();
 		loadSettings();
@@ -119,11 +128,9 @@ public class AfterDriveActivity extends FragmentActivity {
 
 		calc();
 	}
-	
-	public static void setBackgroundIndicator(int c){
-		
-        mIndicator.setBackgroundColor(c);
-		
+
+	public static void setBackgroundIndicator(int c) {
+		mIndicator.setBackgroundColor(c);
 	}
 
 	public void init() {
@@ -147,7 +154,7 @@ public class AfterDriveActivity extends FragmentActivity {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
+
 		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
@@ -304,7 +311,10 @@ public class AfterDriveActivity extends FragmentActivity {
 		// save to database
 		cal = Calendar.getInstance();
 		date = dateFormat.format(cal.getTime());
-		drivingStatsDataSource.createDrivingStats(date, accScore, speedScore, brakeScore, routeScore, driveLength, 0, 0, 0, 0, 0);
+		drivingStatsDataSource.createDrivingStats(date, accScore, speedScore,
+				brakeScore, routeScore, driveLength,
+				(int) (previousRelativeRange * 100), rangeUsed,
+				(int) (relativeRange * 100), 0, 0);
 	}
 
 	public static class MyAdapter extends FragmentPagerAdapter {
@@ -315,15 +325,17 @@ public class AfterDriveActivity extends FragmentActivity {
 
 		@Override
 		public int getCount() {
-			return 2;
+			return 3;
 		}
 
 		@Override
 		public Fragment getItem(int position) {
 			switch (position) {
 			case 0:
-				return new AfterDriveFragmentDriveComplete();
+				return new SummaryFragment();
 			case 1:
+				return new AfterDriveFragmentDriveComplete();
+			case 2:
 				return new AfterDriveFragmentDriveDetails();
 			default:
 				return null;
