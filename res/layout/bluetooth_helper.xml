@@ -40,7 +40,7 @@
         android:layout_weight="0.7"
         android:gravity="center|left"
         android:orientation="vertical"
-        android:padding="5dp" >
+        android:padding="10dp" >
 
         <TextView
             android:id="@+id/tv_before_start"
@@ -102,8 +102,7 @@
         android:layout_height="0dp"
         android:layout_weight="0.15"
         android:gravity="center|left"
-        android:orientation="vertical"
-        android:padding="5dp" >
+        android:orientation="vertical" >
 
         <TextView
             android:id="@+id/tv_goto_settings"

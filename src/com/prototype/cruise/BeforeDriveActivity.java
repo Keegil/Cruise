@@ -86,16 +86,16 @@ public class BeforeDriveActivity extends FragmentActivity {
 		beforeDriveFragmentCurrentStatus = (BeforeDriveFragmentCurrentStatus) mAdapter
 				.getItem(1);
 		summaryFragment = (SummaryFragment) mAdapter.getItem(0);
-		
-		 bt = new BluetoothBackEnd(this);
 
-		mPager.setCurrentItem(1);
+		bt = new BluetoothBackEnd(this);
+
+		init();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		init();
+		mPager.setCurrentItem(1);
 		loadSettings();
 		loadData();
 		loadDate();
