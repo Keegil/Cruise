@@ -42,7 +42,6 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 	// Declare background.
 	static LinearLayout ll;
 
-
 	// Declare bars.
 	LinearLayout llBar1;
 	LinearLayout llBar2;
@@ -79,10 +78,12 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 	EditText etBrakeMistakes;
 	EditText etSpeedMistakes;
 	Button bDrive;
-	
+
 	static double redStop;
 	static double greenStop;
 	static double blueStop;
+
+	static BackgroundCalc bc = new BackgroundCalc();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -115,7 +116,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		
+
 	}
 
 	public void init(View v) {
@@ -124,7 +125,6 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 
 		// Initialize background view.
 		ll = (LinearLayout) v.findViewById(R.id.ll_main);
-
 
 		// Initialize bars and set OnClickListener.
 		llBar1 = (LinearLayout) v.findViewById(R.id.bar1);
@@ -314,6 +314,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 	public void drawBackground() {
 		// Check relative range and set background accordingly.
 		// The transition is animated.
+
 		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
@@ -322,7 +323,9 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 				double rr = BeforeDriveActivity.previousRelativeRange;
 				while (rr <= BeforeDriveActivity.relativeRange) {
 					Message msg = new Message();
-					msg.obj = setGradient(rr);
+					// msg.obj = setGradient(rr);
+					msg.obj = bc.makeGradient(rr);
+
 					bgHandler.sendMessage(msg);
 					try {
 						Thread.sleep(30);
@@ -336,65 +339,11 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		new Thread(runnable).start();
 	}
 
-	public GradientDrawable setGradient(double rr) {
-		// Returns a gradient drawable based in relative range.
-		double redStart = 95 + (2013 * rr) - (5311 * rr * rr)
-				+ (3204 * rr * rr * rr);
-		if (redStart > 255) {
-			redStart = 255;
-		} else if (redStart < 0) {
-			redStart = 0;
-		}
-		redStop = 155 + (402 * rr) - (593 * rr * rr)
-				+ (290 * rr * rr * rr);
-		if (redStop > 255) {
-			redStop = 255;
-		} else if (redStop < 0) {
-			redStop = 0;
-		}
-		double greenStart = 129 + (294 * rr) - (328 * rr * rr);
-		if (greenStart > 255) {
-			greenStart = 255;
-		} else if (greenStart < 0) {
-			greenStart = 0;
-		}
-		greenStop = 14 + (164 * rr) + (42 * rr * rr);
-		if (greenStop > 255) {
-			greenStop = 255;
-		} else if (greenStop < 0) {
-			greenStop = 0;
-		}
-		double blueStart = 66 - (472 * rr) + (1191 * rr * rr)
-				- (728 * rr * rr * rr);
-		if (blueStart > 255) {
-			blueStart = 255;
-		} else if (blueStart < 0) {
-			blueStart = 0;
-		}
-		blueStop = 45 + (12 * rr) - (72 * rr * rr) + (37 * rr * rr * rr);
-		if (blueStop > 255) {
-			blueStop = 255;
-		} else if (blueStop < 0) {
-			blueStop = 0;
-		}
-		GradientDrawable gdBackground = new GradientDrawable(
-				GradientDrawable.Orientation.TOP_BOTTOM, new int[] {
-						Color.rgb((int) redStart, (int) greenStart,
-								(int) blueStart),
-						Color.rgb((int) redStop, (int) greenStop,
-								(int) blueStop) });
-		gdBackground.setCornerRadius(0f);
-		return gdBackground;
-	}
-	
-
-
 	// UI handler for changing gradient.
 	static final Handler bgHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			ll.setBackgroundDrawable((Drawable) msg.obj);
-			BeforeDriveActivity.setBackgroundIndicator(Color.rgb((int) redStop, (int) greenStop,
-					(int) blueStop));
+			BeforeDriveActivity.setBackgroundIndicator(bc.getStopRGB());
 
 		}
 	};

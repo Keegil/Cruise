@@ -55,10 +55,12 @@ public class AfterDriveFragmentDriveComplete extends Fragment implements
 	// Declare hint.
 	TextView tvHint;
 	AnimationSet animation;
-	
+
 	static double redStop;
 	static double greenStop;
 	static double blueStop;
+
+	static BackgroundCalc bc = new BackgroundCalc();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -68,8 +70,8 @@ public class AfterDriveFragmentDriveComplete extends Fragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(
-				R.layout.frag_after_drive_completed, container, false);
+		View view = inflater.inflate(R.layout.frag_after_drive_completed,
+				container, false);
 		init(view);
 		return view;
 	}
@@ -222,9 +224,11 @@ public class AfterDriveFragmentDriveComplete extends Fragment implements
 				double rr = AfterDriveActivity.previousRelativeRange;
 				while (rr > AfterDriveActivity.relativeRange) {
 					Message msg = new Message();
-					msg.obj = setGradient(rr);
+					// msg.obj = setGradient(rr);
+
+					msg.obj = bc.makeGradient(rr);
 					bgHandler.sendMessage(msg);
-					
+
 					try {
 						Thread.sleep(30);
 					} catch (InterruptedException e) {
@@ -237,61 +241,10 @@ public class AfterDriveFragmentDriveComplete extends Fragment implements
 		new Thread(runnable).start();
 	}
 
-	public GradientDrawable setGradient(double rr) {
-		double redStart = 95 + (2013 * rr) - (5311 * rr * rr)
-				+ (3204 * rr * rr * rr);
-		if (redStart > 255) {
-			redStart = 255;
-		} else if (redStart < 0) {
-			redStart = 0;
-		}
-		redStop = 155 + (402 * rr) - (593 * rr * rr)
-				+ (290 * rr * rr * rr);
-		if (redStop > 255) {
-			redStop = 255;
-		} else if (redStop < 0) {
-			redStop = 0;
-		}
-		double greenStart = 129 + (294 * rr) - (328 * rr * rr);
-		if (greenStart > 255) {
-			greenStart = 255;
-		} else if (greenStart < 0) {
-			greenStart = 0;
-		}
-		greenStop = 14 + (164 * rr) + (42 * rr * rr);
-		if (greenStop > 255) {
-			greenStop = 255;
-		} else if (greenStop < 0) {
-			greenStop = 0;
-		}
-		double blueStart = 66 - (472 * rr) + (1191 * rr * rr)
-				- (728 * rr * rr * rr);
-		if (blueStart > 255) {
-			blueStart = 255;
-		} else if (blueStart < 0) {
-			blueStart = 0;
-		}
-		blueStop = 45 + (12 * rr) - (72 * rr * rr) + (37 * rr * rr * rr);
-		if (blueStop > 255) {
-			blueStop = 255;
-		} else if (blueStop < 0) {
-			blueStop = 0;
-		}
-		GradientDrawable gdBackground = new GradientDrawable(
-				GradientDrawable.Orientation.TOP_BOTTOM, new int[] {
-						Color.rgb((int) redStart, (int) greenStart,
-								(int) blueStart),
-						Color.rgb((int) redStop, (int) greenStop,
-								(int) blueStop) });
-		gdBackground.setCornerRadius(0f);
-		return gdBackground;
-	}
-
 	static final Handler bgHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			ll.setBackgroundDrawable((Drawable) msg.obj);
-			AfterDriveActivity.setBackgroundIndicator(Color.rgb((int) redStop, (int) greenStop,
-					(int) blueStop));
+			AfterDriveActivity.setBackgroundIndicator(bc.getStopRGB());
 		}
 	};
 
