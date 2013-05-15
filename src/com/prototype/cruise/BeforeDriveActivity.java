@@ -70,6 +70,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 
 	// Declare & initialize bluetooth variables.
 	private BluetoothBackEnd bt;
+	private AsyncClass ac;
 
 	static CirclePageIndicator mIndicator;
 
@@ -104,12 +105,9 @@ public class BeforeDriveActivity extends FragmentActivity {
 		loadData();
 		loadDate();
 		calc();
-	
 		
-		AsyncClass ac=new AsyncClass(this);
-
+		ac = new AsyncClass(this);
 		ac.execute();
-		
 	}
 
 	public static void setBackgroundIndicator(int c) {
@@ -171,10 +169,6 @@ public class BeforeDriveActivity extends FragmentActivity {
 		}
 		relativeRange = (double) currentRange / (double) defaultRange;
 		saveData();
-	}
-
-	public void btConnect() {
-		bt.findBT(false);
 	}
 
 	public void loadSettings() {
@@ -246,7 +240,8 @@ public class BeforeDriveActivity extends FragmentActivity {
 			reset();
 			return true;
 		case R.id.action_connect_bt:
-			btConnect();
+			ac = new AsyncClass(this);
+			ac.execute();
 			return true;
 		case R.id.action_close_bt:
 			try {
@@ -316,14 +311,15 @@ public class BeforeDriveActivity extends FragmentActivity {
 	        @Override
 	        protected void onPreExecute() {
 	            dialog.setTitle("Please wait");
+	            dialog.setMessage("Connecting to Senseboard...");
 	            dialog.show();
 	        }
 
 	        @Override
 	        protected Void doInBackground(Void... unused) {
-	            //SystemClock.sleep(10000);
+	            SystemClock.sleep(2000);
 	            
-	        	btConnect();
+	        	bt.findBT(false);
 	        	
 	        	return (null);
 	        }

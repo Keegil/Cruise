@@ -572,18 +572,19 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int default_underline_indicator_fade_length=0x7f070004;
     }
     public static final class layout {
-        public static final int bluetooth_helper=0x7f030000;
-        public static final int frag_after_drive_completed=0x7f030001;
-        public static final int frag_after_drive_details=0x7f030002;
-        public static final int frag_before_drive_status=0x7f030003;
-        public static final int frag_help_acc=0x7f030004;
-        public static final int frag_help_bars=0x7f030005;
-        public static final int frag_help_brake=0x7f030006;
-        public static final int frag_help_route=0x7f030007;
-        public static final int frag_help_speed=0x7f030008;
-        public static final int frag_summary=0x7f030009;
-        public static final int list_item=0x7f03000a;
-        public static final int viewpager=0x7f03000b;
+        public static final int activity_splash=0x7f030000;
+        public static final int bluetooth_helper=0x7f030001;
+        public static final int frag_after_drive_completed=0x7f030002;
+        public static final int frag_after_drive_details=0x7f030003;
+        public static final int frag_before_drive_status=0x7f030004;
+        public static final int frag_help_acc=0x7f030005;
+        public static final int frag_help_bars=0x7f030006;
+        public static final int frag_help_brake=0x7f030007;
+        public static final int frag_help_route=0x7f030008;
+        public static final int frag_help_speed=0x7f030009;
+        public static final int frag_summary=0x7f03000a;
+        public static final int list_item=0x7f03000b;
+        public static final int viewpager=0x7f03000c;
     }
     public static final class menu {
         public static final int after_drive=0x7f0b0000;
@@ -621,6 +622,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int charge_gained_ex=0x7f0a0015;
         public static final int city_desc=0x7f0a0013;
         public static final int city_ex=0x7f0a000f;
+        /**  SplashActivity 
+         */
+        public static final int cruise_starting=0x7f0a003f;
         public static final int distance_traveled_desc=0x7f0a0028;
         public static final int distance_traveled_ex=0x7f0a002b;
         public static final int drive_button=0x7f0a001a;

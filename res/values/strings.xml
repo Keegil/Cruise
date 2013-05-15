@@ -83,5 +83,8 @@
     <string name="eval_good">Based on your current driving habits, you are a good candidate for an electric vehicle. An EV will satisfy the majority of your needs.</string>
     <string name="eval_weak">Based on your current driving habits, you are a weak candidate for an electric vehicle. Maybe an EV as a second car would be right for you?</string>
 	<string name="rating_ex">20/20</string>
+	
+	<!-- SplashActivity -->
+		<string name="cruise_starting">Cruise is starting...</string>
     
 </resources>

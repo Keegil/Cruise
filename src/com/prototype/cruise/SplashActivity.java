@@ -2,22 +2,17 @@ package com.prototype.cruise;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
+import android.view.Menu;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class BluetoothHelper extends Activity {
-
-	BluetoothBackEnd btb;
-
+public class SplashActivity extends Activity {
+	
 	// Declare & initialize preference variables and set defaults.
 	int defaultRange = 120;
 
@@ -25,87 +20,55 @@ public class BluetoothHelper extends Activity {
 	int currentRange = 120;
 
 	double relativeRange;
-
-	// Declare TextViews.
-	TextView tvLogo;
-	TextView tvBeforeStart;
-	TextView tvSettings;
-
-	TextView tvScan;
-	TextView tvPin;
-	TextView tvStart;
-
-	TextView tvSense;
-	TextView tvGoto;
-
+	
 	LinearLayout ll;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		
+
 
 		// fullscreen
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		setContentView(R.layout.bluetooth_helper);
-		btb = new BluetoothBackEnd(this);
-		init();
-	}
+		// set content
+		setContentView(R.layout.activity_splash);
+		
+		final SplashActivity sPlashScreen = this; 
+		
+		ll = (LinearLayout) findViewById(R.id.ll_main);
 
-	public void openBluetoothSettings(View v) {
-		Log.d("bt", "bt settings clicked");
-		Intent intentBluetooth = new Intent();
-		intentBluetooth
-				.setAction(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
-		startActivity(intentBluetooth);
+		drawBackground();
+
+		//set and start timer
+		Thread timer = new Thread() {
+			public void run() {
+				try {
+					sleep(3000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} finally {
+					Intent i = new Intent();
+					i.setClass(sPlashScreen, BeforeDriveActivity.class);
+					startActivity(i);
+					finish();
+				}
+			}
+		};
+		timer.start();
 	}
 
 	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-
-		if (btb.isPaired()) {
-			finish();
-		}
-
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		return false;
 	}
-
-	public void init() {
-		ll = (LinearLayout) findViewById(R.id.ll_main);
-		tvLogo = (TextView) findViewById(R.id.tv_logo);
-		tvBeforeStart = (TextView) findViewById(R.id.tv_before_start);
-		tvSettings = (TextView) findViewById(R.id.tv_2_settings);
-		tvScan = (TextView) findViewById(R.id.tv_3_scan);
-		tvPin = (TextView) findViewById(R.id.tv_4_pin);
-		tvStart = (TextView) findViewById(R.id.tv_1_start_engine);
-		tvSense = (TextView) findViewById(R.id.tv_senseboard);
-		tvGoto = (TextView) findViewById(R.id.tv_goto_settings);
-
-		setFonts();
-		drawBackground();
-
-	}
-
-	public void setFonts() {
-		// Declare & initialize Typefaces.
-		Typeface tfHelvetica = Typeface.createFromAsset(this.getAssets(),
-				"fonts/helvetica_bold_oblique.ttf");
-		Typeface tfMyriadRegular = Typeface.createFromAsset(this.getAssets(),
-				"fonts/myriad_regular.otf");
-
-		// Set correct fonts to views.
-		tvLogo.setTypeface(tfHelvetica);
-		tvBeforeStart.setTypeface(tfMyriadRegular);
-		tvSettings.setTypeface(tfMyriadRegular);
-		tvScan.setTypeface(tfMyriadRegular);
-		tvPin.setTypeface(tfMyriadRegular);
-		tvStart.setTypeface(tfMyriadRegular);
-		tvSense.setTypeface(tfMyriadRegular);
-		tvGoto.setTypeface(tfMyriadRegular);
-	}
+	
+	
 
 	public void drawBackground() {
 		relativeRange = (double) currentRange / (double) defaultRange;
@@ -162,5 +125,6 @@ public class BluetoothHelper extends Activity {
 		gdBackground.setCornerRadius(0f);
 		return gdBackground;
 	}
+
 
 }
