@@ -105,9 +105,12 @@ public class BeforeDriveActivity extends FragmentActivity {
 		loadData();
 		loadDate();
 		calc();
-		
-		ac = new AsyncClass(this);
-		ac.execute();
+
+		if (bt.getOpenStatus().equals("Could not open device!")) {
+			ac = new AsyncClass(this);
+			ac.execute();
+
+		}
 	}
 
 	public static void setBackgroundIndicator(int c) {
@@ -297,43 +300,36 @@ public class BeforeDriveActivity extends FragmentActivity {
 		finish();
 		startActivity(intent);
 	}
-	
-	
+
 	public class AsyncClass extends AsyncTask<Void, String, Void> {
-	    private Context context;
-	    ProgressDialog dialog;
+		private Context context;
+		ProgressDialog dialog;
 
-	        public AsyncClass(Context cxt) {
-	            context = cxt;
-	            dialog = new ProgressDialog(context);
-	        }
+		public AsyncClass(Context cxt) {
+			context = cxt;
+			dialog = new ProgressDialog(context);
+		}
 
-	        @Override
-	        protected void onPreExecute() {
-	            dialog.setTitle("Please wait");
-	            dialog.setMessage("Connecting to Senseboard...");
-	            dialog.show();
-	        }
+		@Override
+		protected void onPreExecute() {
+			dialog.setTitle("Please wait");
+			dialog.setMessage("Connecting to Senseboard...");
+			dialog.show();
+		}
 
-	        @Override
-	        protected Void doInBackground(Void... unused) {
-	            SystemClock.sleep(2000);
-	            
-	        	bt.findBT(false);
-	        	
-	        	return (null);
-	        }
+		@Override
+		protected Void doInBackground(Void... unused) {
+			SystemClock.sleep(2000);
 
-	        @Override
-	        protected void onPostExecute(Void unused) {
-	            dialog.dismiss();
-	        }
-	    }
-	
-	
-	
-	
-	
-	
-	
+			bt.findBT(false);
+
+			return (null);
+		}
+
+		@Override
+		protected void onPostExecute(Void unused) {
+			dialog.dismiss();
+		}
+	}
+
 }

@@ -19,7 +19,7 @@
     android:id="@+id/vpl"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res/com.prototype.cruise">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
@@ -32,6 +32,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#FF000000"
-        android:padding="10dip" />
+        android:padding="10dip"
+        app:radius="5sp"
+        app:strokeColor="#FFFFFF"
+         />
 
 </LinearLayout>
