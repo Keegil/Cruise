@@ -206,6 +206,7 @@ public class SummaryFragment extends Fragment {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void drawBackground() {
 		relativeRange = (double) currentRange / (double) defaultRange;
 		ll.setBackgroundDrawable(setGradient(relativeRange));

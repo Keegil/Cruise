@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 public class HelpFragmentBars extends Fragment implements OnTouchListener {
 
 	// Declare & initialize logging variable.
+	@SuppressWarnings("unused")
 	private static final String TAG = "HelpFragmentSpeed";
 
 	// Declare parent activity.
@@ -25,7 +25,7 @@ public class HelpFragmentBars extends Fragment implements OnTouchListener {
 
 	// Declare background.
 	static LinearLayout ll;
-	
+
 	// Declare bars.
 	LinearLayout llBars;
 
@@ -33,7 +33,7 @@ public class HelpFragmentBars extends Fragment implements OnTouchListener {
 	TextView tvLogo;
 	TextView tvBarsHead;
 	TextView tvBarsInfo;
-	
+
 	// Declare touch variables.
 	float x, y;
 	DrawBars drawBars;
@@ -45,8 +45,7 @@ public class HelpFragmentBars extends Fragment implements OnTouchListener {
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater
-				.inflate(R.layout.frag_help_bars, container, false);
+		View view = inflater.inflate(R.layout.frag_help_bars, container, false);
 		init(view);
 		return view;
 	}
@@ -64,7 +63,7 @@ public class HelpFragmentBars extends Fragment implements OnTouchListener {
 
 		// Initialize background view.
 		ll = (LinearLayout) v.findViewById(R.id.ll_help_bars);
-		
+
 		// Initialize bars and set OnClickListener.
 		llBars = (LinearLayout) v.findViewById(R.id.ll_bars_help);
 
@@ -80,8 +79,6 @@ public class HelpFragmentBars extends Fragment implements OnTouchListener {
 				.getAssets(), "fonts/helvetica_bold_oblique.ttf");
 		Typeface tfMyriadRegular = Typeface.createFromAsset(getActivity()
 				.getAssets(), "fonts/myriad_regular.otf");
-		Typeface tfMyriadItalic = Typeface.createFromAsset(getActivity()
-				.getAssets(), "fonts/myriad_italic.otf");
 
 		// Set correct fonts to views.
 		tvLogo.setTypeface(tfHelvetica);
@@ -89,6 +86,7 @@ public class HelpFragmentBars extends Fragment implements OnTouchListener {
 		tvBarsInfo.setTypeface(tfMyriadRegular);
 	}
 
+	@SuppressWarnings("deprecation")
 	public void drawBackground() {
 		ll.setBackgroundDrawable(setGradient(HelpActivity.relativeRange));
 	}

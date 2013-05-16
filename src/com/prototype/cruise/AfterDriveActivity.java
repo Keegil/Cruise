@@ -85,7 +85,7 @@ public class AfterDriveActivity extends FragmentActivity {
 	private static final String TAG_ACC = "hardAccels";
 	private static final String TAG_BRA = "hardBrakes";
 	private static final String TAG_SPE = "speedingCounts";
-	private static final String TAG_TOT = "totalCounts";
+	// private static final String TAG_TOT = "totalCounts";
 	private static final String TAG_DIS = "distanceTraveled";
 
 	// Viewpager indicator
@@ -206,11 +206,11 @@ public class AfterDriveActivity extends FragmentActivity {
 			for (int i = 0; i < drive.length(); i++) {
 				JSONObject c = drive.getJSONObject(i);
 
-				// Storing each json item in variable
+				// Storing each JSON item in variable.
 				accMistakes = c.getInt(TAG_ACC);
 				brakeMistakes = c.getInt(TAG_BRA);
 				speedMistakes = c.getInt(TAG_SPE);
-				int tot = c.getInt(TAG_TOT);
+				// int tot = c.getInt(TAG_TOT);
 				driveLength = c.getInt(TAG_DIS);
 
 				Log.d("blue", "Acc: " + accMistakes + " - Bra: "

@@ -2,7 +2,6 @@ package com.prototype.cruise;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 public class HelpFragmentAcc extends Fragment {
 
 	// Declare & initialize logging variable.
+	@SuppressWarnings("unused")
 	private static final String TAG = "HelpFragmentAcc";
 
 	// Declare parent activity.
@@ -36,8 +36,7 @@ public class HelpFragmentAcc extends Fragment {
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater
-				.inflate(R.layout.frag_help_acc, container, false);
+		View view = inflater.inflate(R.layout.frag_help_acc, container, false);
 		init(view);
 		return view;
 	}
@@ -68,8 +67,6 @@ public class HelpFragmentAcc extends Fragment {
 				.getAssets(), "fonts/helvetica_bold_oblique.ttf");
 		Typeface tfMyriadRegular = Typeface.createFromAsset(getActivity()
 				.getAssets(), "fonts/myriad_regular.otf");
-		Typeface tfMyriadItalic = Typeface.createFromAsset(getActivity()
-				.getAssets(), "fonts/myriad_italic.otf");
 
 		// Set correct fonts to views.
 		tvLogo.setTypeface(tfHelvetica);
@@ -77,6 +74,7 @@ public class HelpFragmentAcc extends Fragment {
 		tvAccInfo.setTypeface(tfMyriadRegular);
 	}
 
+	@SuppressWarnings("deprecation")
 	public void drawBackground() {
 		ll.setBackgroundDrawable(setGradient(HelpActivity.relativeRange));
 	}

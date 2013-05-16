@@ -2,11 +2,10 @@ package com.prototype.cruise;
 
 import java.util.concurrent.TimeUnit;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -233,6 +232,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 				+ BeforeDriveActivity.chargedRange + " km");
 	}
 
+	@SuppressLint("DefaultLocale")
 	public String setTime(long l) {
 		// Returns a string with correct time formatting.
 		final long days = TimeUnit.MILLISECONDS.toDays(l);
@@ -341,6 +341,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 
 	// UI handler for changing gradient.
 	static final Handler bgHandler = new Handler() {
+		@SuppressWarnings("deprecation")
 		public void handleMessage(Message msg) {
 			ll.setBackgroundDrawable((Drawable) msg.obj);
 			BeforeDriveActivity.setBackgroundIndicator(bc.getStopRGB());

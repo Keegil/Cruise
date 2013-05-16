@@ -2,10 +2,7 @@ package com.prototype.cruise;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -66,13 +63,10 @@ public class BluetoothHelper extends Activity {
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
-
 		if (btb.isPaired()) {
 			finish();
 		}
-
 	}
 
 	public void init() {
@@ -109,9 +103,9 @@ public class BluetoothHelper extends Activity {
 		tvGoto.setTypeface(tfMyriadRegular);
 	}
 
+	@SuppressWarnings("deprecation")
 	public void drawBackground() {
 		relativeRange = (double) currentRange / (double) defaultRange;
-
 		bc = new BackgroundCalc(relativeRange);
 		ll.setBackgroundDrawable(bc.getGradient());
 	}

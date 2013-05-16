@@ -27,6 +27,7 @@ import com.viewpagerindicator.CirclePageIndicator;
 public class BeforeDriveActivity extends FragmentActivity {
 
 	// Declare & initialize logging variable.
+	@SuppressWarnings("unused")
 	private static final String TAG = "BeforeDriveActivity";
 
 	// Declare fragments.

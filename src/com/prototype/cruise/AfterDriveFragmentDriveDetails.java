@@ -1,8 +1,6 @@
 package com.prototype.cruise;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -17,9 +15,9 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
-import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -416,6 +414,7 @@ public class AfterDriveFragmentDriveDetails extends Fragment implements
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void drawBackground() {
 		bc = new BackgroundCalc(AfterDriveActivity.relativeRange);
 		ll.setBackgroundDrawable(bc.getGradient());

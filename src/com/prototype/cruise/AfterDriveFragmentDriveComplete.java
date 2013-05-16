@@ -1,9 +1,7 @@
 package com.prototype.cruise;
 
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,9 +15,9 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
-import android.view.animation.Animation.AnimationListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -242,6 +240,7 @@ public class AfterDriveFragmentDriveComplete extends Fragment implements
 	}
 
 	static final Handler bgHandler = new Handler() {
+		@SuppressWarnings("deprecation")
 		public void handleMessage(Message msg) {
 			ll.setBackgroundDrawable((Drawable) msg.obj);
 			AfterDriveActivity.setBackgroundIndicator(bc.getStopRGB());

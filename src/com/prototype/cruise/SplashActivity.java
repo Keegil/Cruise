@@ -9,10 +9,9 @@ import android.view.Menu;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 public class SplashActivity extends Activity {
-	
+
 	// Declare & initialize preference variables and set defaults.
 	int defaultRange = 120;
 
@@ -20,31 +19,28 @@ public class SplashActivity extends Activity {
 	int currentRange = 120;
 
 	double relativeRange;
-	
+
 	LinearLayout ll;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		
 
-
-		// fullscreen
+		// Set fullscreen.
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		// set content
 		setContentView(R.layout.activity_splash);
-		
-		final SplashActivity sPlashScreen = this; 
-		
+
+		final SplashActivity sPlashScreen = this;
+
 		ll = (LinearLayout) findViewById(R.id.ll_main);
 
 		drawBackground();
 
-		//set and start timer
+		// set and start timer
 		Thread timer = new Thread() {
 			public void run() {
 				try {
@@ -67,9 +63,8 @@ public class SplashActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		return false;
 	}
-	
-	
 
+	@SuppressWarnings("deprecation")
 	public void drawBackground() {
 		relativeRange = (double) currentRange / (double) defaultRange;
 		ll.setBackgroundDrawable(setGradient(relativeRange));
@@ -125,6 +120,5 @@ public class SplashActivity extends Activity {
 		gdBackground.setCornerRadius(0f);
 		return gdBackground;
 	}
-
 
 }
