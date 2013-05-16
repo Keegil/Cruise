@@ -24,7 +24,7 @@ public class HelpFragmentAcc extends Fragment {
 	// Declare background.
 	static LinearLayout ll;
 
-	// Declare Textviews.
+	// Declare TextViews.
 	TextView tvLogo;
 	TextView tvAccHead;
 	TextView tvAccInfo;

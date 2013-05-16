@@ -16,6 +16,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -166,7 +167,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 
 		// Initialize hint and set background, animation and listener.
 		tvHint = (TextView) v.findViewById(R.id.tv_before_drive_hint);
-		tvHint.getBackground().setAlpha(100);
+		tvHint.getBackground().setAlpha(150);
 		tvHint.setOnClickListener(this);
 		animation = new AnimationSet(false);
 	}
@@ -218,6 +219,39 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		}
 		layoutParams = new RelativeLayout.LayoutParams(width, height);
 		tvStartingRange.setLayoutParams(layoutParams);
+
+		length = String.valueOf((int) (BeforeDriveActivity.currentRange * 0.8))
+				.length();
+		if (length == 3) {
+			width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+					59, getResources().getDisplayMetrics());
+		} else if (length == 2) {
+			width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+					41, getResources().getDisplayMetrics());
+		} else if (length == 1) {
+			width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+					22, getResources().getDisplayMetrics());
+		}
+		Log.d(TAG, "Length: " + length + " | Width: " + width + "");
+		layoutParams = new RelativeLayout.LayoutParams(width,
+				LayoutParams.WRAP_CONTENT);
+		tvHighwayRange.setLayoutParams(layoutParams);
+
+		length = String.valueOf(BeforeDriveActivity.currentRange).length();
+		if (length == 3) {
+			width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+					59, getResources().getDisplayMetrics());
+		} else if (length == 2) {
+			width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+					41, getResources().getDisplayMetrics());
+		} else if (length == 1) {
+			width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+					22, getResources().getDisplayMetrics());
+		}
+		Log.d(TAG, "Length: " + length + " | Width: " + width + "");
+		layoutParams = new RelativeLayout.LayoutParams(width,
+				LayoutParams.WRAP_CONTENT);
+		tvCityRange.setLayoutParams(layoutParams);
 
 		// Set TextViews to display correct information.
 		if (BeforeDriveActivity.lastTime == 0) {
@@ -372,9 +406,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 				double rr = BeforeDriveActivity.previousRelativeRange;
 				while (rr <= BeforeDriveActivity.relativeRange) {
 					Message msg = new Message();
-					// msg.obj = setGradient(rr);
 					msg.obj = bc.makeGradient(rr);
-
 					bgHandler.sendMessage(msg);
 					try {
 						Thread.sleep(2);
@@ -394,7 +426,6 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		public void handleMessage(Message msg) {
 			ll.setBackgroundDrawable((Drawable) msg.obj);
 			BeforeDriveActivity.setBackgroundIndicator(bc.getStopRGB());
-
 		}
 	};
 

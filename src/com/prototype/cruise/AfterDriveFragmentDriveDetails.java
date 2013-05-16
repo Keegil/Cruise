@@ -194,7 +194,7 @@ public class AfterDriveFragmentDriveDetails extends Fragment implements
 
 		// Initialize hint and set background, animation and listener.
 		tvHint = (TextView) v.findViewById(R.id.tv_after_drive_hint2);
-		tvHint.getBackground().setAlpha(100);
+		tvHint.getBackground().setAlpha(150);
 		tvHint.setOnClickListener(this);
 		animation = new AnimationSet(false);
 	}

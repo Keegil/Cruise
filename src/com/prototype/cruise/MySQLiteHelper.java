@@ -7,7 +7,7 @@ import android.util.Log;
 
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
-	private static final String DATABASE_NAME = "cruise25.db";
+	private static final String DATABASE_NAME = "cruise26.db";
 	private static final int DATABASE_VERSION = 1;
 
 	// driving stats table

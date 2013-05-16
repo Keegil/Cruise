@@ -1,5 +1,7 @@
 package com.prototype.cruise;
 
+import com.viewpagerindicator.CirclePageIndicator;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -48,6 +50,11 @@ public class HelpActivity extends FragmentActivity {
 	public static double doubleDefaultRange;
 	public static double relativeRange;
 
+	// Viewpager indicator
+	static CirclePageIndicator mIndicator;
+
+	static BackgroundCalc bc = new BackgroundCalc();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -57,18 +64,29 @@ public class HelpActivity extends FragmentActivity {
 
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
-		
+
+		mIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
+		mIndicator.setViewPager(mPager);
+
 		// Set correct page based on data from bundle.
 		Bundle extras = this.getIntent().getExtras();
 		whichPage = extras.getInt("helpData");
 		Log.d(TAG, "" + whichPage + "");
 		mPager.setCurrentItem(whichPage);
 
+		loadSettings();
+		loadData();
+
 		doubleCurrentRange = (double) currentRange;
 		doubleDefaultRange = (double) defaultRange;
 		relativeRange = doubleCurrentRange / doubleDefaultRange;
+		
+		bc.makeGradient(relativeRange);
+		setBackgroundIndicator(bc.getStopRGB());
+	}
 
-		loadData();
+	public static void setBackgroundIndicator(int c) {
+		mIndicator.setBackgroundColor(c);
 	}
 
 	public static class MyAdapter extends FragmentPagerAdapter {

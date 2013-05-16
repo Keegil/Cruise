@@ -60,7 +60,7 @@
 
                 <TextView
                     android:id="@+id/tv_km"
-                    android:layout_width="wrap_content"
+                    android:layout_width="60sp"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/tv_starting_range"
                     android:layout_marginBottom="-16sp"
@@ -110,11 +110,10 @@
 
                     <TextView
                         android:id="@+id/tv_highway_km"
-                        android:layout_width="wrap_content"
+                        android:layout_width="40sp"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@id/tv_highway_range"
                         android:layout_marginBottom="5sp"
-                        android:layout_marginLeft="3sp"
                         android:layout_toRightOf="@id/tv_highway_range"
                         android:text="@string/km"
                         android:textColor="@color/white"
@@ -163,11 +162,10 @@
 
                     <TextView
                         android:id="@+id/tv_city_km"
-                        android:layout_width="wrap_content"
+                        android:layout_width="40sp"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@id/tv_city_range"
                         android:layout_marginBottom="5sp"
-                        android:layout_marginLeft="3sp"
                         android:layout_toRightOf="@id/tv_city_range"
                         android:text="@string/km"
                         android:textColor="@color/white"
