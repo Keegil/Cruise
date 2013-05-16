@@ -134,7 +134,7 @@
 
                 <TextView
                     android:id="@+id/tv_km_after"
-                    android:layout_width="wrap_content"
+                    android:layout_width="60sp"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/tv_ending_range"
                     android:layout_marginBottom="-16sp"

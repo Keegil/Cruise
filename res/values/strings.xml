@@ -46,7 +46,7 @@
     <string name="before_drive_hint">Here you see the current status of your EV. Click any element on the screen for more information.</string>
 
     <!-- AfterDriveFragmentCompleted -->
-    <string name="drive_completed">Drive Completed!</string>
+    <string name="drive_completed">Drive completed!</string>
     <string name="stars_ex">11/20</string>
     <string name="good_charge">Your EV still has a good amount of charge remaining.</string>
     <string name="bad_charge">Your EV might need charging before the next trip.</string>

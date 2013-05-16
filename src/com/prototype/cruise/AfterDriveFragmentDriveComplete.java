@@ -8,9 +8,11 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -19,6 +21,7 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class AfterDriveFragmentDriveComplete extends Fragment implements
@@ -49,6 +52,7 @@ public class AfterDriveFragmentDriveComplete extends Fragment implements
 	TextView tvDriveCompleted;
 	TextView tvStars;
 	TextView tvChargeLeft;
+	TextView tvMaxStars;
 
 	// Declare hint.
 	TextView tvHint;
@@ -109,6 +113,7 @@ public class AfterDriveFragmentDriveComplete extends Fragment implements
 		tvStars = (TextView) v.findViewById(R.id.tv_stars);
 		tvChargeLeft = (TextView) v.findViewById(R.id.tv_charge_left);
 		tvDriveCompleted = (TextView) v.findViewById(R.id.tv_drive_completed);
+		tvMaxStars = (TextView) v.findViewById(R.id.tv_stars_max);
 
 		// Initialize hint and set background, animation and listener.
 		tvHint = (TextView) v.findViewById(R.id.tv_after_drive_hint1);
@@ -127,12 +132,35 @@ public class AfterDriveFragmentDriveComplete extends Fragment implements
 		// Set correct fonts to views.
 		tvLogo.setTypeface(tfHelvetica);
 		tvDriveCompleted.setTypeface(tfMyriadRegular);
-		tvStars.setTypeface(tfMyriadRegular);
+		tvStars.setTypeface(tfHelvetica);
 		tvChargeLeft.setTypeface(tfMyriadRegular);
 		tvHint.setTypeface(tfMyriadRegular);
+		tvMaxStars.setTypeface(tfHelvetica);
 	}
 
 	public void setTextViews() {
+		// Calculate accumulated score.
+		int accumulatedScore = AfterDriveActivity.accScore
+				+ AfterDriveActivity.brakeScore + AfterDriveActivity.speedScore
+				+ AfterDriveActivity.routeScore;
+
+		// Set length of TextViews to avoid font clipping.
+		int length = 0;
+		int width = 0;
+		RelativeLayout.LayoutParams layoutParams;
+		length = String.valueOf(accumulatedScore).length();
+		Log.d(TAG, "" + length + "");
+		if (length == 2) {
+			width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+					100, getResources().getDisplayMetrics());
+		} else if (length == 1) {
+			width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+					48, getResources().getDisplayMetrics());
+		}
+		layoutParams = new RelativeLayout.LayoutParams(width,
+				LayoutParams.WRAP_CONTENT);
+		// tvStars.setLayoutParams(layoutParams);
+
 		// Set TextViews to display correct information.
 		if (AfterDriveActivity.relativeRange >= 0.6) {
 			tvChargeLeft
@@ -144,10 +172,7 @@ public class AfterDriveFragmentDriveComplete extends Fragment implements
 			tvChargeLeft.setText(getResources().getString(R.string.no_charge));
 		}
 
-		int accumulatedScore = AfterDriveActivity.accScore
-				+ AfterDriveActivity.brakeScore + AfterDriveActivity.speedScore
-				+ AfterDriveActivity.routeScore;
-		tvStars.setText("" + accumulatedScore + "/20");
+		tvStars.setText("" + accumulatedScore + "");
 	}
 
 	public void drawBars() {
