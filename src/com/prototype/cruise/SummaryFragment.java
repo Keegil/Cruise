@@ -10,11 +10,17 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class SummaryFragment extends Fragment {
@@ -49,6 +55,11 @@ public class SummaryFragment extends Fragment {
 	TextView tvEffPercent;
 	TextView tvEffDesc;
 	TextView tvContinue;
+
+	// Declare RelativeLayouts.
+	RelativeLayout rlComp;
+	RelativeLayout rlMoney;
+	RelativeLayout rlEff;
 
 	// Declare database variables.
 	DrivingStatsDataSource drivingStatsDataSource;
@@ -119,6 +130,11 @@ public class SummaryFragment extends Fragment {
 		tvEffDesc = (TextView) v.findViewById(R.id.tv_eff_desc);
 		tvContinue = (TextView) v.findViewById(R.id.tv_continue);
 
+		// Initialize RelativeLayouts.
+		rlComp = (RelativeLayout) v.findViewById(R.id.rl_comp);
+		rlMoney = (RelativeLayout) v.findViewById(R.id.rl_money);
+		rlEff = (RelativeLayout) v.findViewById(R.id.rl_eff);
+
 		// Initialize database.
 		drivingStatsDataSource = new DrivingStatsDataSource(fragmentActivity);
 		drivingStatsDataSource.open();
@@ -155,12 +171,8 @@ public class SummaryFragment extends Fragment {
 		int stars = 0;
 		totalDistance = 0;
 		gasCost = 0;
-
 		drives = drivingStatsDataSource.getAllDrivingStats();
-
-		if (drives.size() == 0) {
-
-		} else {
+		if (drives.size() != 0) {
 			while (i < drives.size()) {
 				drivingStats = drivingStatsDataSource.getDrivingStats(i + 1);
 				if (drivingStats.getRangeEnd() == 0) {
@@ -177,33 +189,111 @@ public class SummaryFragment extends Fragment {
 				totalDistance = totalDistance + drivingStats.getDriveDistance();
 				i++;
 			}
-			Log.d(TAG,
-					"Drives: " + drives.size() + " | Fails: " + fails
-							+ " | Failtrain: " + failTrain + " | Stars: "
-							+ stars + " | Rating: " + rating + " [ accScore = "
-							+ drivingStats.getNumAccEvent()
-							+ " [ brakeScore = "
-							+ drivingStats.getNumBrakeEvent()
-							+ " [ routeScore = "
-							+ drivingStats.getNumRouteEvent()
-							+ " [ speedScore = "
-							+ drivingStats.getNumSpeedEvent() + "");
+			gasCost = totalDistance * 0.06 * 14;
 		}
-		gasCost = totalDistance * 0.06 * 14;
 	}
 
 	public void setTextViews() {
-		// Set TextViews to display correct information.
-		tvCompScore.setText("" + (int) ((1 - failTrain) * 100) + "");
-		tvMoneyScore.setText("" + (int) gasCost + "");
-		if (failTrain < 0.1) {
-			tvEval.setText(getResources().getString(R.string.eval_strong));
-		} else if (failTrain > 0.1 && failTrain < 0.3) {
-			tvEval.setText(getResources().getString(R.string.eval_good));
+		if (drives.size() == 0) {
+			rlComp.setVisibility(View.GONE);
+			rlMoney.setVisibility(View.GONE);
+			rlEff.setVisibility(View.GONE);
+			tvContinue.setVisibility(View.GONE);
+			tvEval.setText(getResources().getString(R.string.eval_none));
 		} else {
-			tvEval.setText(getResources().getString(R.string.eval_weak));
+			// Set length of TextViews to avoid font clipping.
+
+			int length = 0;
+			int width = 0;
+			RelativeLayout.LayoutParams layoutParams;
+
+			length = String.valueOf((int) ((1 - failTrain) * 100)).length();
+			if (length == 3) {
+				width = (int) TypedValue.applyDimension(
+						TypedValue.COMPLEX_UNIT_SP, 59, getResources()
+								.getDisplayMetrics());
+			} else if (length == 2) {
+				width = (int) TypedValue.applyDimension(
+						TypedValue.COMPLEX_UNIT_SP, 41, getResources()
+								.getDisplayMetrics());
+			} else if (length == 1) {
+				width = (int) TypedValue.applyDimension(
+						TypedValue.COMPLEX_UNIT_SP, 22, getResources()
+								.getDisplayMetrics());
+			}
+			Log.d(TAG, "Length: " + length + " | Width: " + width + "");
+			layoutParams = new RelativeLayout.LayoutParams(width,
+					LayoutParams.WRAP_CONTENT);
+			tvCompScore.setLayoutParams(layoutParams);
+
+			length = String.valueOf((int) gasCost).length();
+			if (length == 4) {
+				width = (int) TypedValue.applyDimension(
+						TypedValue.COMPLEX_UNIT_SP, 78, getResources()
+								.getDisplayMetrics());
+			} else if (length == 3) {
+				width = (int) TypedValue.applyDimension(
+						TypedValue.COMPLEX_UNIT_SP, 59, getResources()
+								.getDisplayMetrics());
+			} else if (length == 2) {
+				width = (int) TypedValue.applyDimension(
+						TypedValue.COMPLEX_UNIT_SP, 41, getResources()
+								.getDisplayMetrics());
+			} else if (length == 1) {
+				width = (int) TypedValue.applyDimension(
+						TypedValue.COMPLEX_UNIT_SP, 22, getResources()
+								.getDisplayMetrics());
+			} else {
+				width = 0;
+			}
+			Log.d(TAG, "Length: " + length + " | Width: " + width + "");
+			layoutParams = new RelativeLayout.LayoutParams(width,
+					LayoutParams.WRAP_CONTENT);
+			tvMoneyScore.setLayoutParams(layoutParams);
+
+			length = String.valueOf(rating).length();
+			Log.d(TAG, "" + length + "");
+			if (length == 2) {
+				width = (int) TypedValue.applyDimension(
+						TypedValue.COMPLEX_UNIT_SP, 41, getResources()
+								.getDisplayMetrics());
+			} else if (length == 1) {
+				width = (int) TypedValue.applyDimension(
+						TypedValue.COMPLEX_UNIT_SP, 22, getResources()
+								.getDisplayMetrics());
+			} else {
+				width = 0;
+			}
+			Log.d(TAG, "Length: " + length + " | Width: " + width + "");
+			layoutParams = new RelativeLayout.LayoutParams(width,
+					LayoutParams.WRAP_CONTENT);
+			tvEffScore.setLayoutParams(layoutParams);
+
+			// Set TextViews to display correct information.
+			final StyleSpan bss = new StyleSpan(android.graphics.Typeface.BOLD);
+			tvCompScore.setText("" + (int) ((1 - failTrain) * 100) + "");
+			tvMoneyScore.setText("" + (int) gasCost + "");
+			tvEffScore.setText("" + rating + "");
+			if (failTrain < 0.1) {
+				final SpannableStringBuilder sb = new SpannableStringBuilder(
+						getResources().getString(R.string.eval_strong));
+				sb.setSpan(bss, 48, 64, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+				tvEval.setText(sb);
+				// tvEval.setText(getResources().getString(R.string.eval_strong));
+			} else if (failTrain > 0.1 && failTrain < 0.3) {
+				final SpannableStringBuilder sb = new SpannableStringBuilder(
+						getResources().getString(R.string.eval_good));
+				sb.setSpan(bss, 48, 62, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+				tvEval.setText(sb);
+				// tvEval.setText(getResources().getString(R.string.eval_good));
+			} else {
+				final SpannableStringBuilder sb = new SpannableStringBuilder(
+						getResources().getString(R.string.eval_weak));
+				sb.setSpan(bss, 48, 62, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+				tvEval.setText(sb);
+				// tvEval.setText(getResources().getString(R.string.eval_weak));
+			}
 		}
-		tvEffScore.setText("" + rating + "");
 	}
 
 	@SuppressWarnings("deprecation")

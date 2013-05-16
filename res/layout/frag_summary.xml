@@ -67,19 +67,17 @@
             <TextView
                 android:id="@+id/tv_comp_score"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12sp"
+                android:layout_height="40sp"
                 android:text="@string/comp_score_ex"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_large" />
 
             <TextView
                 android:id="@+id/tv_comp_percent"
-                android:layout_width="wrap_content"
+                android:layout_width="35sp"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/tv_comp_score"
                 android:layout_marginBottom="6sp"
-                android:layout_marginLeft="3sp"
                 android:layout_toRightOf="@id/tv_comp_score"
                 android:text="@string/percent"
                 android:textColor="@color/white"
@@ -113,11 +111,10 @@
 
             <TextView
                 android:id="@+id/tv_money_kr"
-                android:layout_width="wrap_content"
+                android:layout_width="35sp"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/tv_money_score"
                 android:layout_marginBottom="6sp"
-                android:layout_marginLeft="3sp"
                 android:layout_toRightOf="@id/tv_money_score"
                 android:text="@string/kr"
                 android:textColor="@color/white"
@@ -150,11 +147,10 @@
 
             <TextView
                 android:id="@+id/tv_eff_percent"
-                android:layout_width="wrap_content"
+                android:layout_width="35sp"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/tv_eff_score"
                 android:layout_marginBottom="6sp"
-                android:layout_marginLeft="3sp"
                 android:layout_toRightOf="@id/tv_eff_score"
                 android:text="@string/out_of_20"
                 android:textColor="@color/white"
