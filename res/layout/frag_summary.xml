@@ -36,18 +36,150 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.55"
+        android:layout_weight="0.2"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/iv_car"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ev" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_scores"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.15"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:id="@+id/rl_comp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="17dp"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tv_comp_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12sp"
+                android:text="@string/comp_score_ex"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_large" />
+
+            <TextView
+                android:id="@+id/tv_comp_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/tv_comp_score"
+                android:layout_marginBottom="6sp"
+                android:layout_marginLeft="3sp"
+                android:layout_toRightOf="@id/tv_comp_score"
+                android:text="@string/percent"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_medium" />
+
+            <TextView
+                android:id="@+id/tv_comp_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_comp_score"
+                android:layout_marginTop="-18sp"
+                android:text="@string/comp_score_desc"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_small" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="17dp"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tv_money_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/money_score_ex"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_large" />
+
+            <TextView
+                android:id="@+id/tv_money_kr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/tv_money_score"
+                android:layout_marginBottom="6sp"
+                android:layout_marginLeft="3sp"
+                android:layout_toRightOf="@id/tv_money_score"
+                android:text="@string/kr"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_medium" />
+
+            <TextView
+                android:id="@+id/tv_money_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_money_score"
+                android:layout_marginTop="-18sp"
+                android:text="@string/money_score_desc"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_small" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_eff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tv_eff_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/eff_score_ex"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_large" />
+
+            <TextView
+                android:id="@+id/tv_eff_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/tv_eff_score"
+                android:layout_marginBottom="6sp"
+                android:layout_marginLeft="3sp"
+                android:layout_toRightOf="@id/tv_eff_score"
+                android:text="@string/out_of_20"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_medium" />
+
+            <TextView
+                android:id="@+id/tv_eff_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_eff_score"
+                android:layout_marginTop="-18sp"
+                android:text="@string/eff_score_desc"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_small" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingLeft="30dp"
         android:paddingRight="30dp" >
-
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_marginBottom="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ev" />
 
         <TextView
             android:id="@+id/tv_eval"
@@ -64,77 +196,20 @@
         android:layout_height="0dp"
         android:layout_weight="0.2"
         android:gravity="center"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp" >
 
         <TextView
-            android:id="@+id/tv_rating"
+            android:id="@+id/tv_continue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="@color/white"
-            android:text="@string/rating_ex"
-            android:textSize="@dimen/font_large" />
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="-18sp"
             android:gravity="center"
-            android:layout_gravity="center" >
-
-            <ImageView
-                android:id="@+id/iv_star1"
-                android:layout_width="@dimen/star_size_bigger"
-                android:layout_height="@dimen/star_size_bigger"
-                android:layout_marginRight="@dimen/star_margin"
-                android:layout_below="@id/tv_rating"
-                android:scaleType="fitXY"
-                android:src="@drawable/starempty" />
-
-            <ImageView
-                android:id="@+id/iv_star2"
-                android:layout_width="@dimen/star_size_bigger"
-                android:layout_height="@dimen/star_size_bigger"
-                android:layout_marginRight="@dimen/star_margin"
-                android:layout_toRightOf="@id/iv_star1"
-                android:scaleType="fitXY"
-                android:src="@drawable/starempty" />
-
-            <ImageView
-                android:id="@+id/iv_star3"
-                android:layout_width="@dimen/star_size_bigger"
-                android:layout_height="@dimen/star_size_bigger"
-                android:layout_marginRight="@dimen/star_margin"
-                android:layout_toRightOf="@id/iv_star2"
-                android:scaleType="fitXY"
-                android:src="@drawable/starempty" />
-
-            <ImageView
-                android:id="@+id/iv_star4"
-                android:layout_width="@dimen/star_size_bigger"
-                android:layout_height="@dimen/star_size_bigger"
-                android:layout_marginRight="@dimen/star_margin"
-                android:layout_toRightOf="@id/iv_star3"
-                android:scaleType="fitXY"
-                android:src="@drawable/starempty" />
-
-            <ImageView
-                android:id="@+id/iv_star5"
-                android:layout_width="@dimen/star_size_bigger"
-                android:layout_height="@dimen/star_size_bigger"
-                android:layout_toRightOf="@id/iv_star4"
-                android:scaleType="fitXY"
-                android:src="@drawable/starempty" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="5dp" >
+            android:text="@string/continue_desc"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_small" />
     </LinearLayout>
 
 </LinearLayout>

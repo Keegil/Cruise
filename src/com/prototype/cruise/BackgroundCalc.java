@@ -14,7 +14,6 @@ public class BackgroundCalc {
 
 	public BackgroundCalc(double rr) {
 		calcRGB(rr);
-
 	}
 
 	public GradientDrawable makeGradient(double rr) {

@@ -3,6 +3,7 @@ package com.prototype.cruise;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -56,12 +57,6 @@ public class SplashActivity extends Activity {
 			}
 		};
 		timer.start();
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		return false;
 	}
 
 	@SuppressWarnings("deprecation")

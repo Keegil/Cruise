@@ -84,24 +84,17 @@ public class BeforeDriveActivity extends FragmentActivity {
 
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
+		mPager.setCurrentItem(1);
 
 		mIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
-
 		mIndicator.setViewPager(mPager);
-
-		beforeDriveFragmentCurrentStatus = (BeforeDriveFragmentCurrentStatus) mAdapter
-				.getItem(1);
-		summaryFragment = (SummaryFragment) mAdapter.getItem(0);
-
-		bt = new BluetoothBackEnd(this);
-
+		
 		init();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		mPager.setCurrentItem(1);
 		loadSettings();
 		loadData();
 		loadDate();
@@ -110,7 +103,6 @@ public class BeforeDriveActivity extends FragmentActivity {
 		if (bt.getOpenStatus().equals("Could not open device!")) {
 			ac = new AsyncClass(this);
 			ac.execute();
-
 		}
 	}
 
@@ -119,6 +111,14 @@ public class BeforeDriveActivity extends FragmentActivity {
 	}
 
 	public void init() {
+		// Initialize fragments.
+		beforeDriveFragmentCurrentStatus = (BeforeDriveFragmentCurrentStatus) mAdapter
+				.getItem(1);
+		summaryFragment = (SummaryFragment) mAdapter.getItem(0);
+
+		// Initialize BlueTooth.
+		bt = new BluetoothBackEnd(this);
+
 		// Initialize database.
 		drivingStatsDataSource = new DrivingStatsDataSource(this);
 		drivingStatsDataSource.open();
@@ -304,18 +304,19 @@ public class BeforeDriveActivity extends FragmentActivity {
 
 	public class AsyncClass extends AsyncTask<Void, String, Void> {
 		private Context context;
-		ProgressDialog dialog;
+
+		// ProgressDialog dialog;
 
 		public AsyncClass(Context cxt) {
 			context = cxt;
-			dialog = new ProgressDialog(context);
+			// dialog = new ProgressDialog(context);
 		}
 
 		@Override
 		protected void onPreExecute() {
-			dialog.setTitle("Please wait");
-			dialog.setMessage("Connecting to Senseboard...");
-			dialog.show();
+			// dialog.setTitle("Please wait");
+			// dialog.setMessage("Connecting to Senseboard...");
+			// dialog.show();
 		}
 
 		@Override
@@ -329,7 +330,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 
 		@Override
 		protected void onPostExecute(Void unused) {
-			dialog.dismiss();
+			// dialog.dismiss();
 		}
 	}
 

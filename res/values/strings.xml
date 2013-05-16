@@ -22,9 +22,15 @@
     <string name="example_km">120</string>
     <string name="highway_ex">80</string>
     <string name="city_ex">120</string>
+    <string name="comp_score_ex">75</string>
+    <string name="money_score_ex">280</string>
+    <string name="eff_score_ex">16</string>
 
     <!-- General -->
     <string name="km">km</string>
+    <string name="kr">kr</string>
+    <string name="out_of_20">/20</string>
+    <string name="percent">%</string>
     <string name="est_range_remain">Estimated Range Remaining</string>
 
     <!-- BeforeDriveFragmentCurrentStatus -->
@@ -82,9 +88,14 @@
     <string name="eval_strong">Based on your current driving habits, you are a strong candidate for an electric vehicle. Driving an EV fits well with your lifestyle.</string>
     <string name="eval_good">Based on your current driving habits, you are a good candidate for an electric vehicle. An EV will satisfy the majority of your needs.</string>
     <string name="eval_weak">Based on your current driving habits, you are a weak candidate for an electric vehicle. Maybe an EV as a second car would be right for you?</string>
-	<string name="rating_ex">20/20</string>
-	
-	<!-- SplashActivity -->
-		<string name="cruise_starting">Cruise is starting...</string>
-    
+    <string name="eval_none">Cruise has not yet collected enough data to provide you with an evaluation. Continue using Cruise to determine if an EV is right for you.</string>
+    <string name="rating_ex">20/20</string>
+    <string name="comp_score_desc">Compatible drives</string>
+    <string name="money_score_desc">Money saved</string>
+    <string name="eff_score_desc">Efficiency score</string>
+    <string name="continue_desc">Continue using Cruise to collect more data and improve your driving performance.</string>
+
+    <!-- SplashActivity -->
+    <string name="cruise_starting">Cruise is starting...</string>
+
 </resources>

@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -40,14 +39,16 @@ public class SummaryFragment extends Fragment {
 	// Declare TextViews.
 	TextView tvLogo;
 	TextView tvEval;
-	TextView tvRating;
-
-	// Declare stars.
-	ImageView ivStar1;
-	ImageView ivStar2;
-	ImageView ivStar3;
-	ImageView ivStar4;
-	ImageView ivStar5;
+	TextView tvCompScore;
+	TextView tvCompPercent;
+	TextView tvCompDesc;
+	TextView tvMoneyScore;
+	TextView tvMoneyKr;
+	TextView tvMoneyDesc;
+	TextView tvEffScore;
+	TextView tvEffPercent;
+	TextView tvEffDesc;
+	TextView tvContinue;
 
 	// Declare database variables.
 	DrivingStatsDataSource drivingStatsDataSource;
@@ -59,6 +60,8 @@ public class SummaryFragment extends Fragment {
 	double failTrain;
 	int rating;
 	double relativeRange;
+	int totalDistance = 0;
+	double gasCost = 0;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -85,7 +88,6 @@ public class SummaryFragment extends Fragment {
 		loadData();
 		calc();
 		setTextViews();
-		setStars();
 		drawBackground();
 	}
 
@@ -104,22 +106,24 @@ public class SummaryFragment extends Fragment {
 		// Initialize TextViews.
 		tvLogo = (TextView) v.findViewById(R.id.tv_logo_summary);
 		tvEval = (TextView) v.findViewById(R.id.tv_eval);
-		tvRating = (TextView) v.findViewById(R.id.tv_rating);
-
-		// Initialize stars.
-		ivStar1 = (ImageView) v.findViewById(R.id.iv_star1);
-		ivStar2 = (ImageView) v.findViewById(R.id.iv_star2);
-		ivStar3 = (ImageView) v.findViewById(R.id.iv_star3);
-		ivStar4 = (ImageView) v.findViewById(R.id.iv_star4);
-		ivStar5 = (ImageView) v.findViewById(R.id.iv_star5);
-
+		tvCompScore = (TextView) v.findViewById(R.id.tv_comp_score);
+		tvCompPercent = (TextView) v.findViewById(R.id.tv_comp_percent);
+		tvCompDesc = (TextView) v.findViewById(R.id.tv_comp_desc);
+		tvMoneyScore = (TextView) v.findViewById(R.id.tv_money_score);
+		tvMoneyKr = (TextView) v.findViewById(R.id.tv_money_kr);
+		tvMoneyDesc = (TextView) v.findViewById(R.id.tv_money_desc);
+		tvEffScore = (TextView) v.findViewById(R.id.tv_eff_score);
+		tvEffPercent = (TextView) v.findViewById(R.id.tv_eff_percent);
+		tvEffDesc = (TextView) v.findViewById(R.id.tv_eff_desc);
+		tvContinue = (TextView) v.findViewById(R.id.tv_continue);
+		
 		// Initialize database.
 		drivingStatsDataSource = new DrivingStatsDataSource(fragmentActivity);
 		drivingStatsDataSource.open();
 	}
 
 	public void setFonts() {
-		// Initialize typefaces.
+		// Initialize fonts.
 		Typeface tfHelvetica = Typeface.createFromAsset(getActivity()
 				.getAssets(), "fonts/helvetica_bold_oblique.ttf");
 		Typeface tfMyriadRegular = Typeface.createFromAsset(getActivity()
@@ -130,45 +134,62 @@ public class SummaryFragment extends Fragment {
 		// Set correct fonts to views.
 		tvLogo.setTypeface(tfHelvetica);
 		tvEval.setTypeface(tfMyriadRegular);
+		tvCompScore.setTypeface(tfHelvetica);
+		tvCompPercent.setTypeface(tfHelvetica);
+		tvCompDesc.setTypeface(tfMyriadItalic);
+		tvMoneyScore.setTypeface(tfHelvetica);
+		tvMoneyKr.setTypeface(tfHelvetica);
+		tvMoneyDesc.setTypeface(tfMyriadItalic);
+		tvEffScore.setTypeface(tfHelvetica);
+		tvEffPercent.setTypeface(tfHelvetica);
+		tvEffDesc.setTypeface(tfMyriadItalic);
+		tvContinue.setTypeface(tfMyriadItalic);
 	}
 
 	public void calc() {
-		// Determine strength of EV candidacy.
-		drives = drivingStatsDataSource.getAllDrivingStats();
+		// Reset all variables.
 		int i = 0;
 		int fails = 0;
 		int stars = 0;
-		while (i < drives.size()) {
-			drivingStats = drivingStatsDataSource.getDrivingStats(i + 1);
-			if (drivingStats.getRangeEnd() == 0) {
-				fails++;
-			}
-			stars = stars + drivingStats.getNumAccEvent()
-					+ drivingStats.getNumBrakeEvent()
-					+ drivingStats.getNumRouteEvent()
-					+ drivingStats.getNumSpeedEvent();
-			failTrain = (double) ((double) fails / (double) drives.size());
-			double dStars = (double) stars;
-			double dDrives = (double) drives.size();
-			rating = (int) ((dStars / (dDrives * 20)) * 20);
-			i++;
-			Log.d(TAG,
-					"Drives: " + drives.size() + " | Fails: " + fails
-							+ " | Failtrain: " + failTrain + " | Stars: "
-							+ stars + " | Rating: " + rating + " [ accScore = "
-							+ drivingStats.getNumAccEvent()
-							+ " [ brakeScore = "
-							+ drivingStats.getNumBrakeEvent()
-							+ " [ routeScore = "
-							+ drivingStats.getNumRouteEvent()
-							+ " [ speedScore = "
-							+ drivingStats.getNumSpeedEvent() + "");
-		}
+		totalDistance = 0;
+		gasCost = 0;
+		
+		drives = drivingStatsDataSource.getAllDrivingStats();
+		
+		if (drives.size() == 0) {
 
+		} else {
+			while (i < drives.size()) {
+				drivingStats = drivingStatsDataSource.getDrivingStats(i + 1);
+				if (drivingStats.getRangeEnd() == 0) {
+					fails++;
+				}
+				stars = stars + drivingStats.getNumAccEvent()
+						+ drivingStats.getNumBrakeEvent()
+						+ drivingStats.getNumRouteEvent()
+						+ drivingStats.getNumSpeedEvent();
+				failTrain = (double) ((double) fails / (double) drives.size());
+				double dStars = (double) stars;
+				double dDrives = (double) drives.size();
+				rating = (int) ((dStars / (dDrives * 20)) * 20);
+				totalDistance = totalDistance + drivingStats.getDriveDistance();
+				i++;
+				Log.d(TAG, "Drives: " + drives.size() + " | Fails: " + fails
+						+ " | Failtrain: " + failTrain + " | Stars: " + stars
+						+ " | Rating: " + rating + " [ accScore = "
+						+ drivingStats.getNumAccEvent() + " [ brakeScore = "
+						+ drivingStats.getNumBrakeEvent() + " [ routeScore = "
+						+ drivingStats.getNumRouteEvent() + " [ speedScore = "
+						+ drivingStats.getNumSpeedEvent() + "");
+			}
+		}
+		gasCost = totalDistance * 0.06 * 14;
 	}
 
 	public void setTextViews() {
 		// Set TextViews to display correct information.
+		tvCompScore.setText("" + (int) ((1 - failTrain) * 100) + "");
+		tvMoneyScore.setText("" + (int) gasCost + "");
 		if (failTrain < 0.1) {
 			tvEval.setText(getResources().getString(R.string.eval_strong));
 		} else if (failTrain > 0.1 && failTrain < 0.3) {
@@ -176,34 +197,7 @@ public class SummaryFragment extends Fragment {
 		} else {
 			tvEval.setText(getResources().getString(R.string.eval_weak));
 		}
-		tvRating.setText("" + rating + "/20");
-	}
-
-	public void setStars() {
-		// Set correct amount of stars.
-		if (rating == 0) {
-
-		} else if (rating > 0 && rating <= 4) {
-			ivStar1.setImageResource(R.drawable.starfilled);
-		} else if (rating > 4 && rating <= 8) {
-			ivStar1.setImageResource(R.drawable.starfilled);
-			ivStar2.setImageResource(R.drawable.starfilled);
-		} else if (rating > 8 && rating <= 12) {
-			ivStar1.setImageResource(R.drawable.starfilled);
-			ivStar2.setImageResource(R.drawable.starfilled);
-			ivStar3.setImageResource(R.drawable.starfilled);
-		} else if (rating > 12 && rating <= 16) {
-			ivStar1.setImageResource(R.drawable.starfilled);
-			ivStar2.setImageResource(R.drawable.starfilled);
-			ivStar3.setImageResource(R.drawable.starfilled);
-			ivStar4.setImageResource(R.drawable.starfilled);
-		} else {
-			ivStar1.setImageResource(R.drawable.starfilled);
-			ivStar2.setImageResource(R.drawable.starfilled);
-			ivStar3.setImageResource(R.drawable.starfilled);
-			ivStar4.setImageResource(R.drawable.starfilled);
-			ivStar5.setImageResource(R.drawable.starfilled);
-		}
+		tvEffScore.setText("" + rating + "");
 	}
 
 	@SuppressWarnings("deprecation")

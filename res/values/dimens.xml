@@ -15,6 +15,7 @@
     <dimen name="font_medium">22sp</dimen>
     <dimen name="font_medium_small">18sp</dimen>
     <dimen name="font_small">14sp</dimen>
+    <dimen name="font_smaller">12sp</dimen>
     <dimen name="bottom_section_margin">15dp</dimen>
     
     <!-- HelpActivity -->

@@ -53,7 +53,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 	LinearLayout llBar9;
 	LinearLayout llBars;
 
-	// Declare textviews.
+	// Declare TextViews.
 	TextView tvStartingRange;
 	TextView tvLogo;
 	TextView tvEstRangeRemain;
@@ -77,11 +77,13 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 	EditText etBrakeMistakes;
 	EditText etSpeedMistakes;
 	Button bDrive;
-
+	
+	// Declare color variables for ViewPagerIndicator.
 	static double redStop;
 	static double greenStop;
 	static double blueStop;
-
+	
+	// Declare and initialize background calculation class.
 	static BackgroundCalc bc = new BackgroundCalc();
 
 	@Override
@@ -138,7 +140,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		llBars = (LinearLayout) v.findViewById(R.id.ll_bars_before);
 		llBars.setOnClickListener(this);
 
-		// Initialize textviews.
+		// Initialize TextViews.
 		tvStartingRange = (TextView) v.findViewById(R.id.tv_starting_range);
 		tvLogo = (TextView) v.findViewById(R.id.tv_logo);
 		tvEstRangeRemain = (TextView) v.findViewById(R.id.tv_est_range_remain);
@@ -152,7 +154,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		tvTimeParked = (TextView) v.findViewById(R.id.tv_time_parked);
 		tvChargeGained = (TextView) v.findViewById(R.id.tv_charge_gained);
 
-		// Initialize edittexts.
+		// Initialize EditTexts.
 		etDistance = (EditText) v.findViewById(R.id.et_distance);
 		etAccMistakes = (EditText) v.findViewById(R.id.et_acc_mistakes);
 		etBrakeMistakes = (EditText) v.findViewById(R.id.et_brake_mistakes);
@@ -170,7 +172,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 	}
 
 	public void setFonts() {
-		// Initialize typefaces.
+		// Initialize TypeFaces.
 		Typeface tfHelvetica = Typeface.createFromAsset(getActivity()
 				.getAssets(), "fonts/helvetica_bold_oblique.ttf");
 		Typeface tfMyriadRegular = Typeface.createFromAsset(getActivity()
