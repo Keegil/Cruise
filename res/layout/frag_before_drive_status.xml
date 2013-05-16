@@ -63,11 +63,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/tv_starting_range"
-                    android:layout_marginLeft="3sp"
+                    android:layout_marginBottom="-16sp"
                     android:layout_toRightOf="@id/tv_starting_range"
                     android:text="@string/km"
                     android:textColor="@color/white"
-                    android:textSize="25sp" />
+                    android:textSize="@dimen/font_large" />
 
                 <TextView
                     android:id="@+id/tv_est_range_remain"
@@ -89,15 +89,15 @@
 
                 <ImageView
                     android:id="@+id/iv_highway"
-                    android:layout_width="40sp"
-                    android:layout_height="40sp"
+                    android:layout_width="60sp"
+                    android:layout_height="60sp"
                     android:layout_marginRight="8sp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/highway_icon" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="60sp" >
 
                     <TextView
                         android:id="@+id/tv_highway_range"
@@ -106,14 +106,14 @@
                         android:layout_toRightOf="@id/iv_highway"
                         android:text="@string/highway_ex"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/font_medium_large" />
+                        android:textSize="@dimen/font_large" />
 
                     <TextView
                         android:id="@+id/tv_highway_km"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@id/tv_highway_range"
-                        android:layout_marginBottom="8sp"
+                        android:layout_marginBottom="5sp"
                         android:layout_marginLeft="3sp"
                         android:layout_toRightOf="@id/tv_highway_range"
                         android:text="@string/km"
@@ -125,7 +125,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_highway_range"
-                        android:layout_marginTop="-12sp"
+                        android:layout_marginTop="-16sp"
                         android:text="@string/highway_desc"
                         android:textColor="@color/white"
                         android:textSize="@dimen/font_small" />
@@ -142,15 +142,15 @@
 
                 <ImageView
                     android:id="@+id/iv_city"
-                    android:layout_width="40sp"
-                    android:layout_height="40sp"
+                    android:layout_width="60sp"
+                    android:layout_height="60sp"
                     android:layout_marginRight="8sp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/city_icon" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="60sp" >
 
                     <TextView
                         android:id="@+id/tv_city_range"
@@ -159,14 +159,14 @@
                         android:layout_toRightOf="@id/iv_city"
                         android:text="@string/city_ex"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/font_medium_large" />
+                        android:textSize="@dimen/font_large" />
 
                     <TextView
                         android:id="@+id/tv_city_km"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@id/tv_city_range"
-                        android:layout_marginBottom="8sp"
+                        android:layout_marginBottom="5sp"
                         android:layout_marginLeft="3sp"
                         android:layout_toRightOf="@id/tv_city_range"
                         android:text="@string/km"
@@ -178,7 +178,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_city_range"
-                        android:layout_marginTop="-12sp"
+                        android:layout_marginTop="-16sp"
                         android:text="@string/city_desc"
                         android:textColor="@color/white"
                         android:textSize="@dimen/font_small" />

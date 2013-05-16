@@ -184,9 +184,9 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		tvLogo.setTypeface(tfHelvetica);
 		tvStartingRange.setTypeface(tfHelvetica);
 		tvEstRangeRemain.setTypeface(tfMyriadItalic);
-		tvKm1.setTypeface(tfMyriadRegular);
-		tvKm2.setTypeface(tfMyriadRegular);
-		tvKm3.setTypeface(tfMyriadRegular);
+		tvKm1.setTypeface(tfHelvetica);
+		tvKm2.setTypeface(tfHelvetica);
+		tvKm3.setTypeface(tfHelvetica);
 		tvHighwayDesc.setTypeface(tfMyriadItalic);
 		tvHighwayRange.setTypeface(tfHelvetica);
 		tvCityDesc.setTypeface(tfMyriadItalic);
