@@ -78,6 +78,11 @@ public class AfterDriveFragmentDriveComplete extends Fragment implements
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		setFonts();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
 		setTextViews();
 		drawBars();
 		drawBackground();
@@ -223,16 +228,14 @@ public class AfterDriveFragmentDriveComplete extends Fragment implements
 				while (rr > AfterDriveActivity.relativeRange) {
 					Message msg = new Message();
 					// msg.obj = setGradient(rr);
-
 					msg.obj = bc.makeGradient(rr);
 					bgHandler.sendMessage(msg);
-
 					try {
-						Thread.sleep(30);
+						Thread.sleep(2);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					rr = rr - 0.01;
+					rr = rr - 0.001;
 				}
 			}
 		};

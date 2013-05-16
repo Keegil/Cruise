@@ -63,6 +63,8 @@ public class SummaryFragment extends Fragment {
 	int totalDistance = 0;
 	double gasCost = 0;
 
+	BackgroundCalc bc;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -116,7 +118,7 @@ public class SummaryFragment extends Fragment {
 		tvEffPercent = (TextView) v.findViewById(R.id.tv_eff_percent);
 		tvEffDesc = (TextView) v.findViewById(R.id.tv_eff_desc);
 		tvContinue = (TextView) v.findViewById(R.id.tv_continue);
-		
+
 		// Initialize database.
 		drivingStatsDataSource = new DrivingStatsDataSource(fragmentActivity);
 		drivingStatsDataSource.open();
@@ -153,9 +155,9 @@ public class SummaryFragment extends Fragment {
 		int stars = 0;
 		totalDistance = 0;
 		gasCost = 0;
-		
+
 		drives = drivingStatsDataSource.getAllDrivingStats();
-		
+
 		if (drives.size() == 0) {
 
 		} else {
@@ -174,14 +176,18 @@ public class SummaryFragment extends Fragment {
 				rating = (int) ((dStars / (dDrives * 20)) * 20);
 				totalDistance = totalDistance + drivingStats.getDriveDistance();
 				i++;
-				Log.d(TAG, "Drives: " + drives.size() + " | Fails: " + fails
-						+ " | Failtrain: " + failTrain + " | Stars: " + stars
-						+ " | Rating: " + rating + " [ accScore = "
-						+ drivingStats.getNumAccEvent() + " [ brakeScore = "
-						+ drivingStats.getNumBrakeEvent() + " [ routeScore = "
-						+ drivingStats.getNumRouteEvent() + " [ speedScore = "
-						+ drivingStats.getNumSpeedEvent() + "");
 			}
+			Log.d(TAG,
+					"Drives: " + drives.size() + " | Fails: " + fails
+							+ " | Failtrain: " + failTrain + " | Stars: "
+							+ stars + " | Rating: " + rating + " [ accScore = "
+							+ drivingStats.getNumAccEvent()
+							+ " [ brakeScore = "
+							+ drivingStats.getNumBrakeEvent()
+							+ " [ routeScore = "
+							+ drivingStats.getNumRouteEvent()
+							+ " [ speedScore = "
+							+ drivingStats.getNumSpeedEvent() + "");
 		}
 		gasCost = totalDistance * 0.06 * 14;
 	}
@@ -203,7 +209,8 @@ public class SummaryFragment extends Fragment {
 	@SuppressWarnings("deprecation")
 	public void drawBackground() {
 		relativeRange = (double) currentRange / (double) defaultRange;
-		ll.setBackgroundDrawable(setGradient(relativeRange));
+		bc = new BackgroundCalc(relativeRange);
+		ll.setBackgroundDrawable(bc.makeGradient(relativeRange));
 	}
 
 	public GradientDrawable setGradient(double rr) {

@@ -84,7 +84,6 @@ public class BeforeDriveActivity extends FragmentActivity {
 
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
-		mPager.setCurrentItem(1);
 
 		mIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
 		mIndicator.setViewPager(mPager);
@@ -95,6 +94,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		mPager.setCurrentItem(1);
 		loadSettings();
 		loadData();
 		loadDate();

@@ -77,12 +77,12 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 	EditText etBrakeMistakes;
 	EditText etSpeedMistakes;
 	Button bDrive;
-	
+
 	// Declare color variables for ViewPagerIndicator.
 	static double redStop;
 	static double greenStop;
 	static double blueStop;
-	
+
 	// Declare and initialize background calculation class.
 	static BackgroundCalc bc = new BackgroundCalc();
 
@@ -247,24 +247,61 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 
 	public void drawBars() {
 		// Check relative range and set bars accordingly.
-		if (BeforeDriveActivity.relativeRange <= 0.9
+		if (BeforeDriveActivity.relativeRange <= 1
+				&& BeforeDriveActivity.relativeRange > 0.9) {
+			llBar1.setBackgroundResource(R.drawable.whitebar);
+			llBar2.setBackgroundResource(R.drawable.whitebar);
+			llBar3.setBackgroundResource(R.drawable.whitebar);
+			llBar4.setBackgroundResource(R.drawable.whitebar);
+			llBar5.setBackgroundResource(R.drawable.whitebar);
+			llBar6.setBackgroundResource(R.drawable.whitebar);
+			llBar7.setBackgroundResource(R.drawable.whitebar);
+			llBar8.setBackgroundResource(R.drawable.whitebar);
+			llBar9.setBackgroundResource(R.drawable.whitebar);
+		} else if (BeforeDriveActivity.relativeRange <= 0.9
 				&& BeforeDriveActivity.relativeRange > 0.8) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whitebar);
+			llBar3.setBackgroundResource(R.drawable.whitebar);
+			llBar4.setBackgroundResource(R.drawable.whitebar);
+			llBar5.setBackgroundResource(R.drawable.whitebar);
+			llBar6.setBackgroundResource(R.drawable.whitebar);
+			llBar7.setBackgroundResource(R.drawable.whitebar);
+			llBar8.setBackgroundResource(R.drawable.whitebar);
+			llBar9.setBackgroundResource(R.drawable.whitebar);
 		} else if (BeforeDriveActivity.relativeRange <= 0.8
 				&& BeforeDriveActivity.relativeRange > 0.7) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whitebar);
+			llBar4.setBackgroundResource(R.drawable.whitebar);
+			llBar5.setBackgroundResource(R.drawable.whitebar);
+			llBar6.setBackgroundResource(R.drawable.whitebar);
+			llBar7.setBackgroundResource(R.drawable.whitebar);
+			llBar8.setBackgroundResource(R.drawable.whitebar);
+			llBar9.setBackgroundResource(R.drawable.whitebar);
 		} else if (BeforeDriveActivity.relativeRange <= 0.7
 				&& BeforeDriveActivity.relativeRange > 0.6) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whitebar);
+			llBar5.setBackgroundResource(R.drawable.whitebar);
+			llBar6.setBackgroundResource(R.drawable.whitebar);
+			llBar7.setBackgroundResource(R.drawable.whitebar);
+			llBar8.setBackgroundResource(R.drawable.whitebar);
+			llBar9.setBackgroundResource(R.drawable.whitebar);
 		} else if (BeforeDriveActivity.relativeRange <= 0.6
 				&& BeforeDriveActivity.relativeRange > 0.5) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whitebar);
+			llBar6.setBackgroundResource(R.drawable.whitebar);
+			llBar7.setBackgroundResource(R.drawable.whitebar);
+			llBar8.setBackgroundResource(R.drawable.whitebar);
+			llBar9.setBackgroundResource(R.drawable.whitebar);
 		} else if (BeforeDriveActivity.relativeRange <= 0.5
 				&& BeforeDriveActivity.relativeRange > 0.4) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
@@ -272,6 +309,10 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar6.setBackgroundResource(R.drawable.whitebar);
+			llBar7.setBackgroundResource(R.drawable.whitebar);
+			llBar8.setBackgroundResource(R.drawable.whitebar);
+			llBar9.setBackgroundResource(R.drawable.whitebar);
 		} else if (BeforeDriveActivity.relativeRange <= 0.4
 				&& BeforeDriveActivity.relativeRange > 0.3) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
@@ -280,6 +321,9 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar7.setBackgroundResource(R.drawable.whitebar);
+			llBar8.setBackgroundResource(R.drawable.whitebar);
+			llBar9.setBackgroundResource(R.drawable.whitebar);
 		} else if (BeforeDriveActivity.relativeRange <= 0.3
 				&& BeforeDriveActivity.relativeRange > 0.2) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
@@ -289,6 +333,8 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar8.setBackgroundResource(R.drawable.whitebar);
+			llBar9.setBackgroundResource(R.drawable.whitebar);
 		} else if (BeforeDriveActivity.relativeRange <= 0.2
 				&& BeforeDriveActivity.relativeRange > 0.1) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
@@ -299,6 +345,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
 			llBar8.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar9.setBackgroundResource(R.drawable.whitebar);
 		} else if (BeforeDriveActivity.relativeRange <= 0.1
 				&& BeforeDriveActivity.relativeRange >= 0) {
 			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
@@ -330,11 +377,11 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 
 					bgHandler.sendMessage(msg);
 					try {
-						Thread.sleep(30);
+						Thread.sleep(2);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					rr = rr + 0.01;
+					rr = rr + 0.001;
 				}
 			}
 		};

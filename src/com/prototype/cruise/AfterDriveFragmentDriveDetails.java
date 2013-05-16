@@ -93,7 +93,7 @@ public class AfterDriveFragmentDriveDetails extends Fragment implements
 	// Declare hint.
 	TextView tvHint;
 	AnimationSet animation;
-	
+
 	BackgroundCalc bc;
 
 	@Override
@@ -114,6 +114,11 @@ public class AfterDriveFragmentDriveDetails extends Fragment implements
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		setFonts();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
 		setTextViews();
 		setStars();
 		drawBars();
@@ -246,7 +251,8 @@ public class AfterDriveFragmentDriveDetails extends Fragment implements
 		// Set TextViews to display correct information.
 		tvEndingRange.setText("" + AfterDriveActivity.currentRange + "");
 		int startingRange = AfterDriveActivity.currentRange
-				+ AfterDriveActivity.rangeUsed;
+				+ AfterDriveActivity.rangeUsed
+				+ AfterDriveActivity.deficitRange;
 		tvStartRange.setText("" + startingRange + " km");
 		tvRangeDecrease.setText("" + AfterDriveActivity.rangeUsed + " km");
 		tvDistanceTraveled.setText("" + AfterDriveActivity.driveLength + " km");
@@ -417,7 +423,8 @@ public class AfterDriveFragmentDriveDetails extends Fragment implements
 	@SuppressWarnings("deprecation")
 	public void drawBackground() {
 		bc = new BackgroundCalc(AfterDriveActivity.relativeRange);
-		ll.setBackgroundDrawable(bc.getGradient());
+		ll.setBackgroundDrawable(bc
+				.makeGradient(AfterDriveActivity.relativeRange));
 	}
 
 	public void showHint() {

@@ -78,6 +78,7 @@ public class AfterDriveActivity extends FragmentActivity {
 	public static double doubleCurrentRange;
 	public static double doubleDefaultRange;
 	public static double relativeRange;
+	public static int deficitRange; 
 
 	// Declare & initialize bluetooth variables.
 	String btData;
@@ -292,9 +293,11 @@ public class AfterDriveActivity extends FragmentActivity {
 		double extraRange = extraRangeInterval * modifier;
 		rangeUsed = driveLength + (int) extraRange;
 
-		// calculate current range
+		// Calculate current range.
+		deficitRange = 0;
 		currentRange = currentRange - rangeUsed;
 		if (currentRange < 0) {
+			deficitRange = currentRange;
 			currentRange = 0;
 		}
 
