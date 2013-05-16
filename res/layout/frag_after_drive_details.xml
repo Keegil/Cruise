@@ -137,11 +137,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/tv_ending_range"
-                    android:layout_marginLeft="3sp"
+                    android:layout_marginBottom="-16sp"
                     android:layout_toRightOf="@id/tv_ending_range"
                     android:text="@string/km"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/font_medium" />
+                    android:textSize="@dimen/font_large" />
 
                 <TextView
                     android:id="@+id/tv_est_range_remain_after"

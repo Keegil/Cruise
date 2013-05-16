@@ -210,7 +210,7 @@ public class AfterDriveFragmentDriveDetails extends Fragment implements
 
 		// Set correct fonts to views.
 		tvEndingRange.setTypeface(tfHelvetica);
-		tvKm.setTypeface(tfMyriadRegular);
+		tvKm.setTypeface(tfHelvetica);
 		tvEstRangeRemain.setTypeface(tfMyriadItalic);
 		tvSpeed.setTypeface(tfMyriadItalic);
 		tvAcc.setTypeface(tfMyriadItalic);
