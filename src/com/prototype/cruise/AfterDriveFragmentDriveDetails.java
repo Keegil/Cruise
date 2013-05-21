@@ -46,6 +46,7 @@ public class AfterDriveFragmentDriveDetails extends Fragment implements
 	LinearLayout llBar7;
 	LinearLayout llBar8;
 	LinearLayout llBar9;
+	LinearLayout llBars;
 
 	// Declare TextViews.
 	TextView tvEndingRange;
@@ -137,6 +138,8 @@ public class AfterDriveFragmentDriveDetails extends Fragment implements
 		llBar7 = (LinearLayout) v.findViewById(R.id.bar7_after2);
 		llBar8 = (LinearLayout) v.findViewById(R.id.bar8_after2);
 		llBar9 = (LinearLayout) v.findViewById(R.id.bar9_after2);
+		llBars = (LinearLayout) v.findViewById(R.id.ll_bars_after2);
+		llBars.setOnClickListener(this);
 
 		// initialize background
 		ll = (LinearLayout) v.findViewById(R.id.ll_main_after2);
@@ -497,6 +500,12 @@ public class AfterDriveFragmentDriveDetails extends Fragment implements
 					HelpActivity.class);
 			i.putExtra("helpData", 3);
 			startActivity(i);
+			break;
+		case R.id.ll_bars_after2:
+			Intent a = new Intent(getActivity().getApplicationContext(),
+					HelpActivity.class);
+			a.putExtra("helpData", 4);
+			startActivity(a);
 			break;
 		}
 	}

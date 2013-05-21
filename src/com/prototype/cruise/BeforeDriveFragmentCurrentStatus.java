@@ -480,7 +480,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 			final CharSequence[] items = { "Perfect drive", "Good drive",
 					"Bad drive", "Long drive", "Too long drive" };
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("Pick drive...");
+			builder.setTitle("How did you drive?");
 			builder.setItems(items, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int item) {
 					if (item == 0) {
@@ -544,10 +544,10 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 			tvHint.setVisibility(View.GONE);
 			break;
 		case R.id.ll_bars_before:
-			i = new Intent(getActivity().getApplicationContext(),
+			Intent a = new Intent(getActivity().getApplicationContext(),
 					HelpActivity.class);
-			i.putExtra("helpData", 4);
-			startActivity(i);
+			a.putExtra("helpData", 4);
+			startActivity(a);
 			break;
 		}
 	}

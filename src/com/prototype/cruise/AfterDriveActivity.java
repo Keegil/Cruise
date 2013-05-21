@@ -133,7 +133,7 @@ public class AfterDriveActivity extends FragmentActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		finish();
+		// finish();
 	}
 
 	public static void setBackgroundIndicator(int c) {

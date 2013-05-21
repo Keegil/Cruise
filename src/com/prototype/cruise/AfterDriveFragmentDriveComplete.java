@@ -1,5 +1,6 @@
 package com.prototype.cruise;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -46,6 +47,7 @@ public class AfterDriveFragmentDriveComplete extends Fragment implements
 	LinearLayout llBar7;
 	LinearLayout llBar8;
 	LinearLayout llBar9;
+	LinearLayout llBars;
 
 	// Declare TextViews.
 	TextView tvLogo;
@@ -104,6 +106,8 @@ public class AfterDriveFragmentDriveComplete extends Fragment implements
 		llBar7 = (LinearLayout) v.findViewById(R.id.bar7_after);
 		llBar8 = (LinearLayout) v.findViewById(R.id.bar8_after);
 		llBar9 = (LinearLayout) v.findViewById(R.id.bar9_after);
+		llBars = (LinearLayout) v.findViewById(R.id.ll_bars_after1);
+		llBars.setOnClickListener(this);
 
 		// Initialize background.
 		ll = (LinearLayout) v.findViewById(R.id.ll_main_after);
@@ -319,6 +323,12 @@ public class AfterDriveFragmentDriveComplete extends Fragment implements
 			Log.d(TAG, "lol");
 			tvHint.clearAnimation();
 			tvHint.setVisibility(View.GONE);
+			break;
+		case R.id.ll_bars_after1:
+			Intent a = new Intent(getActivity().getApplicationContext(),
+					HelpActivity.class);
+			a.putExtra("helpData", 4);
+			startActivity(a);
 			break;
 		}
 	}
