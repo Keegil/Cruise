@@ -202,6 +202,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		tvTimeParked.setTypeface(tfMyriadRegular);
 		tvChargeGained.setTypeface(tfMyriadRegular);
 		tvHint.setTypeface(tfMyriadRegular);
+		bSimulate.setTypeface(tfMyriadRegular);
 	}
 
 	public void setTextViews() {
@@ -478,7 +479,6 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		case R.id.b_simulate:
 			final CharSequence[] items = { "Perfect drive", "Good drive",
 					"Bad drive", "Long drive", "Too long drive" };
-
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle("Pick drive...");
 			builder.setItems(items, new DialogInterface.OnClickListener() {
