@@ -69,7 +69,7 @@ public class BluetoothBackEnd {
 					.getBondedDevices();
 			if (pairedDevices.size() > 0) {
 				for (BluetoothDevice device : pairedDevices) {
-					if (device.getName().equals("RN42-DF28")) {
+					if (device.getName().equals("RN42-B1B5")) {
 						mmDevice = device;
 						findStatus = "Bluetooth Device Found";
 						return true;
