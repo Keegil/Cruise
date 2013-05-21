@@ -245,7 +245,7 @@ public class AfterDriveActivity extends FragmentActivity {
 		}
 		Log.d(TAG, "accPerKm: " + accPerKm + "| accScore: " + accScore + "");
 
-		// Calculate brake score
+		// Calculate brake score.
 		double brakePerKm = brakeMistakes / driveLength;
 		if (brakePerKm >= 45) {
 			brakeScore = 0;
@@ -263,7 +263,7 @@ public class AfterDriveActivity extends FragmentActivity {
 		Log.d(TAG, "brakePerKm: " + brakePerKm + "| brakeScore: " + brakeScore
 				+ "");
 
-		// Calculate speed score
+		// Calculate speed score.
 		double speedPerKm = speedMistakes / driveLength;
 		if (speedPerKm >= 45) {
 			speedScore = 0;
@@ -286,7 +286,7 @@ public class AfterDriveActivity extends FragmentActivity {
 		routeScore = 5;
 		Log.d(TAG, "routeScore: " + routeScore + "");
 
-		// Calculate and apply modifier
+		// Calculate and apply modifier.
 		double modifier = 1 - (((double) accScore + (double) brakeScore + (double) speedScore) / 15);
 		double extraRangeInterval = ((double) driveLength * 1.3)
 				- ((double) driveLength);
@@ -305,19 +305,19 @@ public class AfterDriveActivity extends FragmentActivity {
 		doubleDefaultRange = (double) defaultRange;
 		relativeRange = doubleCurrentRange / doubleDefaultRange;
 
-		// get correct time
+		// Get correct time.
 		if (lastTime == 0) {
 			firstTime = true;
 			saveSettings();
 		}
 		lastTime = System.currentTimeMillis();
 
-		// save data and date
+		// Save data and date.
 		saveData();
 		saveDate();
 		saveScore();
 
-		// save to database
+		// Save to database.
 		cal = Calendar.getInstance();
 		date = dateFormat.format(cal.getTime());
 		drivingStatsDataSource.createDrivingStats(date, accScore, speedScore,

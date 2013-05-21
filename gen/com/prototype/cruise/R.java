@@ -400,57 +400,58 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int whiteemptybar=0x7f020014;
     }
     public static final class id {
-        public static final int action_close_bt=0x7f0400ae;
-        public static final int action_connect_bt=0x7f0400ad;
-        public static final int action_defaultrange=0x7f0400ab;
-        public static final int action_reset=0x7f0400ac;
+        public static final int action_close_bt=0x7f0400af;
+        public static final int action_connect_bt=0x7f0400ae;
+        public static final int action_defaultrange=0x7f0400ac;
+        public static final int action_reset=0x7f0400ad;
         public static final int b_drive=0x7f04006c;
+        public static final int b_simulate=0x7f04006d;
         public static final int bar1=0x7f04005c;
         public static final int bar1_after=0x7f040015;
         public static final int bar1_after2=0x7f040021;
-        public static final int bar1_help=0x7f040074;
+        public static final int bar1_help=0x7f040075;
         public static final int bar2=0x7f04005d;
         public static final int bar2_after=0x7f040016;
         public static final int bar2_after2=0x7f040022;
-        public static final int bar2_help=0x7f040075;
+        public static final int bar2_help=0x7f040076;
         public static final int bar3=0x7f04005e;
         public static final int bar3_after=0x7f040017;
         public static final int bar3_after2=0x7f040023;
-        public static final int bar3_help=0x7f040076;
+        public static final int bar3_help=0x7f040077;
         public static final int bar4=0x7f04005f;
         public static final int bar4_after=0x7f040018;
         public static final int bar4_after2=0x7f040024;
-        public static final int bar4_help=0x7f040077;
+        public static final int bar4_help=0x7f040078;
         public static final int bar5=0x7f040060;
         public static final int bar5_after=0x7f040019;
         public static final int bar5_after2=0x7f040025;
-        public static final int bar5_help=0x7f040078;
+        public static final int bar5_help=0x7f040079;
         public static final int bar6=0x7f040061;
         public static final int bar6_after=0x7f04001a;
         public static final int bar6_after2=0x7f040026;
-        public static final int bar6_help=0x7f040079;
+        public static final int bar6_help=0x7f04007a;
         public static final int bar7=0x7f040062;
         public static final int bar7_after=0x7f04001b;
         public static final int bar7_after2=0x7f040027;
-        public static final int bar7_help=0x7f04007a;
+        public static final int bar7_help=0x7f04007b;
         public static final int bar8=0x7f040063;
         public static final int bar8_after=0x7f04001c;
         public static final int bar8_after2=0x7f040028;
-        public static final int bar8_help=0x7f04007b;
+        public static final int bar8_help=0x7f04007c;
         public static final int bar9=0x7f040064;
         public static final int bar9_after=0x7f04001d;
         public static final int bar9_after2=0x7f040029;
-        public static final int bar9_help=0x7f04007c;
+        public static final int bar9_help=0x7f04007d;
         public static final int bottom=0x7f040003;
         public static final int et_acc_mistakes=0x7f040069;
         public static final int et_brake_mistakes=0x7f04006a;
         public static final int et_distance=0x7f040068;
         public static final int et_speed_mistakes=0x7f04006b;
-        public static final int group=0x7f04009d;
-        public static final int group1=0x7f04009e;
-        public static final int group2=0x7f0400a0;
-        public static final int group3=0x7f0400a3;
-        public static final int indicator=0x7f0400aa;
+        public static final int group=0x7f04009e;
+        public static final int group1=0x7f04009f;
+        public static final int group2=0x7f0400a1;
+        public static final int group3=0x7f0400a4;
+        public static final int indicator=0x7f0400ab;
         public static final int iv_acc=0x7f040034;
         public static final int iv_acc_star1=0x7f040035;
         public static final int iv_acc_star2=0x7f040036;
@@ -463,7 +464,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int iv_brake_star3=0x7f040045;
         public static final int iv_brake_star4=0x7f040046;
         public static final int iv_brake_star5=0x7f040047;
-        public static final int iv_car=0x7f04008d;
+        public static final int iv_car=0x7f04008e;
         public static final int iv_city=0x7f040057;
         public static final int iv_highway=0x7f040053;
         public static final int iv_logo=0x7f040006;
@@ -480,30 +481,30 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int iv_speed_star4=0x7f040031;
         public static final int iv_speed_star5=0x7f040032;
         public static final int iv_stars=0x7f040012;
-        public static final int li_accmist=0x7f0400a6;
-        public static final int li_date=0x7f0400a2;
-        public static final int li_dist=0x7f0400a4;
-        public static final int li_id=0x7f0400a5;
-        public static final int li_point=0x7f04009f;
-        public static final int li_remdist=0x7f0400a1;
-        public static final int li_spmist=0x7f0400a7;
+        public static final int li_accmist=0x7f0400a7;
+        public static final int li_date=0x7f0400a3;
+        public static final int li_dist=0x7f0400a5;
+        public static final int li_id=0x7f0400a6;
+        public static final int li_point=0x7f0400a0;
+        public static final int li_remdist=0x7f0400a2;
+        public static final int li_spmist=0x7f0400a8;
         public static final int ll_bars_before=0x7f04005b;
-        public static final int ll_bars_help=0x7f040073;
-        public static final int ll_help_acc=0x7f04006d;
-        public static final int ll_help_bars=0x7f040071;
-        public static final int ll_help_brake=0x7f04007f;
-        public static final int ll_help_route=0x7f040083;
-        public static final int ll_help_speed=0x7f040087;
+        public static final int ll_bars_help=0x7f040074;
+        public static final int ll_help_acc=0x7f04006e;
+        public static final int ll_help_bars=0x7f040072;
+        public static final int ll_help_brake=0x7f040080;
+        public static final int ll_help_route=0x7f040084;
+        public static final int ll_help_speed=0x7f040088;
         public static final int ll_main=0x7f040005;
         public static final int ll_main_after=0x7f04000f;
         public static final int ll_main_after2=0x7f040020;
-        public static final int ll_main_summary=0x7f04008b;
-        public static final int ll_scores=0x7f04008e;
+        public static final int ll_main_summary=0x7f04008c;
+        public static final int ll_scores=0x7f04008f;
         public static final int none=0x7f040000;
-        public static final int pager=0x7f0400a9;
-        public static final int rl_comp=0x7f04008f;
-        public static final int rl_eff=0x7f040097;
-        public static final int rl_money=0x7f040093;
+        public static final int pager=0x7f0400aa;
+        public static final int rl_comp=0x7f040090;
+        public static final int rl_eff=0x7f040098;
+        public static final int rl_money=0x7f040094;
         public static final int top=0x7f040004;
         public static final int triangle=0x7f040001;
         public static final int tv_1_start_engine=0x7f040009;
@@ -511,36 +512,36 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int tv_3_scan=0x7f04000b;
         public static final int tv_4_pin=0x7f04000c;
         public static final int tv_acc_desc=0x7f04003a;
-        public static final int tv_acc_head=0x7f04006f;
-        public static final int tv_acc_text=0x7f040070;
+        public static final int tv_acc_head=0x7f040070;
+        public static final int tv_acc_text=0x7f040071;
         public static final int tv_after_drive_hint1=0x7f04001e;
         public static final int tv_after_drive_hint2=0x7f040049;
-        public static final int tv_bars_head=0x7f04007d;
-        public static final int tv_bars_text=0x7f04007e;
+        public static final int tv_bars_head=0x7f04007e;
+        public static final int tv_bars_text=0x7f04007f;
         public static final int tv_before_drive_hint=0x7f040065;
         public static final int tv_before_start=0x7f040008;
         public static final int tv_brake_desc=0x7f040048;
-        public static final int tv_brake_head=0x7f040081;
-        public static final int tv_brake_text=0x7f040082;
+        public static final int tv_brake_head=0x7f040082;
+        public static final int tv_brake_text=0x7f040083;
         public static final int tv_charge_gained=0x7f040067;
         public static final int tv_charge_left=0x7f04001f;
         public static final int tv_city_desc=0x7f04005a;
         public static final int tv_city_km=0x7f040059;
         public static final int tv_city_range=0x7f040058;
-        public static final int tv_comp_desc=0x7f040092;
-        public static final int tv_comp_percent=0x7f040091;
-        public static final int tv_comp_score=0x7f040090;
-        public static final int tv_continue=0x7f04009c;
+        public static final int tv_comp_desc=0x7f040093;
+        public static final int tv_comp_percent=0x7f040092;
+        public static final int tv_comp_score=0x7f040091;
+        public static final int tv_continue=0x7f04009d;
         public static final int tv_distance_traveled=0x7f04004f;
         public static final int tv_distance_traveled_desc=0x7f04004c;
         public static final int tv_drive_completed=0x7f040011;
-        public static final int tv_eff_desc=0x7f04009a;
-        public static final int tv_eff_percent=0x7f040099;
-        public static final int tv_eff_score=0x7f040098;
+        public static final int tv_eff_desc=0x7f04009b;
+        public static final int tv_eff_percent=0x7f04009a;
+        public static final int tv_eff_score=0x7f040099;
         public static final int tv_ending_range=0x7f04002a;
         public static final int tv_est_range_remain=0x7f040052;
         public static final int tv_est_range_remain_after=0x7f04002c;
-        public static final int tv_eval=0x7f04009b;
+        public static final int tv_eval=0x7f04009c;
         public static final int tv_goto_settings=0x7f04000e;
         public static final int tv_highway_desc=0x7f040056;
         public static final int tv_highway_km=0x7f040055;
@@ -549,24 +550,24 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int tv_km_after=0x7f04002b;
         public static final int tv_logo=0x7f040007;
         public static final int tv_logo_after=0x7f040010;
-        public static final int tv_logo_help_acc=0x7f04006e;
-        public static final int tv_logo_help_bars=0x7f040072;
-        public static final int tv_logo_help_brake=0x7f040080;
-        public static final int tv_logo_help_route=0x7f040084;
-        public static final int tv_logo_help_speed=0x7f040088;
-        public static final int tv_logo_summary=0x7f04008c;
-        public static final int tv_money_desc=0x7f040096;
-        public static final int tv_money_kr=0x7f040095;
-        public static final int tv_money_score=0x7f040094;
+        public static final int tv_logo_help_acc=0x7f04006f;
+        public static final int tv_logo_help_bars=0x7f040073;
+        public static final int tv_logo_help_brake=0x7f040081;
+        public static final int tv_logo_help_route=0x7f040085;
+        public static final int tv_logo_help_speed=0x7f040089;
+        public static final int tv_logo_summary=0x7f04008d;
+        public static final int tv_money_desc=0x7f040097;
+        public static final int tv_money_kr=0x7f040096;
+        public static final int tv_money_score=0x7f040095;
         public static final int tv_range_decrease=0x7f04004e;
         public static final int tv_range_decrease_desc=0x7f04004b;
         public static final int tv_route_desc=0x7f040041;
-        public static final int tv_route_head=0x7f040085;
-        public static final int tv_route_text=0x7f040086;
+        public static final int tv_route_head=0x7f040086;
+        public static final int tv_route_text=0x7f040087;
         public static final int tv_senseboard=0x7f04000d;
         public static final int tv_speed_desc=0x7f040033;
-        public static final int tv_speed_head=0x7f040089;
-        public static final int tv_speed_text=0x7f04008a;
+        public static final int tv_speed_head=0x7f04008a;
+        public static final int tv_speed_text=0x7f04008b;
         public static final int tv_stars=0x7f040013;
         public static final int tv_stars_max=0x7f040014;
         public static final int tv_start_range=0x7f04004d;
@@ -574,7 +575,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int tv_starting_range=0x7f040050;
         public static final int tv_time_parked=0x7f040066;
         public static final int underline=0x7f040002;
-        public static final int vpl=0x7f0400a8;
+        public static final int vpl=0x7f0400a9;
     }
     public static final class integer {
         public static final int default_circle_indicator_orientation=0x7f070000;
@@ -604,8 +605,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int help=0x7f0b0002;
     }
     public static final class string {
-        public static final int acc_desc=0x7f0a0029;
-        public static final int acc_info=0x7f0a0034;
+        public static final int acc_desc=0x7f0a002a;
+        public static final int acc_info=0x7f0a0035;
         public static final int acc_mistakes=0x7f0a001d;
         public static final int action_close_bt=0x7f0a000c;
         public static final int action_connect_bt=0x7f0a000b;
@@ -617,53 +618,53 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
          */
         public static final int action_reset=0x7f0a0005;
         public static final int action_reset_db=0x7f0a000a;
-        public static final int after_drive_hint1=0x7f0a0027;
-        public static final int after_drive_hint2=0x7f0a0032;
+        public static final int after_drive_hint1=0x7f0a0028;
+        public static final int after_drive_hint2=0x7f0a0033;
         /**  App/activity/fragment name strings 
          */
         public static final int app_name=0x7f0a0000;
         public static final int app_name_caps=0x7f0a0001;
-        public static final int bad_charge=0x7f0a0025;
-        public static final int bars_desc=0x7f0a0037;
-        public static final int bars_info=0x7f0a0038;
+        public static final int bad_charge=0x7f0a0026;
+        public static final int bars_desc=0x7f0a0038;
+        public static final int bars_info=0x7f0a0039;
         public static final int before_drive_hint=0x7f0a0021;
-        public static final int beforewe=0x7f0a003f;
-        public static final int brake_desc=0x7f0a002b;
-        public static final int brake_info=0x7f0a0036;
+        public static final int beforewe=0x7f0a0040;
+        public static final int brake_desc=0x7f0a002c;
+        public static final int brake_info=0x7f0a0037;
         public static final int brake_mistakes=0x7f0a001e;
         public static final int charge_gained_ex=0x7f0a001b;
         public static final int city_desc=0x7f0a0019;
         public static final int city_ex=0x7f0a000f;
-        public static final int comp_score_desc=0x7f0a0046;
+        public static final int comp_score_desc=0x7f0a0047;
         public static final int comp_score_ex=0x7f0a0010;
-        public static final int continue_desc=0x7f0a0049;
+        public static final int continue_desc=0x7f0a004a;
         /**  SplashActivity 
          */
-        public static final int cruise_starting=0x7f0a004a;
-        public static final int distance_traveled_desc=0x7f0a002e;
-        public static final int distance_traveled_ex=0x7f0a0031;
+        public static final int cruise_starting=0x7f0a004b;
+        public static final int distance_traveled_desc=0x7f0a002f;
+        public static final int distance_traveled_ex=0x7f0a0032;
         public static final int drive_button=0x7f0a0020;
         /**  AfterDriveFragmentCompleted 
          */
-        public static final int drive_completed=0x7f0a0022;
+        public static final int drive_completed=0x7f0a0023;
         public static final int drive_distance=0x7f0a001c;
-        public static final int eff_score_desc=0x7f0a0048;
+        public static final int eff_score_desc=0x7f0a0049;
         public static final int eff_score_ex=0x7f0a0012;
         public static final int est_range_remain=0x7f0a0017;
-        public static final int eval_good=0x7f0a0042;
-        public static final int eval_none=0x7f0a0044;
+        public static final int eval_good=0x7f0a0043;
+        public static final int eval_none=0x7f0a0045;
         /**  SummaryFragment 
          */
-        public static final int eval_strong=0x7f0a0041;
-        public static final int eval_weak=0x7f0a0043;
+        public static final int eval_strong=0x7f0a0042;
+        public static final int eval_weak=0x7f0a0044;
         /**  Example/placeholder 
          */
         public static final int example_km=0x7f0a000d;
-        public static final int four_pin=0x7f0a003d;
-        public static final int good_charge=0x7f0a0024;
+        public static final int four_pin=0x7f0a003e;
+        public static final int good_charge=0x7f0a0025;
         /**  BluetoothHelper 
          */
-        public static final int gotosettings=0x7f0a0039;
+        public static final int gotosettings=0x7f0a003a;
         /**  BeforeDriveFragmentCurrentStatus 
          */
         public static final int highway_desc=0x7f0a0018;
@@ -672,35 +673,36 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
          */
         public static final int km=0x7f0a0013;
         public static final int kr=0x7f0a0014;
-        public static final int money_score_desc=0x7f0a0047;
+        public static final int money_score_desc=0x7f0a0048;
         public static final int money_score_ex=0x7f0a0011;
-        public static final int no_charge=0x7f0a0026;
-        public static final int one_turn=0x7f0a003a;
+        public static final int no_charge=0x7f0a0027;
+        public static final int one_turn=0x7f0a003b;
         public static final int out_of_20=0x7f0a0015;
         public static final int percent=0x7f0a0016;
-        public static final int range_decrease_desc=0x7f0a002d;
-        public static final int range_decrease_ex=0x7f0a0030;
-        public static final int rating_ex=0x7f0a0045;
-        public static final int route_desc=0x7f0a002a;
-        public static final int route_info=0x7f0a0035;
-        public static final int senseboard=0x7f0a003e;
+        public static final int range_decrease_desc=0x7f0a002e;
+        public static final int range_decrease_ex=0x7f0a0031;
+        public static final int rating_ex=0x7f0a0046;
+        public static final int route_desc=0x7f0a002b;
+        public static final int route_info=0x7f0a0036;
+        public static final int senseboard=0x7f0a003f;
+        public static final int simulate_button=0x7f0a0022;
         /**  AfterDriveFragmentDetails 
          */
-        public static final int speed_desc=0x7f0a0028;
+        public static final int speed_desc=0x7f0a0029;
         /**  HelpActivity 
          */
-        public static final int speed_info=0x7f0a0033;
+        public static final int speed_info=0x7f0a0034;
         public static final int speed_mistakes=0x7f0a001f;
-        public static final int stars_ex=0x7f0a0023;
-        public static final int start_range_desc=0x7f0a002c;
-        public static final int start_range_ex=0x7f0a002f;
-        public static final int three_scan=0x7f0a003c;
+        public static final int stars_ex=0x7f0a0024;
+        public static final int start_range_desc=0x7f0a002d;
+        public static final int start_range_ex=0x7f0a0030;
+        public static final int three_scan=0x7f0a003d;
         public static final int time_parked_ex=0x7f0a001a;
         public static final int title_activity_after_drive=0x7f0a0002;
         public static final int title_activity_after_drive_fragment2=0x7f0a0003;
         public static final int title_activity_help=0x7f0a0004;
-        public static final int title_bluetoothhelper=0x7f0a0040;
-        public static final int two_goto=0x7f0a003b;
+        public static final int title_bluetoothhelper=0x7f0a0041;
+        public static final int two_goto=0x7f0a003c;
     }
     public static final class style {
         /** 

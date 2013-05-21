@@ -44,7 +44,8 @@
     <string name="speed_mistakes">Speed mistakes</string>
     <string name="drive_button">Simulate</string>
     <string name="before_drive_hint">Here you see the current status of your EV. Click any element on the screen for more information.</string>
-
+	<string name="simulate_button">Take a drive!</string>
+    
     <!-- AfterDriveFragmentCompleted -->
     <string name="drive_completed">Drive completed!</string>
     <string name="stars_ex">11/20</string>

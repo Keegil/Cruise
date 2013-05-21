@@ -3,6 +3,8 @@ package com.prototype.cruise;
 import java.util.concurrent.TimeUnit;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -16,8 +18,8 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -78,6 +80,7 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 	EditText etBrakeMistakes;
 	EditText etSpeedMistakes;
 	Button bDrive;
+	Button bSimulate;
 
 	// Declare color variables for ViewPagerIndicator.
 	static double redStop;
@@ -164,6 +167,10 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 		// Initialize button and set listener.
 		bDrive = (Button) v.findViewById(R.id.b_drive);
 		bDrive.setOnClickListener(this);
+
+		// Initialize simubutton and set listener.
+		bSimulate = (Button) v.findViewById(R.id.b_simulate);
+		bSimulate.setOnClickListener(this);
 
 		// Initialize hint and set background, animation and listener.
 		tvHint = (TextView) v.findViewById(R.id.tv_before_drive_hint);
@@ -468,6 +475,53 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
+		case R.id.b_simulate:
+			final CharSequence[] items = { "Perfect drive", "Good drive",
+					"Bad drive", "Long drive", "Too long drive" };
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("Pick drive...");
+			builder.setItems(items, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int item) {
+					if (item == 0) {
+						BeforeDriveActivity.driveLength = 20;
+						BeforeDriveActivity.accMistakes = 0;
+						BeforeDriveActivity.brakeMistakes = 0;
+						BeforeDriveActivity.speedMistakes = 0;
+					} else if (item == 1) {
+						BeforeDriveActivity.driveLength = 30;
+						BeforeDriveActivity.accMistakes = 400;
+						BeforeDriveActivity.brakeMistakes = 400;
+						BeforeDriveActivity.speedMistakes = 0;
+					} else if (item == 2) {
+						BeforeDriveActivity.driveLength = 10;
+						BeforeDriveActivity.accMistakes = 400;
+						BeforeDriveActivity.brakeMistakes = 400;
+						BeforeDriveActivity.speedMistakes = 0;
+					} else if (item == 3) {
+						BeforeDriveActivity.driveLength = 90;
+						BeforeDriveActivity.accMistakes = 400;
+						BeforeDriveActivity.brakeMistakes = 400;
+						BeforeDriveActivity.speedMistakes = 0;
+					} else if (item == 4) {
+						BeforeDriveActivity.driveLength = 140;
+						BeforeDriveActivity.accMistakes = 400;
+						BeforeDriveActivity.brakeMistakes = 400;
+						BeforeDriveActivity.speedMistakes = 0;
+					}
+					((BeforeDriveActivity) beforeDriveActivity).saveData();
+					Intent i = new Intent(
+							getActivity().getApplicationContext(),
+							AfterDriveActivity.class);
+					i.putExtra("btdata", "simulation");
+					startActivity(i);
+					getActivity().finish();
+					dialog.dismiss();
+				}
+			});
+			AlertDialog alert = builder.create();
+			alert.show();
+			break;
 		case R.id.b_drive:
 			BeforeDriveActivity.driveLength = Integer.parseInt(etDistance
 					.getText().toString());
