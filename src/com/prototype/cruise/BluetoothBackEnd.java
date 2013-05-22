@@ -177,6 +177,7 @@ public class BluetoothBackEnd {
 	}
 
 	public void closeBT(boolean show, Context c) throws IOException {
+		if (openStatus.equals("Bluetooth Opened")){
 		stopWorker = true;
 		mmOutputStream.close();
 		mmInputStream.close();
@@ -185,6 +186,7 @@ public class BluetoothBackEnd {
 		if (show)
 			Toast.makeText(c.getApplicationContext(), openStatus,
 					Toast.LENGTH_SHORT).show();
+		}
 
 	}
 }

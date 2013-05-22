@@ -44,11 +44,13 @@
         </activity>
         <activity
             android:name="com.prototype.cruise.HelpActivity"
-            android:label="@string/title_activity_help" >
+            android:label="@string/title_activity_help"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.prototype.cruise.BluetoothHelper"
-            android:label="@string/title_bluetoothhelper" >
+            android:label="@string/title_bluetoothhelper"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

@@ -87,7 +87,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 
 		mIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
 		mIndicator.setViewPager(mPager);
-		
+
 		init();
 	}
 
@@ -100,10 +100,6 @@ public class BeforeDriveActivity extends FragmentActivity {
 		loadDate();
 		calc();
 
-		if (bt.getOpenStatus().equals("Could not open device!")) {
-			ac = new AsyncClass(this);
-			ac.execute();
-		}
 	}
 
 	public static void setBackgroundIndicator(int c) {
@@ -122,6 +118,11 @@ public class BeforeDriveActivity extends FragmentActivity {
 		// Initialize database.
 		drivingStatsDataSource = new DrivingStatsDataSource(this);
 		drivingStatsDataSource.open();
+
+		if (bt.getOpenStatus().equals("Could not open device!")) {
+			ac = new AsyncClass(this);
+			ac.execute();
+		}
 	}
 
 	public static class MyAdapter extends FragmentPagerAdapter {
@@ -321,7 +322,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 
 		@Override
 		protected Void doInBackground(Void... unused) {
-			SystemClock.sleep(2000);
+			// SystemClock.sleep(2000);
 
 			bt.findBT(false);
 
