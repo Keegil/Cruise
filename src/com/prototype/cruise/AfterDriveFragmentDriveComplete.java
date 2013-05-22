@@ -84,15 +84,15 @@ public class AfterDriveFragmentDriveComplete extends Fragment implements
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		setFonts();
+		setTextViews();
+		drawBars();
+		drawBackground();
+		showHint();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		setTextViews();
-		drawBars();
-		drawBackground();
-		showHint();
 	}
 
 	public void init(View v) {

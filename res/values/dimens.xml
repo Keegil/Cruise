@@ -21,7 +21,7 @@
     <!-- HelpActivity -->
     <dimen name="img_distance">40dp</dimen>
     <dimen name="text_distance">10dp</dimen>
-    <dimen name="bar_low_height">14dp</dimen>
-    <dimen name="bar_low_spacing">11dp</dimen>
+    <dimen name="bar_low_height">13dp</dimen>
+    <dimen name="bar_low_spacing">10dp</dimen>
 
 </resources>

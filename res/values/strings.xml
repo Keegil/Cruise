@@ -43,7 +43,7 @@
     <string name="brake_mistakes">Brake mistakes</string>
     <string name="speed_mistakes">Speed mistakes</string>
     <string name="drive_button">Simulate</string>
-    <string name="before_drive_hint">Here you see the current status of your EV. Click any element on the screen for more information.</string>
+    <string name="before_drive_hint">This is the current status of your EV. Click any element on the screen for more information.</string>
 	<string name="simulate_button">Take a drive!</string>
     
     <!-- AfterDriveFragmentCompleted -->
@@ -52,7 +52,7 @@
     <string name="good_charge">Your EV still has a good amount of charge remaining.</string>
     <string name="bad_charge">Your EV might need charging before the next trip.</string>
     <string name="no_charge">Your EV might not make this trip without charging.</string>
-    <string name="after_drive_hint1">Swipe left to get more information about a drive.</string>
+    <string name="after_drive_hint1">Swipe left to get more information about a drive. Swipe right to see how well you\'re doing.</string>
 
     <!-- AfterDriveFragmentDetails -->
     <string name="speed_desc">Speed</string>
@@ -73,13 +73,13 @@
     <string name="route_info">With an EV, the shortest route is not always the best route. Steep hills will drain your battery and reduce range. Consider this when you plan your drive.</string>
     <string name="brake_info">With smoother and smarter braking, you capture more regenerative energy and conserve power.</string>
     <string name="bars_desc">Range bar</string>
-    <string name="bars_info">The range bar, together with the background color gradient, indicates how much range you have left.</string>
+    <string name="bars_info">The range bar, together with the background color gradient, indicates how much range you have left. More bars means more range.</string>
 
     <!-- BluetoothHelper -->
     <string name="gotosettings"><u>GO TO SETTINGS</u></string>
-    <string name="one_turn">1. Start your vehicle</string>
-    <string name="two_goto">2. Go to settings and enable bluetooth. Consider this when you plan your drive.</string>
-    <string name="three_scan">3. Scan for devices and select CRUISE</string>
+    <string name="one_turn">1. Start your vehicle.</string>
+    <string name="two_goto">2. Go to settings and enable Bluetooth.</string>
+    <string name="three_scan">3. Scan for devices and select CRUISE.</string>
     <string name="four_pin">4. Enter pin 1234</string>
     <string name="senseboard">The Senseboard Bluetooth indicator will stop flashing when the device is connected.</string>
     <string name="beforewe">Before we start...</string>

@@ -371,11 +371,12 @@
         <Button
             android:id="@+id/b_simulate"
             android:padding="10dp"
-            android:layout_width="200dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="@string/simulate_button"
             android:background="@color/white"
-            android:textSize="@dimen/font_small" />
+            android:textSize="@dimen/font_medium_small"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

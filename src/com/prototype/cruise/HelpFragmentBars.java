@@ -6,6 +6,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,6 +28,15 @@ public class HelpFragmentBars extends Fragment implements OnTouchListener {
 	static LinearLayout ll;
 
 	// Declare bars.
+	LinearLayout llBar1;
+	LinearLayout llBar2;
+	LinearLayout llBar3;
+	LinearLayout llBar4;
+	LinearLayout llBar5;
+	LinearLayout llBar6;
+	LinearLayout llBar7;
+	LinearLayout llBar8;
+	LinearLayout llBar9;
 	LinearLayout llBars;
 
 	// Declare Textviews.
@@ -37,6 +47,11 @@ public class HelpFragmentBars extends Fragment implements OnTouchListener {
 	// Declare touch variables.
 	float x, y;
 	DrawBars drawBars;
+
+	// Declare & initialize temporary calculation variables.
+	double helpRelativeRange = 0;
+
+	BackgroundCalc bc;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +69,7 @@ public class HelpFragmentBars extends Fragment implements OnTouchListener {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		setFonts();
+		drawBars(HelpActivity.relativeRange);
 		drawBackground();
 	}
 
@@ -65,7 +81,17 @@ public class HelpFragmentBars extends Fragment implements OnTouchListener {
 		ll = (LinearLayout) v.findViewById(R.id.ll_help_bars);
 
 		// Initialize bars and set OnClickListener.
+		llBar1 = (LinearLayout) v.findViewById(R.id.bar1_help);
+		llBar2 = (LinearLayout) v.findViewById(R.id.bar2_help);
+		llBar3 = (LinearLayout) v.findViewById(R.id.bar3_help);
+		llBar4 = (LinearLayout) v.findViewById(R.id.bar4_help);
+		llBar5 = (LinearLayout) v.findViewById(R.id.bar5_help);
+		llBar6 = (LinearLayout) v.findViewById(R.id.bar6_help);
+		llBar7 = (LinearLayout) v.findViewById(R.id.bar7_help);
+		llBar8 = (LinearLayout) v.findViewById(R.id.bar8_help);
+		llBar9 = (LinearLayout) v.findViewById(R.id.bar9_help);
 		llBars = (LinearLayout) v.findViewById(R.id.ll_bars_help);
+		llBars.setOnTouchListener(this);
 
 		// Initialize TextViews.
 		tvLogo = (TextView) v.findViewById(R.id.tv_logo_help_bars);
@@ -86,66 +112,136 @@ public class HelpFragmentBars extends Fragment implements OnTouchListener {
 		tvBarsInfo.setTypeface(tfMyriadRegular);
 	}
 
+	public void drawBars(double range) {
+		// Check relative range and set bars accordingly.
+		if (range <= 1 && range > 0.9) {
+			llBar1.setBackgroundResource(R.drawable.whitebar);
+			llBar2.setBackgroundResource(R.drawable.whitebar);
+			llBar3.setBackgroundResource(R.drawable.whitebar);
+			llBar4.setBackgroundResource(R.drawable.whitebar);
+			llBar5.setBackgroundResource(R.drawable.whitebar);
+			llBar6.setBackgroundResource(R.drawable.whitebar);
+			llBar7.setBackgroundResource(R.drawable.whitebar);
+			llBar8.setBackgroundResource(R.drawable.whitebar);
+			llBar9.setBackgroundResource(R.drawable.whitebar);
+		} else if (range <= 0.9 && range > 0.8) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whitebar);
+			llBar3.setBackgroundResource(R.drawable.whitebar);
+			llBar4.setBackgroundResource(R.drawable.whitebar);
+			llBar5.setBackgroundResource(R.drawable.whitebar);
+			llBar6.setBackgroundResource(R.drawable.whitebar);
+			llBar7.setBackgroundResource(R.drawable.whitebar);
+			llBar8.setBackgroundResource(R.drawable.whitebar);
+			llBar9.setBackgroundResource(R.drawable.whitebar);
+		} else if (range <= 0.8 && range > 0.7) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whitebar);
+			llBar4.setBackgroundResource(R.drawable.whitebar);
+			llBar5.setBackgroundResource(R.drawable.whitebar);
+			llBar6.setBackgroundResource(R.drawable.whitebar);
+			llBar7.setBackgroundResource(R.drawable.whitebar);
+			llBar8.setBackgroundResource(R.drawable.whitebar);
+			llBar9.setBackgroundResource(R.drawable.whitebar);
+		} else if (range <= 0.7 && range > 0.6) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whitebar);
+			llBar5.setBackgroundResource(R.drawable.whitebar);
+			llBar6.setBackgroundResource(R.drawable.whitebar);
+			llBar7.setBackgroundResource(R.drawable.whitebar);
+			llBar8.setBackgroundResource(R.drawable.whitebar);
+			llBar9.setBackgroundResource(R.drawable.whitebar);
+		} else if (range <= 0.6 && range > 0.5) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whitebar);
+			llBar6.setBackgroundResource(R.drawable.whitebar);
+			llBar7.setBackgroundResource(R.drawable.whitebar);
+			llBar8.setBackgroundResource(R.drawable.whitebar);
+			llBar9.setBackgroundResource(R.drawable.whitebar);
+		} else if (range <= 0.5 && range > 0.4) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar6.setBackgroundResource(R.drawable.whitebar);
+			llBar7.setBackgroundResource(R.drawable.whitebar);
+			llBar8.setBackgroundResource(R.drawable.whitebar);
+			llBar9.setBackgroundResource(R.drawable.whitebar);
+		} else if (range <= 0.4 && range > 0.3) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar7.setBackgroundResource(R.drawable.whitebar);
+			llBar8.setBackgroundResource(R.drawable.whitebar);
+			llBar9.setBackgroundResource(R.drawable.whitebar);
+		} else if (range <= 0.3 && range > 0.2) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar8.setBackgroundResource(R.drawable.whitebar);
+			llBar9.setBackgroundResource(R.drawable.whitebar);
+		} else if (range <= 0.2 && range > 0.1) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar8.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar9.setBackgroundResource(R.drawable.whitebar);
+		} else if (range <= 0.1 && range >= 0) {
+			llBar1.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar2.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar3.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar4.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar5.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar6.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar7.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar8.setBackgroundResource(R.drawable.whiteemptybar);
+			llBar9.setBackgroundResource(R.drawable.whiteemptybar);
+		}
+	}
+
 	@SuppressWarnings("deprecation")
 	public void drawBackground() {
-		ll.setBackgroundDrawable(setGradient(HelpActivity.relativeRange));
+		bc = new BackgroundCalc(HelpActivity.relativeRange);
+		ll.setBackgroundDrawable(bc.makeGradient(HelpActivity.relativeRange));
 	}
 
-	public GradientDrawable setGradient(double rr) {
-		// Returns a GradientDrawable based on relative range.
-		double redStart = 95 + (2013 * rr) - (5311 * rr * rr)
-				+ (3204 * rr * rr * rr);
-		if (redStart > 255) {
-			redStart = 255;
-		} else if (redStart < 0) {
-			redStart = 0;
-		}
-		double redStop = 155 + (402 * rr) - (593 * rr * rr)
-				+ (290 * rr * rr * rr);
-		if (redStop > 255) {
-			redStop = 255;
-		} else if (redStop < 0) {
-			redStop = 0;
-		}
-		double greenStart = 129 + (294 * rr) - (328 * rr * rr);
-		if (greenStart > 255) {
-			greenStart = 255;
-		} else if (greenStart < 0) {
-			greenStart = 0;
-		}
-		double greenStop = 14 + (164 * rr) + (42 * rr * rr);
-		if (greenStop > 255) {
-			greenStop = 255;
-		} else if (greenStop < 0) {
-			greenStop = 0;
-		}
-		double blueStart = 66 - (472 * rr) + (1191 * rr * rr)
-				- (728 * rr * rr * rr);
-		if (blueStart > 255) {
-			blueStart = 255;
-		} else if (blueStart < 0) {
-			blueStart = 0;
-		}
-		double blueStop = 45 + (12 * rr) - (72 * rr * rr) + (37 * rr * rr * rr);
-		if (blueStop > 255) {
-			blueStop = 255;
-		} else if (blueStop < 0) {
-			blueStop = 0;
-		}
-		GradientDrawable gdBackground = new GradientDrawable(
-				GradientDrawable.Orientation.TOP_BOTTOM, new int[] {
-						Color.rgb((int) redStart, (int) greenStart,
-								(int) blueStart),
-						Color.rgb((int) redStop, (int) greenStop,
-								(int) blueStop) });
-		gdBackground.setCornerRadius(0f);
-		return gdBackground;
-	}
-
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onTouch(View arg0, MotionEvent arg1) {
-		x = arg1.getX();
-		y = arg1.getY();
+		switch (arg0.getId()) {
+		case R.id.ll_bars_help:
+			x = arg1.getX();
+			y = arg1.getY();
+			Log.d(TAG, "(" + x + ", " + y + ")");
+			double relativeY = 1 - (y / 400);
+			if (relativeY > 1) {
+				relativeY = 1;
+			} else if (relativeY < 0) {
+				relativeY = 0;
+			}
+			drawBars(relativeY);
+			ll.setBackgroundDrawable(bc.makeGradient(relativeY));
+			HelpActivity.setBackgroundIndicator(bc.getStopRGB());
+			break;
+		}
 		return true;
 	}
 }
