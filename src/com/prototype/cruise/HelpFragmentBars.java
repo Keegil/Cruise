@@ -1,8 +1,6 @@
 package com.prototype.cruise;
 
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -39,7 +37,7 @@ public class HelpFragmentBars extends Fragment implements OnTouchListener {
 	LinearLayout llBar9;
 	LinearLayout llBars;
 
-	// Declare Textviews.
+	// Declare TextViews.
 	TextView tvLogo;
 	TextView tvBarsHead;
 	TextView tvBarsInfo;
@@ -47,9 +45,6 @@ public class HelpFragmentBars extends Fragment implements OnTouchListener {
 	// Declare touch variables.
 	float x, y;
 	DrawBars drawBars;
-
-	// Declare & initialize temporary calculation variables.
-	double helpRelativeRange = 0;
 
 	BackgroundCalc bc;
 
@@ -69,6 +64,11 @@ public class HelpFragmentBars extends Fragment implements OnTouchListener {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		setFonts();
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
 		drawBars(HelpActivity.relativeRange);
 		drawBackground();
 	}
@@ -231,14 +231,14 @@ public class HelpFragmentBars extends Fragment implements OnTouchListener {
 			x = arg1.getX();
 			y = arg1.getY();
 			Log.d(TAG, "(" + x + ", " + y + ")");
-			double relativeY = 1 - (y / 400);
-			if (relativeY > 1) {
-				relativeY = 1;
-			} else if (relativeY < 0) {
-				relativeY = 0;
+			HelpActivity.relativeRange = 1 - (y / 400);
+			if (HelpActivity.relativeRange > 1) {
+				HelpActivity.relativeRange = 1;
+			} else if (HelpActivity.relativeRange < 0) {
+				HelpActivity.relativeRange = 0;
 			}
-			drawBars(relativeY);
-			ll.setBackgroundDrawable(bc.makeGradient(relativeY));
+			drawBars(HelpActivity.relativeRange);
+			ll.setBackgroundDrawable(bc.makeGradient(HelpActivity.relativeRange));
 			HelpActivity.setBackgroundIndicator(bc.getStopRGB());
 			break;
 		}

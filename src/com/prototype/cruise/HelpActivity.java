@@ -49,8 +49,9 @@ public class HelpActivity extends FragmentActivity {
 	public static double doubleCurrentRange;
 	public static double doubleDefaultRange;
 	public static double relativeRange;
+	public static double relativeY = 0;
 
-	// Viewpager indicator
+	// Declare ViewPager indicator.
 	static CirclePageIndicator mIndicator;
 
 	static BackgroundCalc bc = new BackgroundCalc();

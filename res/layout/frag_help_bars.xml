@@ -44,34 +44,37 @@
 
         <LinearLayout
             android:id="@+id/ll_bars_help"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="@dimen/img_distance"
             android:gravity="center"
             android:orientation="vertical" >
 
             <LinearLayout
                 android:id="@+id/bar1_help"
-                android:layout_width="60dp"
+                android:layout_width="120dp"
                 android:layout_height="@dimen/bar_low_height"
                 android:layout_marginBottom="@dimen/bar_low_spacing"
+                android:layout_marginLeft="-15dp"
                 android:background="@drawable/whitebar" >
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/bar2_help"
-                android:layout_width="80dp"
+                android:layout_width="120dp"
                 android:layout_height="@dimen/bar_low_height"
                 android:layout_marginBottom="@dimen/bar_low_spacing"
+                android:layout_marginLeft="0dp"
                 android:background="@drawable/whitebar" >
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/bar3_help"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="@dimen/bar_low_height"
                 android:layout_marginBottom="@dimen/bar_low_spacing"
+                android:layout_marginLeft="15dp"
                 android:background="@drawable/whitebar" >
             </LinearLayout>
 
@@ -80,14 +83,16 @@
                 android:layout_width="120dp"
                 android:layout_height="@dimen/bar_low_height"
                 android:layout_marginBottom="@dimen/bar_low_spacing"
+                android:layout_marginLeft="30dp"
                 android:background="@drawable/whitebar" >
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/bar5_help"
-                android:layout_width="140dp"
+                android:layout_width="120dp"
                 android:layout_height="@dimen/bar_low_height"
                 android:layout_marginBottom="@dimen/bar_low_spacing"
+                android:layout_marginLeft="45dp"
                 android:background="@drawable/whitebar" >
             </LinearLayout>
 
@@ -96,29 +101,33 @@
                 android:layout_width="120dp"
                 android:layout_height="@dimen/bar_low_height"
                 android:layout_marginBottom="@dimen/bar_low_spacing"
+                android:layout_marginLeft="30dp"
                 android:background="@drawable/whitebar" >
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/bar7_help"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="@dimen/bar_low_height"
                 android:layout_marginBottom="@dimen/bar_low_spacing"
+                android:layout_marginLeft="15dp"
                 android:background="@drawable/whitebar" >
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/bar8_help"
-                android:layout_width="80dp"
+                android:layout_width="120dp"
                 android:layout_height="@dimen/bar_low_height"
                 android:layout_marginBottom="@dimen/bar_low_spacing"
+                android:layout_marginLeft="0dp"
                 android:background="@drawable/whitebar" >
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/bar9_help"
-                android:layout_width="60dp"
+                android:layout_width="120dp"
                 android:layout_height="@dimen/bar_low_height"
+                android:layout_marginLeft="-15dp"
                 android:background="@drawable/whitebar" >
             </LinearLayout>
         </LinearLayout>
