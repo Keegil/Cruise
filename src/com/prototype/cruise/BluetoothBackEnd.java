@@ -35,6 +35,13 @@ public class BluetoothBackEnd {
 
 	StringBuilder sb = new StringBuilder();
 
+	public BluetoothBackEnd() {
+		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		if (mBluetoothAdapter == null) {
+			findStatus = "No bluetooth adapter available";
+		}
+	}
+
 	public BluetoothBackEnd(Context c) {
 		this.c = c;
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -46,7 +53,9 @@ public class BluetoothBackEnd {
 			if (!mBluetoothAdapter.isEnabled()) {
 				Intent enableBluetooth = new Intent(
 						BluetoothAdapter.ACTION_REQUEST_ENABLE);
+
 				((Activity) c).startActivityForResult(enableBluetooth, 0);
+
 			}
 		}
 	}
@@ -69,7 +78,8 @@ public class BluetoothBackEnd {
 					.getBondedDevices();
 			if (pairedDevices.size() > 0) {
 				for (BluetoothDevice device : pairedDevices) {
-					if (device.getName().equals("RN42-B1B5")) {
+					// if (device.getName().equals("RN42-B1B5")) {
+					if (device.getName().equals("RN42-DF28")) {
 						mmDevice = device;
 						findStatus = "Bluetooth Device Found";
 						return true;
@@ -81,7 +91,7 @@ public class BluetoothBackEnd {
 		return false;
 	}
 
-	public void findBT(boolean show) {
+	public void findBT(Context c, boolean show) {
 		this.show = show;
 		if (isPaired()) {
 			try {
@@ -177,15 +187,15 @@ public class BluetoothBackEnd {
 	}
 
 	public void closeBT(boolean show, Context c) throws IOException {
-		if (openStatus.equals("Bluetooth Opened")){
-		stopWorker = true;
-		mmOutputStream.close();
-		mmInputStream.close();
-		mmSocket.close();
-		openStatus = "Bluetooth Closed";
-		if (show)
-			Toast.makeText(c.getApplicationContext(), openStatus,
-					Toast.LENGTH_SHORT).show();
+		if (openStatus.equals("Bluetooth Opened")) {
+			stopWorker = true;
+			mmOutputStream.close();
+			mmInputStream.close();
+			mmSocket.close();
+			openStatus = "Bluetooth Closed";
+			if (show)
+				Toast.makeText(c.getApplicationContext(), openStatus,
+						Toast.LENGTH_SHORT).show();
 		}
 
 	}

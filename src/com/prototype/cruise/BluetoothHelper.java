@@ -65,6 +65,7 @@ public class BluetoothHelper extends Activity {
 	protected void onResume() {
 		super.onResume();
 		if (btb.isPaired()) {
+			
 			finish();
 		}
 	}

@@ -99,6 +99,12 @@ public class BeforeDriveActivity extends FragmentActivity {
 		loadData();
 		loadDate();
 		calc();
+		
+		
+		if (bt.getOpenStatus().equals("Could not open device!")) {
+			ac = new AsyncClass(this);
+			ac.execute();
+		}
 
 	}
 
@@ -113,16 +119,13 @@ public class BeforeDriveActivity extends FragmentActivity {
 		summaryFragment = (SummaryFragment) mAdapter.getItem(0);
 
 		// Initialize BlueTooth.
-		bt = new BluetoothBackEnd(this);
+		bt = new BluetoothBackEnd();
 
 		// Initialize database.
 		drivingStatsDataSource = new DrivingStatsDataSource(this);
 		drivingStatsDataSource.open();
 
-		if (bt.getOpenStatus().equals("Could not open device!")) {
-			ac = new AsyncClass(this);
-			ac.execute();
-		}
+
 	}
 
 	public static class MyAdapter extends FragmentPagerAdapter {
@@ -302,6 +305,10 @@ public class BeforeDriveActivity extends FragmentActivity {
 		finish();
 		startActivity(intent);
 	}
+	
+	public void connectBT(){
+		bt.findBT(this,false);
+	}
 
 	public class AsyncClass extends AsyncTask<Void, String, Void> {
 		private Context context;
@@ -324,7 +331,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 		protected Void doInBackground(Void... unused) {
 			// SystemClock.sleep(2000);
 
-			bt.findBT(false);
+			connectBT();
 
 			return (null);
 		}
