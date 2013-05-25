@@ -19,6 +19,8 @@ import android.support.v4.view.ViewPager;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -99,8 +101,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 		loadData();
 		loadDate();
 		calc();
-		
-		
+
 		if (bt.getOpenStatus().equals("Could not open device!")) {
 			ac = new AsyncClass(this);
 			ac.execute();
@@ -124,7 +125,6 @@ public class BeforeDriveActivity extends FragmentActivity {
 		// Initialize database.
 		drivingStatsDataSource = new DrivingStatsDataSource(this);
 		drivingStatsDataSource.open();
-
 
 	}
 
@@ -305,9 +305,9 @@ public class BeforeDriveActivity extends FragmentActivity {
 		finish();
 		startActivity(intent);
 	}
-	
-	public void connectBT(){
-		bt.findBT(this,false);
+
+	public void connectBT() {
+		bt.findBT(this, false);
 	}
 
 	public class AsyncClass extends AsyncTask<Void, String, Void> {

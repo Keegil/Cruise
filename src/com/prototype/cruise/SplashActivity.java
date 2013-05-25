@@ -26,9 +26,9 @@ public class SplashActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		// Set fullscreen.
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		// requestWindowFeature(Window.FEATURE_NO_TITLE);
+		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+		//		WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		// Set content.
 		setContentView(R.layout.activity_splash);
