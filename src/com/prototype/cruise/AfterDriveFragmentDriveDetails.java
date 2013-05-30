@@ -94,6 +94,7 @@ public class AfterDriveFragmentDriveDetails extends Fragment implements
 	// Declare hint.
 	TextView tvHint;
 	AnimationSet animation;
+	AnimationListener animListener;
 
 	BackgroundCalc bc;
 
@@ -442,26 +443,25 @@ public class AfterDriveFragmentDriveDetails extends Fragment implements
 			fadeOut.setInterpolator(new AccelerateInterpolator());
 			fadeOut.setStartOffset(8000);
 			fadeOut.setDuration(1000);
-
-			animation.addAnimation(fadeIn);
-			animation.addAnimation(fadeOut);
-			animation.setAnimationListener(new AnimationListener() {
-
+			
+			animListener = new AnimationListener() {
 				@Override
 				public void onAnimationEnd(Animation animation) {
 					tvHint.setVisibility(View.GONE);
 				}
-
 				@Override
 				public void onAnimationRepeat(Animation animation) {
 
 				}
-
 				@Override
 				public void onAnimationStart(Animation animation) {
 
-				}
-			});
+				}	
+			};
+
+			animation.addAnimation(fadeIn);
+			animation.addAnimation(fadeOut);
+			animation.setAnimationListener(animListener);
 			tvHint.startAnimation(animation);
 		} else {
 			tvHint.setVisibility(View.GONE);
