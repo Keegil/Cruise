@@ -14,9 +14,14 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 public class BluetoothBackEnd {
+
+	private static final String TAG = "BluetoothBackEnd";
+
+	public static int testing = 0;
 
 	private BluetoothAdapter mBluetoothAdapter;
 	private BluetoothSocket mmSocket;
@@ -124,7 +129,7 @@ public class BluetoothBackEnd {
 		mmOutputStream = mmSocket.getOutputStream();
 		mmInputStream = mmSocket.getInputStream();
 
-		beginListenForData(c);
+		beginListenForData();
 
 		openStatus = "Bluetooth Opened";
 		if (show)
@@ -132,7 +137,7 @@ public class BluetoothBackEnd {
 					Toast.LENGTH_SHORT).show();
 	}
 
-	void beginListenForData(final Context c) {
+	void beginListenForData() {
 		final byte delimiter = 10; // This is the ASCII code for a newline
 									// character
 
@@ -158,17 +163,20 @@ public class BluetoothBackEnd {
 											encodedBytes, "US-ASCII");
 									readBufferPosition = 0;
 									sb.append(data);
-
-									// Check if last line, then open
-									// afteractivity with the string from
-									// stringbuilder
+									Log.d(TAG, "bytesAvailable: " + bytesAvailable + "");
 									if (i + 1 == bytesAvailable) {
+										testing = 1;
 										Intent in = new Intent(c
 												.getApplicationContext(),
 												AfterDriveActivity.class);
 										in.putExtra("btdata", sb.toString());
 										c.startActivity(in);
-									}
+										break;
+									} 
+
+									// Check if last line, then open
+									// afteractivity with the string from
+									// stringbuilder
 
 								} else {
 									readBuffer[readBufferPosition++] = b;

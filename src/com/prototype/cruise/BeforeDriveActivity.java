@@ -120,7 +120,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 		summaryFragment = (SummaryFragment) mAdapter.getItem(0);
 
 		// Initialize BlueTooth.
-		bt = new BluetoothBackEnd();
+		bt = new BluetoothBackEnd(this);
 
 		// Initialize database.
 		drivingStatsDataSource = new DrivingStatsDataSource(this);

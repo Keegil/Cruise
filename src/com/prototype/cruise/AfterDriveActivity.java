@@ -121,7 +121,7 @@ public class AfterDriveActivity extends FragmentActivity {
 
 		Bundle extras = this.getIntent().getExtras();
 		btData = extras.getString("btdata");
-		Log.d(TAG, "" + btData + "");
+		// Log.d(TAG, "" + btData + "");
 
 		if (!btData.equalsIgnoreCase("simulation")) {
 			btCalc();
@@ -227,8 +227,13 @@ public class AfterDriveActivity extends FragmentActivity {
 	public void calc() {
 		chargedRange = 0;
 		previousRelativeRange = (double) ((double) currentRange / (double) defaultRange);
-
+		
+		if (driveLength == 0) {
+			driveLength = 1;
+		}
+		
 		// Calculate acceleration score.
+		
 		double accPerKm = accMistakes / driveLength;
 		if (accPerKm >= 45) {
 			accScore = 0;
@@ -324,6 +329,9 @@ public class AfterDriveActivity extends FragmentActivity {
 				brakeScore, routeScore, driveLength,
 				(int) (previousRelativeRange * 100), rangeUsed,
 				(int) (relativeRange * 100), 0, 0);
+		
+		BluetoothBackEnd.testing = 0;
+		Log.d(TAG, "testing: " + BluetoothBackEnd.testing + "");
 	}
 
 	public static class MyAdapter extends FragmentPagerAdapter {

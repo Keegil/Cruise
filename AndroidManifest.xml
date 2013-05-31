@@ -40,7 +40,8 @@
             android:name="com.prototype.cruise.AfterDriveActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"  >
         </activity>
         <activity
             android:name="com.prototype.cruise.HelpActivity"
