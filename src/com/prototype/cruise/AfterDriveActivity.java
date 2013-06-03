@@ -48,6 +48,7 @@ public class AfterDriveActivity extends FragmentActivity {
 	public static int brakeMistakes = 0;
 	public static int routeFail = 0;
 	public static int chargedRange = 0;
+	public static int totalCounts = 0;
 
 	// Declare score variables.
 	public static final String SCORE_NAME = "MyScoreFile";
@@ -78,16 +79,17 @@ public class AfterDriveActivity extends FragmentActivity {
 	public static double doubleCurrentRange;
 	public static double doubleDefaultRange;
 	public static double relativeRange;
-	public static int deficitRange; 
+	public static int deficitRange;
 
-	// Declare & initialize bluetooth variables.
+	// Declare & initialize Bluetooth variables.
 	String btData;
 	private static final String TAG_DRI = "drive1Instants";
 	private static final String TAG_ACC = "hardAccels";
 	private static final String TAG_BRA = "hardBrakes";
 	private static final String TAG_SPE = "speedingCounts";
-	// private static final String TAG_TOT = "totalCounts";
+	private static final String TAG_TOT = "totalCounts";
 	private static final String TAG_DIS = "distanceTraveled";
+	private static final String TAG_ROU = "altitudeScore";
 
 	// Viewpager indicator
 	static CirclePageIndicator mIndicator;
@@ -110,7 +112,7 @@ public class AfterDriveActivity extends FragmentActivity {
 				.getItem(1);
 		afterDriveFragmentDriveDetails = (AfterDriveFragmentDriveDetails) mAdapter
 				.getItem(2);
-		
+
 		mPager.setCurrentItem(1);
 
 		init();
@@ -211,12 +213,9 @@ public class AfterDriveActivity extends FragmentActivity {
 				accMistakes = c.getInt(TAG_ACC);
 				brakeMistakes = c.getInt(TAG_BRA);
 				speedMistakes = c.getInt(TAG_SPE);
-				// int tot = c.getInt(TAG_TOT);
+				totalCounts = c.getInt(TAG_TOT);
 				driveLength = c.getInt(TAG_DIS);
-
-				Log.d("blue", "Acc: " + accMistakes + " - Bra: "
-						+ brakeMistakes + " - Spe: " + speedMistakes
-						+ " - Dri: " + driveLength);
+				routeFail = c.getInt(TAG_ROU);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -227,13 +226,13 @@ public class AfterDriveActivity extends FragmentActivity {
 	public void calc() {
 		chargedRange = 0;
 		previousRelativeRange = (double) ((double) currentRange / (double) defaultRange);
-		
+
 		if (driveLength == 0) {
 			driveLength = 1;
 		}
-		
+
 		// Calculate acceleration score.
-		
+
 		double accPerKm = accMistakes / driveLength;
 		if (accPerKm >= 45) {
 			accScore = 0;
@@ -248,7 +247,6 @@ public class AfterDriveActivity extends FragmentActivity {
 		} else if (accPerKm < 9 && accPerKm >= 0) {
 			accScore = 5;
 		}
-		Log.d(TAG, "accPerKm: " + accPerKm + "| accScore: " + accScore + "");
 
 		// Calculate brake score.
 		double brakePerKm = brakeMistakes / driveLength;
@@ -265,38 +263,35 @@ public class AfterDriveActivity extends FragmentActivity {
 		} else if (brakePerKm < 9 && brakePerKm >= 0) {
 			brakeScore = 5;
 		}
-		Log.d(TAG, "brakePerKm: " + brakePerKm + "| brakeScore: " + brakeScore
-				+ "");
 
 		// Calculate speed score.
-		double speedPerKm = speedMistakes / driveLength;
-		if (speedPerKm >= 45) {
+		double speedPerCount = speedMistakes / totalCounts;
+		if (speedPerCount >= 5/6) {
 			speedScore = 0;
-		} else if (speedPerKm < 45 && speedPerKm >= 36) {
+		} else if (speedPerCount < 5/6 && speedPerCount >= 4/6) {
 			speedScore = 1;
-		} else if (speedPerKm < 36 && speedPerKm >= 27) {
+		} else if (speedPerCount < 4/6 && speedPerCount >= 3/6) {
 			speedScore = 2;
-		} else if (speedPerKm < 27 && speedPerKm >= 18) {
+		} else if (speedPerCount < 3/6 && speedPerCount >= 2/6) {
 			speedScore = 3;
-		} else if (speedPerKm < 18 && speedPerKm >= 9) {
+		} else if (speedPerCount < 2/6 && speedPerCount >= 1/6) {
 			speedScore = 4;
-		} else if (speedPerKm < 9 && speedPerKm >= 0) {
+		} else if (speedPerCount < 1/6 && speedPerCount >= 0) {
 			speedScore = 5;
 		}
-		speedScore = 5;
-		Log.d(TAG, "speedPerKm: " + speedPerKm + "| speedScore: " + speedScore
-				+ "");
 
 		// Calculate route score?
 		routeScore = 5;
-		Log.d(TAG, "routeScore: " + routeScore + "");
 
 		// Calculate and apply modifier.
-		double modifier = 1 - (((double) accScore + (double) brakeScore + (double) speedScore) / 15);
+		double modifier = 1 - (((double) accScore + (double) brakeScore + (double) routeScore) / 15);
 		double extraRangeInterval = ((double) driveLength * 1.3)
 				- ((double) driveLength);
 		double extraRange = extraRangeInterval * modifier;
 		rangeUsed = driveLength + (int) extraRange;
+		double extraSpeedInterval = ((double) rangeUsed * 1.1) - ((double) rangeUsed);
+		double extraSpeedRange = extraSpeedInterval * speedPerCount;
+		rangeUsed = rangeUsed + (int) extraSpeedRange;
 
 		// Calculate current range.
 		deficitRange = 0;
@@ -329,7 +324,7 @@ public class AfterDriveActivity extends FragmentActivity {
 				brakeScore, routeScore, driveLength,
 				(int) (previousRelativeRange * 100), rangeUsed,
 				(int) (relativeRange * 100), 0, 0);
-		
+
 		BluetoothBackEnd.testing = 0;
 		Log.d(TAG, "testing: " + BluetoothBackEnd.testing + "");
 	}
