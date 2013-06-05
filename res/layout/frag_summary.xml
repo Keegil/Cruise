@@ -152,7 +152,7 @@
                 android:layout_alignBottom="@id/tv_eff_score"
                 android:layout_marginBottom="6sp"
                 android:layout_toRightOf="@id/tv_eff_score"
-                android:text="@string/out_of_20"
+                android:text="@string/out_of_20_2"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_medium" />
 

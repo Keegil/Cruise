@@ -22,7 +22,7 @@
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.7" >
+        android:layout_weight="0.65" >
 
         <LinearLayout
             android:id="@+id/ll_bars_after2"
@@ -433,7 +433,7 @@
         android:layout_height="0dp"
         android:layout_marginLeft="@dimen/bottom_section_margin"
         android:layout_marginRight="@dimen/bottom_section_margin"
-        android:layout_weight="0.15"
+        android:layout_weight="0.2"
         android:gravity="center"
         android:padding="5dp" >
 

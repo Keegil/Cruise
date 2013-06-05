@@ -607,9 +607,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int help=0x7f0b0002;
     }
     public static final class string {
-        public static final int acc_desc=0x7f0a002a;
-        public static final int acc_info=0x7f0a0035;
-        public static final int acc_mistakes=0x7f0a001d;
+        public static final int acc_desc=0x7f0a002b;
+        public static final int acc_info=0x7f0a0036;
+        public static final int acc_mistakes=0x7f0a001e;
         public static final int action_close_bt=0x7f0a000c;
         public static final int action_connect_bt=0x7f0a000b;
         public static final int action_defaultacc=0x7f0a0007;
@@ -620,91 +620,92 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
          */
         public static final int action_reset=0x7f0a0005;
         public static final int action_reset_db=0x7f0a000a;
-        public static final int after_drive_hint1=0x7f0a0028;
-        public static final int after_drive_hint2=0x7f0a0033;
+        public static final int after_drive_hint1=0x7f0a0029;
+        public static final int after_drive_hint2=0x7f0a0034;
         /**  App/activity/fragment name strings 
          */
         public static final int app_name=0x7f0a0000;
         public static final int app_name_caps=0x7f0a0001;
-        public static final int bad_charge=0x7f0a0026;
-        public static final int bars_desc=0x7f0a0038;
-        public static final int bars_info=0x7f0a0039;
-        public static final int before_drive_hint=0x7f0a0021;
-        public static final int beforewe=0x7f0a0040;
-        public static final int brake_desc=0x7f0a002c;
-        public static final int brake_info=0x7f0a0037;
-        public static final int brake_mistakes=0x7f0a001e;
-        public static final int charge_gained_ex=0x7f0a001b;
-        public static final int city_desc=0x7f0a0019;
+        public static final int bad_charge=0x7f0a0027;
+        public static final int bars_desc=0x7f0a0039;
+        public static final int bars_info=0x7f0a003a;
+        public static final int before_drive_hint=0x7f0a0022;
+        public static final int beforewe=0x7f0a0041;
+        public static final int brake_desc=0x7f0a002d;
+        public static final int brake_info=0x7f0a0038;
+        public static final int brake_mistakes=0x7f0a001f;
+        public static final int charge_gained_ex=0x7f0a001c;
+        public static final int city_desc=0x7f0a001a;
         public static final int city_ex=0x7f0a000f;
-        public static final int comp_score_desc=0x7f0a0047;
+        public static final int comp_score_desc=0x7f0a0048;
         public static final int comp_score_ex=0x7f0a0010;
-        public static final int continue_desc=0x7f0a004a;
+        public static final int continue_desc=0x7f0a004b;
         /**  SplashActivity 
          */
-        public static final int cruise_starting=0x7f0a004b;
-        public static final int distance_traveled_desc=0x7f0a002f;
-        public static final int distance_traveled_ex=0x7f0a0032;
-        public static final int drive_button=0x7f0a0020;
+        public static final int cruise_starting=0x7f0a004c;
+        public static final int distance_traveled_desc=0x7f0a0030;
+        public static final int distance_traveled_ex=0x7f0a0033;
+        public static final int drive_button=0x7f0a0021;
         /**  AfterDriveFragmentCompleted 
          */
-        public static final int drive_completed=0x7f0a0023;
-        public static final int drive_distance=0x7f0a001c;
-        public static final int eff_score_desc=0x7f0a0049;
+        public static final int drive_completed=0x7f0a0024;
+        public static final int drive_distance=0x7f0a001d;
+        public static final int eff_score_desc=0x7f0a004a;
         public static final int eff_score_ex=0x7f0a0012;
-        public static final int est_range_remain=0x7f0a0017;
-        public static final int eval_good=0x7f0a0043;
-        public static final int eval_none=0x7f0a0045;
+        public static final int est_range_remain=0x7f0a0018;
+        public static final int eval_good=0x7f0a0044;
+        public static final int eval_none=0x7f0a0046;
         /**  SummaryFragment 
          */
-        public static final int eval_strong=0x7f0a0042;
-        public static final int eval_weak=0x7f0a0044;
+        public static final int eval_strong=0x7f0a0043;
+        public static final int eval_weak=0x7f0a0045;
         /**  Example/placeholder 
          */
         public static final int example_km=0x7f0a000d;
-        public static final int four_pin=0x7f0a003e;
-        public static final int good_charge=0x7f0a0025;
+        public static final int four_pin=0x7f0a003f;
+        public static final int good_charge=0x7f0a0026;
         /**  BluetoothHelper 
          */
-        public static final int gotosettings=0x7f0a003a;
+        public static final int gotosettings=0x7f0a003b;
         /**  BeforeDriveFragmentCurrentStatus 
          */
-        public static final int highway_desc=0x7f0a0018;
+        public static final int highway_desc=0x7f0a0019;
         public static final int highway_ex=0x7f0a000e;
         /**  General 
          */
         public static final int km=0x7f0a0013;
         public static final int kr=0x7f0a0014;
-        public static final int money_score_desc=0x7f0a0048;
+        public static final int money_score_desc=0x7f0a0049;
         public static final int money_score_ex=0x7f0a0011;
-        public static final int no_charge=0x7f0a0027;
-        public static final int one_turn=0x7f0a003b;
+        public static final int no_charge=0x7f0a0028;
+        public static final int one_turn=0x7f0a003c;
         public static final int out_of_20=0x7f0a0015;
-        public static final int percent=0x7f0a0016;
-        public static final int range_decrease_desc=0x7f0a002e;
-        public static final int range_decrease_ex=0x7f0a0031;
-        public static final int rating_ex=0x7f0a0046;
-        public static final int route_desc=0x7f0a002b;
-        public static final int route_info=0x7f0a0036;
-        public static final int senseboard=0x7f0a003f;
-        public static final int simulate_button=0x7f0a0022;
+        public static final int out_of_20_2=0x7f0a0016;
+        public static final int percent=0x7f0a0017;
+        public static final int range_decrease_desc=0x7f0a002f;
+        public static final int range_decrease_ex=0x7f0a0032;
+        public static final int rating_ex=0x7f0a0047;
+        public static final int route_desc=0x7f0a002c;
+        public static final int route_info=0x7f0a0037;
+        public static final int senseboard=0x7f0a0040;
+        public static final int simulate_button=0x7f0a0023;
         /**  AfterDriveFragmentDetails 
          */
-        public static final int speed_desc=0x7f0a0029;
+        public static final int speed_desc=0x7f0a002a;
         /**  HelpActivity 
          */
-        public static final int speed_info=0x7f0a0034;
-        public static final int speed_mistakes=0x7f0a001f;
-        public static final int stars_ex=0x7f0a0024;
-        public static final int start_range_desc=0x7f0a002d;
-        public static final int start_range_ex=0x7f0a0030;
-        public static final int three_scan=0x7f0a003d;
-        public static final int time_parked_ex=0x7f0a001a;
+        public static final int speed_info=0x7f0a0035;
+        public static final int speed_mistakes=0x7f0a0020;
+        public static final int stars_ex=0x7f0a0025;
+        public static final int start_range_desc=0x7f0a002e;
+        public static final int start_range_ex=0x7f0a0031;
+        public static final int three_scan=0x7f0a003e;
+        public static final int time_parked_ex=0x7f0a001b;
         public static final int title_activity_after_drive=0x7f0a0002;
         public static final int title_activity_after_drive_fragment2=0x7f0a0003;
         public static final int title_activity_help=0x7f0a0004;
-        public static final int title_bluetoothhelper=0x7f0a0041;
-        public static final int two_goto=0x7f0a003c;
+        public static final int title_bluetoothhelper=0x7f0a0042;
+        public static final int two_goto=0x7f0a003d;
     }
     public static final class style {
         /** 

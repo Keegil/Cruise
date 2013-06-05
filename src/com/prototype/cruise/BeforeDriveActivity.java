@@ -106,14 +106,6 @@ public class BeforeDriveActivity extends FragmentActivity {
 			ac = new AsyncClass(this);
 			ac.execute();
 		}
-
-		defaultRange = 120;
-		lastTime = 0;
-		currentRange = defaultRange;
-		chargedRange = 0;
-		saveSettings();
-		saveData();
-		saveDate();
 	}
 
 	public static void setBackgroundIndicator(int c) {
@@ -170,8 +162,8 @@ public class BeforeDriveActivity extends FragmentActivity {
 			firstTime = false;
 			saveSettings();
 			previousChargedRange = chargedRange;
-			chargedRange = (int) (double) (timeDifference / 300000);
-			// chargedRange = (int) (double) (timeDifference / 3000);
+			// chargedRange = (int) (double) (timeDifference / 300000);
+			chargedRange = (int) (double) (timeDifference / 1000);
 			if (chargedRange > (defaultRange - currentRange)) {
 				chargedRange = (defaultRange - currentRange);
 			}

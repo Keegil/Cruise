@@ -29,7 +29,8 @@
     <!-- General -->
     <string name="km">km</string>
     <string name="kr">kr</string>
-    <string name="out_of_20">/20</string>
+    <string name="out_of_20">/ 20</string>
+    <string name="out_of_20_2">/20</string>
     <string name="percent">%</string>
     <string name="est_range_remain">Estimated Range Remaining</string>
 
@@ -44,8 +45,8 @@
     <string name="speed_mistakes">Speed mistakes</string>
     <string name="drive_button">Simulate</string>
     <string name="before_drive_hint">This is the current status of your EV. Click any element on the screen for more information.</string>
-	<string name="simulate_button">Take a drive!</string>
-    
+    <string name="simulate_button">Take a drive!</string>
+
     <!-- AfterDriveFragmentCompleted -->
     <string name="drive_completed">Drive completed!</string>
     <string name="stars_ex">11/20</string>

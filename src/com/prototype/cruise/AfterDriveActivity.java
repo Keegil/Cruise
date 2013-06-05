@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -264,31 +265,35 @@ public class AfterDriveActivity extends FragmentActivity {
 		}
 
 		// Calculate speed score.
-		double speedPerCount = speedMistakes / totalCounts;
-		if (speedPerCount >= 5/6) {
+		double speedPerCount = (double) ((double) speedMistakes / (double) totalCounts);
+		Log.d(TAG, "speedMistakes: " + speedMistakes + "| totalCounts: "
+				+ totalCounts + "| speedPerCount: " + speedPerCount + "");
+		if (speedPerCount >= 0.83) {
 			speedScore = 0;
-		} else if (speedPerCount < 5/6 && speedPerCount >= 4/6) {
+		} else if (speedPerCount < 0.83 && speedPerCount >= 0.67) {
 			speedScore = 1;
-		} else if (speedPerCount < 4/6 && speedPerCount >= 3/6) {
+		} else if (speedPerCount < 0.67 && speedPerCount >= 0.5) {
 			speedScore = 2;
-		} else if (speedPerCount < 3/6 && speedPerCount >= 2/6) {
+		} else if (speedPerCount < 0.5 && speedPerCount >= 0.33) {
 			speedScore = 3;
-		} else if (speedPerCount < 2/6 && speedPerCount >= 1/6) {
+		} else if (speedPerCount < 0.33 && speedPerCount >= 0.17) {
 			speedScore = 4;
-		} else if (speedPerCount < 1/6 && speedPerCount >= 0) {
+		} else if (speedPerCount < 0.17 && speedPerCount >= 0) {
 			speedScore = 5;
 		}
+		Log.d(TAG, "speedScore: " + speedScore + "");
 
 		// Calculate route score?
 		routeScore = 5;
 
 		// Calculate and apply modifier.
 		double modifier = 1 - (((double) accScore + (double) brakeScore + (double) routeScore) / 15);
-		double extraRangeInterval = ((double) driveLength * 1.3)
+		double extraRangeInterval = ((double) driveLength * 1.4)
 				- ((double) driveLength);
 		double extraRange = extraRangeInterval * modifier;
 		rangeUsed = driveLength + (int) extraRange;
-		double extraSpeedInterval = ((double) rangeUsed * 1.1) - ((double) rangeUsed);
+		double extraSpeedInterval = ((double) rangeUsed * 1.1)
+				- ((double) rangeUsed);
 		double extraSpeedRange = extraSpeedInterval * speedPerCount;
 		rangeUsed = rangeUsed + (int) extraSpeedRange;
 
@@ -326,6 +331,15 @@ public class AfterDriveActivity extends FragmentActivity {
 
 		BluetoothBackEnd.testing = 0;
 		Log.d(TAG, "testing: " + BluetoothBackEnd.testing + "");
+	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		Intent i = getBaseContext().getPackageManager()
+				.getLaunchIntentForPackage(getBaseContext().getPackageName());
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(i);
 	}
 
 	public static class MyAdapter extends FragmentPagerAdapter {

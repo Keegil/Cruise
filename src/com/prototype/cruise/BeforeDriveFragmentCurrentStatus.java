@@ -488,26 +488,31 @@ public class BeforeDriveFragmentCurrentStatus extends Fragment implements
 						BeforeDriveActivity.accMistakes = 0;
 						BeforeDriveActivity.brakeMistakes = 0;
 						BeforeDriveActivity.speedMistakes = 0;
+						AfterDriveActivity.totalCounts = 2000;
 					} else if (item == 1) {
 						BeforeDriveActivity.driveLength = 30;
 						BeforeDriveActivity.accMistakes = 400;
 						BeforeDriveActivity.brakeMistakes = 400;
-						BeforeDriveActivity.speedMistakes = 0;
+						BeforeDriveActivity.speedMistakes = 300;
+						AfterDriveActivity.totalCounts = 3000;
 					} else if (item == 2) {
-						BeforeDriveActivity.driveLength = 10;
-						BeforeDriveActivity.accMistakes = 400;
-						BeforeDriveActivity.brakeMistakes = 400;
-						BeforeDriveActivity.speedMistakes = 0;
+						BeforeDriveActivity.driveLength = 40;
+						BeforeDriveActivity.accMistakes = 1400;
+						BeforeDriveActivity.brakeMistakes = 1400;
+						BeforeDriveActivity.speedMistakes = 3000;
+						AfterDriveActivity.totalCounts = 4000;
 					} else if (item == 3) {
 						BeforeDriveActivity.driveLength = 90;
 						BeforeDriveActivity.accMistakes = 400;
 						BeforeDriveActivity.brakeMistakes = 400;
-						BeforeDriveActivity.speedMistakes = 0;
+						BeforeDriveActivity.speedMistakes = 5000;
+						AfterDriveActivity.totalCounts = 9000;
 					} else if (item == 4) {
 						BeforeDriveActivity.driveLength = 140;
 						BeforeDriveActivity.accMistakes = 400;
 						BeforeDriveActivity.brakeMistakes = 400;
 						BeforeDriveActivity.speedMistakes = 0;
+						AfterDriveActivity.totalCounts = 14000;
 					}
 					((BeforeDriveActivity) beforeDriveActivity).saveData();
 					Intent i = new Intent(
