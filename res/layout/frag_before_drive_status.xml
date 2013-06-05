@@ -13,7 +13,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.15"
+        android:layout_weight="0.13"
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingBottom="10dp"
@@ -289,7 +289,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.1"
+        android:layout_weight="0.12"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="5dp" >
