@@ -106,7 +106,14 @@ public class BeforeDriveActivity extends FragmentActivity {
 			ac = new AsyncClass(this);
 			ac.execute();
 		}
-		
+
+		defaultRange = 120;
+		lastTime = 0;
+		currentRange = defaultRange;
+		chargedRange = 0;
+		saveSettings();
+		saveData();
+		saveDate();
 	}
 
 	public static void setBackgroundIndicator(int c) {
