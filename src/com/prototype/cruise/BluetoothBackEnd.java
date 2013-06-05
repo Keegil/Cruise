@@ -83,8 +83,8 @@ public class BluetoothBackEnd {
 					.getBondedDevices();
 			if (pairedDevices.size() > 0) {
 				for (BluetoothDevice device : pairedDevices) {
-					if (device.getName().equals("RN42-DCD0")) {
-					// if (device.getName().equals("RN42-DF12")) {
+					// if (device.getName().equals("RN42-DCD0")) {
+					if (device.getName().equals("RN42-DF12")) {
 					// if (device.getName().equals("RN42-B1B5")) {
 					// if (device.getName().equals("RN42-DF28")) {
 						mmDevice = device;
