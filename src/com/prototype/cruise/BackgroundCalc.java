@@ -61,7 +61,7 @@ public class BackgroundCalc {
 	}
 
 	public GradientDrawable getGradient() {
-		// Returns a gradient drawable based in relative range.
+		// Returns a GradientDrawable based on relative range.
 
 		GradientDrawable gdBackground = new GradientDrawable(
 				GradientDrawable.Orientation.TOP_BOTTOM, new int[] {

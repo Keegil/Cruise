@@ -106,7 +106,7 @@ public class BeforeDriveActivity extends FragmentActivity {
 			ac = new AsyncClass(this);
 			ac.execute();
 		}
-
+		
 	}
 
 	public static void setBackgroundIndicator(int c) {

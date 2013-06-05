@@ -91,7 +91,7 @@ public class AfterDriveActivity extends FragmentActivity {
 	private static final String TAG_DIS = "distanceTraveled";
 	private static final String TAG_ROU = "altitudeScore";
 
-	// Viewpager indicator
+	// Declare ViewPagerIndicator.
 	static CirclePageIndicator mIndicator;
 
 	@Override
@@ -232,7 +232,6 @@ public class AfterDriveActivity extends FragmentActivity {
 		}
 
 		// Calculate acceleration score.
-
 		double accPerKm = accMistakes / driveLength;
 		if (accPerKm >= 45) {
 			accScore = 0;

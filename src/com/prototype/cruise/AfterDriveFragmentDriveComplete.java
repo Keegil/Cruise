@@ -127,7 +127,7 @@ public class AfterDriveFragmentDriveComplete extends Fragment implements
 	}
 
 	public void setFonts() {
-		// Declare & initialize Typefaces.
+		// Declare & initialize TypeFaces.
 		Typeface tfHelvetica = Typeface.createFromAsset(getActivity()
 				.getAssets(), "fonts/helvetica_bold_oblique.ttf");
 		Typeface tfMyriadRegular = Typeface.createFromAsset(getActivity()
