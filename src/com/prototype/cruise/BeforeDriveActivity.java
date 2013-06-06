@@ -108,6 +108,12 @@ public class BeforeDriveActivity extends FragmentActivity {
 		}
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+		finish();
+	}
+
 	public static void setBackgroundIndicator(int c) {
 		mIndicator.setBackgroundColor(c);
 	}

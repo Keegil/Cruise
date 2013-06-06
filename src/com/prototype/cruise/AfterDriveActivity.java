@@ -3,6 +3,7 @@ package com.prototype.cruise;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Random;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -221,6 +222,17 @@ public class AfterDriveActivity extends FragmentActivity {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		
+		double random = 0.5 + Math.random();
+		driveLength = (int) ((double) driveLength * random);
+		totalCounts = driveLength * 100;
+		random = 0.5 + Math.random();
+		accMistakes = (int) ((double) 600 * random);
+		random = 0.5 + Math.random();
+		brakeMistakes = (int) ((double) 600 * random);
+		random = Math.random() * 0.5;
+		speedMistakes = (int) ((double) totalCounts * random);
+		
 		saveData();
 	}
 
@@ -266,8 +278,6 @@ public class AfterDriveActivity extends FragmentActivity {
 
 		// Calculate speed score.
 		double speedPerCount = (double) ((double) speedMistakes / (double) totalCounts);
-		Log.d(TAG, "speedMistakes: " + speedMistakes + "| totalCounts: "
-				+ totalCounts + "| speedPerCount: " + speedPerCount + "");
 		if (speedPerCount >= 0.83) {
 			speedScore = 0;
 		} else if (speedPerCount < 0.83 && speedPerCount >= 0.67) {
